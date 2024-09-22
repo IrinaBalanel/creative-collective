@@ -5,7 +5,7 @@ import SideNav from "../../components/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 
-export default function EditClient(){
+export default function EditProvider(){
     const { id } = useParams();
     const [user, setUser] = useState({
         first_name: '',
@@ -22,7 +22,7 @@ export default function EditClient(){
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/admin/update-client/${id}`);
+                const response = await axios.get(`http://localhost:8000/admin/update-provider/${id}`);
                 const data = response.data;
                 console.log(data);
                 setUser({
@@ -87,7 +87,7 @@ export default function EditClient(){
             return; //doesn't submit form if there are any errors
         }
 
-        const clientData = {
+        const providerData = {
             first_name: user.first_name,
             last_name: user.last_name,
             phone_number: user.phone_number,
@@ -98,10 +98,10 @@ export default function EditClient(){
         };
 
         try {
-            const response = await axios.post(`http://localhost:8000/admin/update-client/${id}/submit`, { clientData, userData });
+            const response = await axios.post(`http://localhost:8000/admin/update-provider/${id}/submit`, { providerData, userData });
             console.log(response.data);
 
-            navigate("/admin/management-clients");
+            navigate("/admin/management-providers");
 
         } catch (error) {
 
@@ -123,7 +123,7 @@ export default function EditClient(){
     return(
         <div>
             <SideNav/>
-            <h1>Update Client</h1>
+            <h1>Update Provider</h1>
             {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
             {errorMessages.length > 0 && (
                 <ul style={{ color: "red" }}>

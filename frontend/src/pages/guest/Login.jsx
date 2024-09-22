@@ -18,7 +18,13 @@ export default function Login(){
         
         try {
             const response = await axios.post('http://localhost:8000/auth/login', {email, password}, { withCredentials: true });
-            const user = response.data.user; //OR { user } = response.data; // which is one object named user from the response of the data object
+            
+            if (response.data.errors) {
+                setErrorMessages(response.data.errors);
+                return;
+            }
+            
+            const user = response.data.user;
             console.log(user);  
             
             // redirects to different home pages depending on the role
@@ -31,11 +37,11 @@ export default function Login(){
             }
 
         } catch (error) {
-            // setErrorMessage("Invalid email or password");
-            // console.error("Error:", error);
-
+            //console.log(error)
+            
             // backend errors 
             let backendErrors = [];
+            
             if (error.response && error.response.data && error.response.data.errors) {
                 backendErrors = error.response.data.errors;  // backend errors like user already exists
             } else {

@@ -4,18 +4,43 @@ const User = require("../../models/User");
 const Provider = require("../../models/Provider");
 const bcrypt = require('bcryptjs');
 
-// Controller to fetch users and render the admin page
+
+/////////////////////////USER MANAGEMENT/////////////////////////
+//////////CLIENT/////////
 async function getClients() {
     try {
         // Fetch all users from the database
         const clients = await Client.find()
         .populate({
-          path: 'user_id',  // foreign key
-          select: 'email password role'  // specific fields
+            path: 'user_id',  // foreign key
+            select: 'email password role status blockReason',  // specific fields
         })
         .exec();
         // console.log(clients);
-        return clients; 
+        const filteredClients = clients.filter(client => client.user_id !== null);
+        // console.log(filteredClients);
+        return filteredClients; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function getClientsByStatus(statuses) {
+    try {
+        // Fetch all users from the database
+        const clients = await Client.find()
+        .populate({
+            path: 'user_id',  // foreign key
+            select: 'email password role status blockReason',  // specific fields
+            match: { status: { $in: statuses } }
+        })
+        .exec();
+        // console.log(clients);
+        const filteredClients = clients.filter(client => client.user_id !== null);
+        // console.log(filteredClients);
+        return filteredClients; 
         
     } catch (error) {
         console.error(error);
@@ -41,6 +66,9 @@ async function getClientById(id) {
     }
 }
 
+
+
+// UPDATE CLIENT
 async function updateClient(id, clientData, userData) {
     try{
         const updatedClient = await Client.findByIdAndUpdate(id, {
@@ -60,11 +88,92 @@ async function updateClient(id, clientData, userData) {
         console.error('Error updating client and user:', error);
         throw error;
     }
-    
-
-    //hash the password to update
 }
 
+//////////PROVIDER/////////
+async function getProviders() {
+    try {
+        // Fetch all users from the database
+        const providers = await Provider.find()
+        .populate({
+            path: 'user_id',  // foreign key
+            select: 'email password role status blockReason',  // specific fields
+        })
+        .exec();
+        // console.log(providers);
+        const filteredClients = providers.filter(provider => provider.user_id !== null);
+        // console.log(filteredClients);
+        return filteredClients; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function getProvidersByStatus(statuses) {
+    try {
+        // Fetch all users from the database
+        const providers = await Provider.find()
+        .populate({
+            path: 'user_id',  // foreign key
+            select: 'email password role status blockReason',  // specific fields
+            match: { status: { $in: statuses } }
+        })
+        .exec();
+        // console.log(clients);
+        const filteredClients = providers.filter(provider => provider.user_id !== null);
+        // console.log(filteredClients);
+        return filteredClients; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function getProviderById(id) {
+    try {
+        // Fetch all users from the database
+        const provider = await Provider.findById(id)
+        .populate({
+          path: 'user_id',  // foreign key
+          select: 'email'  // specific fields
+        })
+        .exec();
+        console.log(provider);
+        return provider; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+// UPDATE PROVIDER
+async function updateProvider(id, providerData, userData) {
+    try{
+        const updatedProvider = await Provider.findByIdAndUpdate(id, {
+            first_name: providerData.first_name,
+            last_name: providerData.last_name,
+            phone_number: providerData.phone_number
+        }, { new: true });
+
+        // Update the User information using the user_id from Client
+        const updatedUser = await User.findByIdAndUpdate(updatedProvider.user_id, {
+            email: userData.email
+        }, { new: true });
+
+        return { updatedProvider, updatedUser };
+
+    } catch (error) {
+        console.error('Error updating client and user:', error);
+        throw error;
+    }
+}
+
+//////////USER/////////
+// CREATE USER
 async function createNewUser(firstName, lastName, email, phone, password, role){
     const errors = [];  // array to store error messages
     try{
@@ -116,9 +225,94 @@ async function createNewUser(firstName, lastName, email, phone, password, role){
     }
 }
 
+
+// SOFT DELETE
+async function getUserById(id) {
+    try {
+        // Fetch all users from the database
+        const user = await User.findById(id)
+        console.log(user);
+        return user; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function deleteUser(id) {
+    try{
+        const deletedUser = await User.findByIdAndUpdate(
+            id, {
+                status: "deleted"
+            },
+            { new: true }
+        )
+        return deletedUser; 
+
+    } catch (error) {
+        console.error('Error: ', error);
+        throw error;
+    }
+}
+
+
+// BLOCK & UNBLOCK
+async function blockUser(id, blockReason) {
+    try{
+        const blockedUser = await User.findByIdAndUpdate(
+            id, 
+            {
+                status: "blocked",
+                blockReason: blockReason || "No reason provided"
+            },
+            { new: true }
+        )
+        console.log(blockedUser);
+        return blockedUser; 
+
+    } catch (error) {
+        console.error('Error: ', error);
+        throw error;
+    }
+}
+
+async function unblockUser(id) {
+    try{
+        const unblockedUser = await User.findByIdAndUpdate(
+            id, 
+            {
+                status: "active",
+                blockReason: null
+            },
+            { new: true }
+        )
+        return unblockedUser; 
+
+    } catch (error) {
+        console.error('Error: ', error);
+        throw error;
+    }
+}
+
+
+
+
+
 module.exports = {
-    getClients, 
+    getClients,
+    getClientsByStatus,
     getClientById,
     updateClient,
-    createNewUser
+
+    createNewUser,
+    getUserById,
+    blockUser,
+    unblockUser,
+    deleteUser,
+
+    getProviders,
+    getProvidersByStatus,
+    getProviderById,
+    updateProvider
 };

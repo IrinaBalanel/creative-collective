@@ -9,14 +9,18 @@ const UserSchema = new mongoose.Schema({
 		required: true
 	},
 	//add the status for soft delete: active/blocked and boolean for soft delete
-	isBlocked: {
-		type: Boolean,
-		default: false
+	status: {
+		type: String,
+		enum: ["active", "blocked", "deleted"],
+		default: "active",
+		required: true
 	},
-	isDeleted: {
-		type: Boolean,
-		default: false
+
+	blockReason: {
+		type: String,
+		default: null
 	},
+
 	createdAt: { type: Date, default: Date.now }
 });
     

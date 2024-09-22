@@ -9,30 +9,59 @@ async function login(email, password){
     const errors = []; // array to store error messages
     try{
         const user = await User.findOne({email}); //checks if the user exists
-        if (!user){
+        console.log(user);
+        // if (!user || user.status == "deleted"){
+        //     errors.push("User with this email doesn't exist");
+        // } else if (user && user.status == "blocked") {
+        //         errors.push("This account is blocked");
+        //     } else if (user && user.role == "admin") {
+        //         errors.push("Unauthorized");
+        //     } else {
+        //         const isMatch = await bcrypt.compare(password, user.password); // compares password value with hash
+        //         if(isMatch) {
+        //             //token generation
+        //             token = jwt.sign(
+        //                 {id: user._id, email: user.email, role: user.role}, 
+        //                 process.env.JWT_SECRET_KEY, 
+        //                 {expiresIn: "1d"}
+        //             );
+        //             console.log(token); 
+        //             console.log(user); 
+        //         }else{
+        //             errors.push("Invalid password"); 
+        //         }
+        //     }
+        // if (errors.length > 0) {
+        //     return { errors };
+        // }
+        if (!user || user.status === "deleted") {
             errors.push("User with this email doesn't exist");
-        } else {
-            if (user.role == "admin") {
-                errors.push("Unauthorized");
-            } else {
-                const isMatch = await bcrypt.compare(password, user.password); // compares password value with hash
-                if(isMatch) {
-                    //token generation
-                    token = jwt.sign(
-                        {id: user._id, email: user.email, role: user.role}, 
-                        process.env.JWT_SECRET_KEY, 
-                        {expiresIn: "1d"}
-                    );
-                    console.log(token); 
-                    console.log(user); 
-                }else{
-                    errors.push("Invalid password"); 
-                }
-            }
+            return {errors};
         }
-        if (errors.length > 0) {
-            return { errors };
+
+        if (user.status === "blocked") {
+            errors.push("This account is blocked");
+            return {errors}; // Return errors if user is blocked
         }
+
+        if (user.role === "admin") {
+            errors.push("Unauthorized");
+            return {errors};  // Return errors if the user is unauthorized
+        }
+
+        // Verify password if user is active
+        const isMatch = await bcrypt.compare(password, user.password); // Compare password value with hash
+        if (!isMatch) {
+            errors.push("Invalid password");
+            return {errors};  // Return errors if password is incorrect
+        }
+
+        // Generate token if everything is correct
+        token = jwt.sign(
+            { id: user._id, email: user.email, role: user.role }, 
+            process.env.JWT_SECRET_KEY, 
+            { expiresIn: "1d" }
+        );
         return { user, token };
 
     } catch (error){

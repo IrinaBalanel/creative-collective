@@ -9,11 +9,17 @@ router.post("/login", async (req, res) => {
 
     try {
         const result = await authController.login(email, password);
+        console.log(result.errors);
         if (result.errors) {
             return res.json({ errors: result.errors });
         }
         const token = result.token;
         console.log("this is my token", token);
+        const user = result.user;
+        // Check if token or user is undefined before proceeding
+        if (!token || !user) {
+            return res.json({ message: "Login failed. Please try again." });
+        }
         const cookie = await res.cookie("token", token, {
             httpOnly: true, // prevents client-side from accessing the cookie
             maxAge: 24 * 60 * 60 * 1000, // cookie will expire in 1 day and be deleted from browser
