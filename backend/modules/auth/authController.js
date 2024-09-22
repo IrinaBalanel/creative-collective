@@ -40,7 +40,7 @@ async function login(email, password){
     }
 }
 
-async function register(firstName, lastName, email, password, role){
+async function register(firstName, lastName, email, phone, password, role){
     const errors = [];  // array to store error messages
     try{
         //checks if the user exists
@@ -68,14 +68,16 @@ async function register(firstName, lastName, email, password, role){
             const newClient = new Client({
                 user_id: user._id,
                 first_name: firstName,
-                last_name: lastName
+                last_name: lastName,
+                phone_number: phone
             });
             await newClient.save();
         } else if (role.toLowerCase() === "provider") {
             const newProvider = new Provider({
                 user_id: user._id,
                 first_name: firstName,
-                last_name: lastName
+                last_name: lastName,
+                phone_number: phone
             });
             await newProvider.save();
         }

@@ -8,13 +8,13 @@ const ClientSchema = new mongoose.Schema({
     },
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
+    phone_number: { type: String, required: true },
     favorite_professionals: [
     {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Provider', // references the Provider collection
         default: []
-    }],
-    createdAt: { type: Date, default: Date.now }
+    }]
 });
     
 const Client = mongoose.model("Client", ClientSchema, "clients");

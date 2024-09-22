@@ -27,11 +27,11 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-    const { firstName, lastName, email, password, role } = req.body;
+    const { firstName, lastName, email, phone, password, role } = req.body;
     console.log(req.body);
 
     try {
-        const result = await authController.register(firstName, lastName, email, password, role);
+        const result = await authController.register(firstName, lastName, email, phone, password, role);
         const token = result.token;
         console.log("this is my token", token);
         const cookie = await res.cookie("token", token, {

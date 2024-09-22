@@ -13,18 +13,18 @@ export default function Clients(){
     useEffect(() => {
     const getClients = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/admin/management-clients');
+            const response = await axios.get('http://localhost:8000/admin/management-clients',  { withCredentials: true });
             const data = response.data;
             console.log(data);
             setClients(data);
         } catch (error) {
             console.log(error);
-            if (error.status == 500) {
-                setError("Access denied. You need to login.");
-            } else {
-                setError("Error");
-                console.log("Error ", error);
-            }
+            // if (error.status == 500) {
+            //     setError("Access denied. You need to login.");
+            // } else {
+            //     setError("Error");
+            //     console.log("Error ", error);
+            // }
         }
     }
     getClients();
@@ -45,8 +45,9 @@ export default function Clients(){
                         <th>First name</th>
                         <th>Last name</th>
                         <th>Email</th>
-                        {/* <th>Password</th> */}
-                        <th>Role</th>
+                        <th>Phone</th>
+                        <th>Hashed Password</th>
+                        {/* <th>Role</th> */}
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -58,11 +59,13 @@ export default function Clients(){
                                 <td>{client.first_name}</td>
                                 <td>{client.last_name}</td>
                                 <td>{client.user_id.email}</td>
-                                {/* <td>{client.user_id.password}</td> */}
-                                <td>{client.user_id.role}</td>
+                                <td>{client.phone_number}</td>
+                                <td>{client.user_id.password}</td>
+                                {/* <td>{client.user_id.role}</td> */}
                                 <td>
-                                    <Link to="/admin/updateclient/"><button>Update</button></Link>
-                                    <Link to="/admin/deleteclient/"><button>Delete</button></Link>
+                                    <Link to={`/admin/management-clients/update-client/${client._id}`}><button>Update</button></Link>
+                                    <Link to="/admin/management-clients/delete-client/"><button>Block</button></Link>
+                                    <Link to="/admin/management-clients/delete-client/"><button>Delete</button></Link>
                                 </td>
                             </tr>
                         ))

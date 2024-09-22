@@ -40,13 +40,11 @@ const authRoutes = require("./modules/auth/authRoutes");
 // const clientRoutes = require("./modules/client/clientRoutes");
 // const providerRoutes = require("./modules/provider/providerRoutes");
 
-//app.use(middleware.authJWT);
-
 // Routes to define the beginning of the path
-app.use("/admin", authJWT, authorize(['admin']), adminRoutes);
+app.use("/admin", adminRoutes);
 app.use("/auth", authRoutes);
-// app.use("/client", clientRoutes);
-// app.use("/provider", providerRoutes);
+// app.use("/client", authJWT, authorize(['client']), clientRoutes);
+// app.use("/provider", authJWT, authorize(['provider']), providerRoutes);
 // app.use("/", publicRoutes);
 
 

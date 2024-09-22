@@ -2,11 +2,14 @@ import {useState} from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import SideNav from "../../components/SideNav";
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 
 export default function NewUser(){
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [role, setRole] = useState("client");
@@ -35,16 +38,17 @@ export default function NewUser(){
             return; //doesn't submit form if there are any errors
         }
 
-        console.log(fName, lName, email, password, role);
+        console.log(fName, lName, email, phone, password, role);
 
         try {
             const response = await axios.post('http://localhost:8000/admin/new-user/submit', {
                 firstName: fName,
                 lastName: lName, 
                 email, 
+                phone,
                 password, 
                 role
-            });
+            },  { withCredentials: true });
             // console.log(response);
             const user = response.data.user; // the user object from the data object
             //OR { user } = response.data; // which is one object named user from the response of the data object
@@ -95,6 +99,18 @@ export default function NewUser(){
                 </div>
                 <div>
                     <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
+                    <div id="phone-input">
+                        <PhoneInput
+                            id="phone"
+                            placeholder="999-999-9999"
+                            value={phone}
+                            onChange={(value) => {
+                                setPhone(value);
+                                // handleInputChange();
+                            }}
+                            defaultCountry="CA"
+                        />
+                    </div>
                 </div>
                 <div>
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
@@ -127,7 +143,7 @@ export default function NewUser(){
                         </label>
                     </div>
                 </div>
-                <button type="submit">Register</button>
+                <button type="submit">Create new user</button>
             </form>
         </div>
     )

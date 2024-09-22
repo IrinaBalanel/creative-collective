@@ -11,7 +11,7 @@ async function getClients() {
         const clients = await Client.find()
         .populate({
           path: 'user_id',  // foreign key
-          select: 'email role'  // specific fields
+          select: 'email password role'  // specific fields
         })
         .exec();
         // console.log(clients);
@@ -23,7 +23,49 @@ async function getClients() {
     }
 }
 
-async function createNewUser(firstName, lastName, email, password, role){
+async function getClientById(id) {
+    try {
+        // Fetch all users from the database
+        const client = await Client.findById(id)
+        .populate({
+          path: 'user_id',  // foreign key
+          select: 'email'  // specific fields
+        })
+        .exec();
+        console.log(client);
+        return client; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function updateClient(id, clientData, userData) {
+    try{
+        const updatedClient = await Client.findByIdAndUpdate(id, {
+            first_name: clientData.first_name,
+            last_name: clientData.last_name,
+            phone_number: clientData.phone_number
+        }, { new: true });
+
+        // Update the User information using the user_id from Client
+        const updatedUser = await User.findByIdAndUpdate(updatedClient.user_id, {
+            email: userData.email
+        }, { new: true });
+
+        return { updatedClient, updatedUser };
+
+    } catch (error) {
+        console.error('Error updating client and user:', error);
+        throw error;
+    }
+    
+
+    //hash the password to update
+}
+
+async function createNewUser(firstName, lastName, email, phone, password, role){
     const errors = [];  // array to store error messages
     try{
         //checks if the user exists
@@ -51,14 +93,16 @@ async function createNewUser(firstName, lastName, email, password, role){
             const newClient = new Client({
                 user_id: user._id,
                 first_name: firstName,
-                last_name: lastName
+                last_name: lastName,
+                phone_number: phone
             });
             await newClient.save();
         } else if (role.toLowerCase() === "provider") {
             const newProvider = new Provider({
                 user_id: user._id,
                 first_name: firstName,
-                last_name: lastName
+                last_name: lastName,
+                phone_number: phone
             });
             await newProvider.save();
         }
@@ -74,5 +118,7 @@ async function createNewUser(firstName, lastName, email, password, role){
 
 module.exports = {
     getClients, 
+    getClientById,
+    updateClient,
     createNewUser
 };

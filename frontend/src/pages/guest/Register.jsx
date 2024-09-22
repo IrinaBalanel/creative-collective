@@ -1,11 +1,14 @@
 import {useState} from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 
 export default function Register(){
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
     const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [role, setRole] = useState("client");
@@ -21,6 +24,11 @@ export default function Register(){
 
         let errors = [];
 
+        // var phoneRegEx = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+        // if(!phoneRegEx.test(phone)){
+        //     errors.push("Please, provide a valid phone number");
+        // }
+
         var passRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if(!passRegEx.test(password) || !passRegEx.test(confirmPassword)){
             errors.push("Password should contain at least 8 characters, one letter, and one number.");
@@ -35,13 +43,14 @@ export default function Register(){
             return; //doesn't submit form if there are any errors
         }
 
-        console.log(fName, lName, email, password, role);
+        console.log(fName, lName, email, phone, password, role);
 
         try {
             const response = await axios.post('http://localhost:8000/auth/register', {
                 firstName: fName,
                 lastName: lName, 
                 email, 
+                phone,
                 password, 
                 role
             }, { withCredentials: true });
@@ -93,7 +102,21 @@ export default function Register(){
                 </div>
                 <div>
                     <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
+                    <div id="phone-input">
+                        <PhoneInput
+                            id="phone"
+                            placeholder="999-999-9999"
+                            value={phone}
+                            onChange={(value) => {
+                                setPhone(value);
+                                // handleInputChange();
+                            }}
+                            // international
+                            defaultCountry="CA"
+                        />
+                    </div>
                 </div>
+                
                 <div>
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
                     <input type="password" id="password-confirm" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required></input>
