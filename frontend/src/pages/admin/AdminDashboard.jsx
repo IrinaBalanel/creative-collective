@@ -1,4 +1,4 @@
-import SideNav from "../../components/SideNav"
+import SideNav from "../../components/SideNav/SideNav"
 
 
 export default function AdminDashboard(){

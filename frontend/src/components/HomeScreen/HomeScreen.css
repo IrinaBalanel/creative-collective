@@ -1,0 +1,14 @@
+#home-screen{
+    margin: 180px 100px;
+}
+
+.title{
+    font-size: 3.8em;
+    text-align: center;
+}
+
+#home-screen p{
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 600;
+}

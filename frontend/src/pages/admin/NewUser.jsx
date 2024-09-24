@@ -1,7 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import SideNav from "../../components/SideNav";
+import SideNav from "../../components/SideNav/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 
@@ -82,24 +82,24 @@ export default function NewUser(){
     return(
         <div>
             <SideNav/>
+            <main className="main">
             <h1>Create new user</h1>
-            {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
-            {errorMessages.length > 0 && (
-                <ul style={{ color: "red" }}>
-                    {errorMessages.map((msg, index) => (
-                        <li key={index}>{msg}</li>
-                    ))}
-                </ul>
-            )}
+                {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
+                {errorMessages.length > 0 && (
+                    <ul style={{ color: "red" }}>
+                        {errorMessages.map((msg, index) => (
+                            <li key={index}>{msg}</li>
+                        ))}
+                    </ul>
+                )}
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input type="text" id="fName" placeholder="First Name" value={fName} onChange={(e) => setFName(e.target.value)} required></input>
-                    <input type="text" id="lName" placeholder="Last Name" value={lName} onChange={(e) => setLName(e.target.value)} required></input>
-                </div>
-                <div>
-                    <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
-                    <div id="phone-input">
+                <form onSubmit={handleSubmit} className="form">
+                    <div className="input">
+                        <input type="text" id="fName" placeholder="First Name" value={fName} onChange={(e) => setFName(e.target.value)} required></input>
+                        <input type="text" id="lName" placeholder="Last Name" value={lName} onChange={(e) => setLName(e.target.value)} required></input>
+                    </div>
+                    <div className="input">
+                        <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
                         <PhoneInput
                             id="phone"
                             placeholder="999-999-9999"
@@ -111,14 +111,11 @@ export default function NewUser(){
                             defaultCountry="CA"
                         />
                     </div>
-                </div>
-                <div>
-                    <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
-                    <input type="password" id="password-confirm" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required></input>
-                </div>
-                <div>
-                    <div>
-                        
+                    <div className="input">
+                        <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
+                        <input type="password" id="password-confirm" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required></input>
+                    </div>
+                    <div className="btn-radio">
                         <label>
                             <input 
                                 type="radio" 
@@ -129,8 +126,6 @@ export default function NewUser(){
                             />
                             Client
                         </label>
-                    </div>
-                    <div>
                         <label>
                             <input 
                                 type="radio" 
@@ -142,9 +137,10 @@ export default function NewUser(){
                             Provider
                         </label>
                     </div>
-                </div>
-                <button type="submit">Create new user</button>
-            </form>
+                    <button type="submit">Create new user</button>
+                </form>
+            </main>
+            
         </div>
     )
 

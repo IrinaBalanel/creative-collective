@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import { useNavigate, useParams } from 'react-router-dom';
-import SideNav from "../../components/SideNav";
+import SideNav from "../../components/SideNav/SideNav";
 
 
 export default function ConfirmBlockUser(){

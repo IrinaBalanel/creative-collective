@@ -1,6 +1,7 @@
 import {useState} from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import LogoBlack from "../../components/LogoBlack";
 
 export default function AdminLogin(){
     const [email, setEmail] = useState('');
@@ -30,14 +31,15 @@ export default function AdminLogin(){
     };
 
     return(
-        <div>
+        <div id="login">
+            <LogoBlack/>
             <h1>Admin Login</h1>
             <p style={{ color: "red" }}>{errorMessage}</p>
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form onSubmit={handleSubmit} className="form">
+                <div className="input">
                     <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
                 </div>
-                <div>
+                <div className="input">
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
                 </div>
                 <button type="submit">Login</button>

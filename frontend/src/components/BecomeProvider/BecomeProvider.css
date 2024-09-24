@@ -1,0 +1,55 @@
+#become-provider{
+    margin: 150px 100px;
+}
+
+#become-provider .img-container {
+    max-width: 300px;
+    
+}
+
+
+.become-provider-instructions{
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+    /* align-items: center; */
+    margin: 50px 0;
+    position: relative;
+}
+
+#messenger{
+    width: 25%;
+    position: absolute;
+    top: 30px;
+    left: 20px;
+}
+
+.demo-provider p{
+    max-width: 300px;
+}
+
+
+.step{
+    display: flex;
+    align-items: center;
+    margin: 40px 0;
+    gap: 40px;
+}
+
+.step p{
+    font-weight: 600;
+    max-width: 200px;
+}
+
+#become-provider svg{
+    background-color: #5C748C;
+    color:rgb(245, 245, 245);
+    padding: 30px;
+    border-radius: 10px;
+    /* background-color: #646cff; */
+    /* border: 1px solid #646cff; */
+}
+
+
+/* #16182A */
+

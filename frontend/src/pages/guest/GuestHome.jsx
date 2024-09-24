@@ -1,20 +1,21 @@
 import {Link} from "react-router-dom"
+import Header from "../../components/Header/Header"
+import Footer from "../../components/Footer/Footer"
+import FindByCat from "../../components/FindByCat/FindByCat"
+import HomeScreen from "../../components/HomeScreen/HomeScreen"
+import BecomeProvider from "../../components/BecomeProvider/BecomeProvider"
 
 export default function GuestHome() {
-    // useEffect(() => {
-    //   document.title = "Home | Portfolio"
-    // }, []);
-  
-    return(
+  return(
+    <>
+      <Header/>
       <main id="main">
-        {/* <HomeScreen /> */}
-        <h1>Guest View Landing page</h1>
-        <div>
-          <Link to="/login">Login</Link>
-        </div>
-        <div>
-          <Link to="/register">Register</Link>
-        </div>
+        <HomeScreen/>
+        <FindByCat/>
+        <BecomeProvider/>
       </main>
-    )
+      <Footer/>
+    </>
+    
+  )
 }

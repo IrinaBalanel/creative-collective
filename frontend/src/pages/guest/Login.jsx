@@ -2,6 +2,8 @@ import {useState} from "react";
 import {Link} from "react-router-dom"
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import "./Login.css"
+import LogoBlack from "../../components/LogoBlack";
 
 export default function Login(){
     const [email, setEmail] = useState("");
@@ -54,7 +56,8 @@ export default function Login(){
     };
 
     return(
-        <div>
+        <div id="login">
+            <LogoBlack/>
             <h1>Login</h1>
             {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
             {errorMessages.length > 0 && (
@@ -64,17 +67,17 @@ export default function Login(){
                     ))}
                 </ul>
             )}
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form onSubmit={handleSubmit} className="form">
+                <div className="input">
                     <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
                 </div>
-                <div>
+                <div className="input">
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
                 </div>
                 <button type="submit">Login</button>
             </form>
             <div>
-                <h2><Link to="/password-recovery">Forgot your password?</Link></h2>
+                <Link to="/password-recovery">Forgot your password?</Link>
                 <h2>Don't have an account yet?</h2>
                 <Link to="/register">Create new account</Link>
             </div>

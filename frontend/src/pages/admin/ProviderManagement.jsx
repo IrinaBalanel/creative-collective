@@ -1,8 +1,8 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom"
-import SideNav from "../../components/SideNav";
-
+import SideNav from "../../components/SideNav/SideNav";
+import ProfileButton from "../../components/ProfileButton";
 
 export default function Providers(){
     const [providers, setProviders] = useState([]);
@@ -44,6 +44,10 @@ export default function Providers(){
         }
     };
 
+    const formatId = (id) => {
+        return id.length > 5 ? `${id.substring(0, 5)}...` : id;
+    };
+
     if (error) {
         return <div>{error}</div>;
     }
@@ -52,14 +56,19 @@ export default function Providers(){
         <div>
             <SideNav/>
             <main className="main">
-                <h1>Provider Management</h1>
-                <Link to="/admin/management-providers/new-user"><button>Create new</button></Link>
-                <table id="providers-table">
-                    <thead>
+
+                <ProfileButton/>
+                <div className="inline">
+                    <h1>Provider Management</h1>
+                    <Link to="/admin/management-providers/new-user"><button>Create new</button></Link>
+                </div>
+                
+                <table className="table">
+                    <thead className="head">
                         <tr>
                             <th>Provider ID</th>
-                            <th>First name</th>
-                            <th>Last name</th>
+                            <th>Name</th>
+                            {/* <th>Last name</th> */}
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Status</th>
@@ -67,22 +76,22 @@ export default function Providers(){
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="providers-list">
+                    <tbody className="list">
                         {
                             providers.map((provider) => (
                                 <tr key={provider._id}>
-                                    <td>{provider._id}</td>
-                                    <td>{provider.first_name}</td>
-                                    <td>{provider.last_name}</td>
+                                    <td className="id-col">{formatId(provider._id)}</td>
+                                    <td>{provider.first_name} {provider.last_name}</td>
+                                    {/* <td></td> */}
                                     <td>{provider.user_id.email}</td>
                                     <td>{provider.phone_number}</td>
                                     <td>{provider.user_id.status}</td>
                                     {provider.user_id.blockReason === null ? (
                                     <td>N/A</td>
                                         ) : (
-                                        <td>{provider.user_id.blockReason}</td>
+                                        <td className="block-reason-col">{provider.user_id.blockReason}</td>
                                     )}
-                                    <td>
+                                    <td className="actions-col">
                                         <Link to={`/admin/management-providers/update-provider/${provider._id}`}><button>Update</button></Link>
                                         {/* Conditional button rendering if the user is blocked */}
                                         {provider.user_id.status === "active" ? (

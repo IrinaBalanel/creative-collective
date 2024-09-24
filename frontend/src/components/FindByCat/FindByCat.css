@@ -1,0 +1,37 @@
+#categories{
+    margin: 50px 100px;
+}
+
+.categories{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-flow: row wrap;
+
+}
+
+.category h3{
+    text-align: center;
+}
+
+img{
+    width: 100%;
+    border-radius: 10px;
+    transition: border 0.15s;
+}
+
+#categories img:hover{
+    border: 2px solid #646cff;
+    /* transform: scale(1.04); */
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.img-container{
+    max-width: 240px;
+
+}
+
+#categories a{
+    color:black;
+    text-decoration: none;
+}

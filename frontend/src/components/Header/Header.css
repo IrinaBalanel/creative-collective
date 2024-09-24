@@ -1,0 +1,59 @@
+#header{
+    background-color: #16182A;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    padding: 30px 100px;
+    align-items: center;
+    gap: 60px;
+}
+.nav{
+    display: flex;
+    gap: 60px;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+}
+
+.nav-list{
+    display: flex;
+    gap: 25px;
+    list-style: none;
+    padding: 0;
+    
+}
+
+.nav-list a{
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1em;
+}
+
+.logo{
+    margin: 0;
+}
+
+.btn-light{
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #16182A;
+    color: rgb(241, 241, 241);
+    cursor: pointer;
+    transition: border-color 0.25s;
+    border-color: #646cff;
+}
+
+
+.btn-light:hover {
+    background-color: #646cff;
+    color: rgb(251, 251, 251);
+}
+  
+.btn-light:focus,
+.btn-light:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}

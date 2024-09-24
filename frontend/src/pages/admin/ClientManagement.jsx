@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom"
-import SideNav from "../../components/SideNav";
+import SideNav from "../../components/SideNav/SideNav";
 
 
 export default function Clients(){
@@ -44,6 +44,10 @@ export default function Clients(){
         }
     };
 
+    const formatId = (id) => {
+        return id.length > 5 ? `${id.substring(0, 5)}...` : id;
+    };
+
     if (error) {
         return <div>{error}</div>;
     }
@@ -51,54 +55,58 @@ export default function Clients(){
     return (
         <div>
             <SideNav/>
-            <h1>Client Management</h1>
-            <Link to="/admin/management-clients/new-user"><button>Create new</button></Link>
-            <table id="clients-table">
-                <thead>
-                    <tr>
-                        <th>Client ID</th>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Status</th>
-                        <th>Block Reason</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="client-list">
-                    {
-                        clients.map((client) => (
-                            <tr key={client._id}>
-                                <td>{client._id}</td>
-                                <td>{client.first_name}</td>
-                                <td>{client.last_name}</td>
-                                <td>{client.user_id.email}</td>
-                                <td>{client.phone_number}</td>
-                                <td>{client.user_id.status}</td>
-                                {client.user_id.blockReason === null ? (
-                                   <td>N/A</td>
-                                    ) : (
-                                    <td>{client.user_id.blockReason}</td>
-                                )}
-                                <td>
-                                    <Link to={`/admin/management-clients/update-client/${client._id}`}><button>Update</button></Link>
-                                    {/* <Link to={`/admin/management-clients/block-user/${client.user_id._id}`}><button>Block</button></Link> */}
-                                    {/* Conditional button rendering if the user is blocked */}
-                                    {client.user_id.status === "active" ? (
-                                        <Link to={`/admin/management-clients/block-user/${client.user_id._id}`}>
-                                            <button>Block</button>
-                                        </Link>
-                                    ) : (
-                                        <button onClick={() => handleUnblock(client.user_id._id)}>Unblock</button>
+            <main className="main">
+                <div className="inline">
+                    <h1>Client Management</h1>
+                    <Link to="/admin/management-clients/new-user" className="side-button"><button>Create new</button></Link>
+                </div>
+                <table className="table">
+                    <thead className="head">
+                        <tr>
+                            <th>Client ID</th>
+                            <th>Name</th>
+                            {/* <th>Last name</th> */}
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Status</th>
+                            <th>Block Reason</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody className="list">
+                        {
+                            clients.map((client) => (
+                                <tr key={client._id}>
+                                    <td className="id-col">{formatId(client._id)}</td>
+                                    <td>{client.first_name} {client.last_name}</td>
+                                    {/* <td></td> */}
+                                    <td>{client.user_id.email}</td>
+                                    <td>{client.phone_number}</td>
+                                    <td>{client.user_id.status}</td>
+                                    {client.user_id.blockReason === null ? (
+                                    <td>N/A</td>
+                                        ) : (
+                                        <td className="block-reason-col">{client.user_id.blockReason}</td>
                                     )}
-                                    <Link to={`/admin/management-clients/delete-user/${client.user_id._id}`}><button>Delete</button></Link>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+                                    <td className="actions-col">
+                                        <Link to={`/admin/management-clients/update-client/${client._id}`}><button>Update</button></Link>
+                                        {/* <Link to={`/admin/management-clients/block-user/${client.user_id._id}`}><button>Block</button></Link> */}
+                                        {/* Conditional button rendering if the user is blocked */}
+                                        {client.user_id.status === "active" ? (
+                                            <Link to={`/admin/management-clients/block-user/${client.user_id._id}`}>
+                                                <button>Block</button>
+                                            </Link>
+                                        ) : (
+                                            <button onClick={() => handleUnblock(client.user_id._id)}>Unblock</button>
+                                        )}
+                                        <Link to={`/admin/management-clients/delete-user/${client.user_id._id}`}><button>Delete</button></Link>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </main>
         </div>
         
         
