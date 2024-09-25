@@ -35,54 +35,11 @@
     margin-top: 250px;
 }
 
-/* Style the main content */
-.main {
-    margin-top: 150px;
-    margin-left: 300px; /* Same as the width of the sidenav */
-    padding: 0px 20px;
-}
-
-.inline{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-.table{
-    /* border: 2px solid black; */
-    margin: 10px 0px;
-    max-width: 1100px;
-}
-.head{
-    background-color: #dbdfff;
-}
-.head th{
-    min-width: 100px;
-    height: 50px;
-    padding: 5px 10px;
-}
-.list td{
-    background-color: #f4f5ff;
-    padding: 5px 10px;
-}
-
-/* .block-reason-col{
-    max-width: ;
-} */
-
-.actions-col{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-#logo a{
+#side-nav .logo{
     padding: 5px;
     align-self: center;
     margin-bottom: 130px;
 }
 
-.bi{
-    padding-right: 15px;
-}
+
+

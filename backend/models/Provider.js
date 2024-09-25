@@ -16,7 +16,7 @@ const ProviderSchema = new mongoose.Schema({
         default: null
     },
 	creative_category_details: { type: String, default: null },
-	address: { type: String, default: null },
+	location: { type: String, default: null },
 	portfolio: { type: [String], default: [] },
 	isSearchable: { 
         type: Boolean, 

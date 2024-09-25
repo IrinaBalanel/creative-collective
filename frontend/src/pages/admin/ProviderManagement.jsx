@@ -3,6 +3,7 @@ import axios from "axios";
 import {Link} from "react-router-dom"
 import SideNav from "../../components/SideNav/SideNav";
 import ProfileButton from "../../components/ProfileButton";
+import "./UserManagement.css"
 
 export default function Providers(){
     const [providers, setProviders] = useState([]);

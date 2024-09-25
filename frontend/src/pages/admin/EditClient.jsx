@@ -123,24 +123,25 @@ export default function EditClient(){
     return(
         <div>
             <SideNav/>
-            <h1>Update Client</h1>
-            {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
-            {errorMessages.length > 0 && (
-                <ul style={{ color: "red" }}>
-                    {errorMessages.map((msg, index) => (
-                        <li key={index}>{msg}</li>
-                    ))}
-                </ul>
-            )}
+            <main className="main">
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input type="text" id="fName" placeholder="First Name" name="first_name" value={user.first_name} onChange={handleChange} required/>
-                    <input type="text" id="lName" placeholder="Last Name"  name="last_name" value={user.last_name} onChange={handleChange} required/>
-                </div>
-                <div>
-                    <input type="email" id="email" placeholder="Email" name="email" value={user.user_id.email} onChange={handleChange} required/>
-                    <div id="phone-input">
+                <h1>Update Client</h1>
+                {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
+                {errorMessages.length > 0 && (
+                    <ul style={{ color: "red" }}>
+                        {errorMessages.map((msg, index) => (
+                            <li key={index}>{msg}</li>
+                        ))}
+                    </ul>
+                )}
+
+                <form onSubmit={handleSubmit} className="form user">
+                    <div className="input">
+                        <input type="text" id="fName" placeholder="First Name" name="first_name" value={user.first_name} onChange={handleChange} required/>
+                        <input type="text" id="lName" placeholder="Last Name"  name="last_name" value={user.last_name} onChange={handleChange} required/>
+                    </div>
+                    <div className="input">
+                        <input type="email" id="email" placeholder="Email" name="email" value={user.user_id.email} onChange={handleChange} required/>
                         <PhoneInput
                             id="phone"
                             placeholder="999-999-9999"
@@ -148,9 +149,10 @@ export default function EditClient(){
                             defaultCountry="CA"
                         />
                     </div>
-                </div>
-                <button type="submit">Update</button>
-            </form>
+                    <button type="submit">Update</button>
+                </form>
+                            
+            </main>
         </div>
     )
 

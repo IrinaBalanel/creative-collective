@@ -1,5 +1,6 @@
 import './App.css'
 // import { PopupButton } from "react-calendly";
+// Admin pages
 import AdminLogin from "./pages/admin/AdminLogin"
 import AdminDashboard from "./pages/admin/AdminDashboard"
 import ClientManagement from "./pages/admin/ClientManagement"
@@ -9,12 +10,22 @@ import EditProvider from "./pages/admin/EditProvider"
 import ConfirmBlockUser from "./pages/admin/ConfirmBlockUser"
 import ConfirmDeleteUser from "./pages/admin/ConfirmDeleteUser"
 import ProviderManagement from "./pages/admin/ProviderManagement"
-import GuestHome from "./pages/guest/GuestHome"
-import Login from "./pages/guest/Login"
-import Register from "./pages/guest/Register"
+
+// Public pages
+import NotFoundPage from "./pages/public/NotFoundPage"
+import GuestHome from "./pages/public/GuestHome"
+import Login from "./pages/public/Login"
+import Register from "./pages/public/Register"
+import Professionals from "./pages/public/Professionals"
+// import ProfessionalsByCat from "./pages/public/ProfessionalsByCat"
+
+// Client pages
 import LoggedInHome from "./pages/client/LoggedInHome"
+
+// Provider pages
 import ProviderDashboard from "./pages/provider/ProviderDashboard"
-import NotFoundPage from "./pages/guest/NotFoundPage"
+
+
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 // import { AdminUser } from './context/AdminContext'
@@ -51,8 +62,17 @@ function App() {
               <Route path="/" element={<GuestHome />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              {/* Fetches all professionals */}
+              <Route path="/professionals" element={<Professionals title="All Professionals" />} />
+              {/* Fetches professionals by category */}
+              <Route path="/professionals/:category" element={<Professionals />} />
               
               <Route path="/home" element={<LoggedInHome />} />
+
+
+
+
+
 
               <Route path="/dashboard" element={<ProviderDashboard />} />
 

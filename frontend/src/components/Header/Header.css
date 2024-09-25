@@ -1,17 +1,16 @@
 #header{
     background-color: #16182A;
-    display: flex;
-    justify-content: space-between;
-    flex-flow: row wrap;
-    padding: 30px 100px;
-    align-items: center;
-    gap: 60px;
+    overflow: hidden;
 }
 .nav{
     display: flex;
     gap: 60px;
     flex-flow: row wrap;
-    justify-content: flex-end;
+    justify-content: space-between;
+    padding: 20px 100px;
+    align-items: center;
+    gap: 60px;
+
 }
 
 .nav-list{
@@ -56,4 +55,61 @@
 .btn-light:focus,
 .btn-light:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
+}
+
+
+/* DROPDOWN */
+
+.nav a {
+    float: left;
+    padding: 10px 12px;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+  
+.dropdown .btn-dropdown {
+    /* border: none;
+    outline: none; */
+    color: white;
+    /* padding: 14px 16px; */
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+.dropdown:hover .btn-dropdown {
+    color: #646cff;;
+}
+.dropdown .bi{
+    padding: 0;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 80px;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 9px 30px;
+    display: block;
+    text-align: left;
+    font-size: 0.95em; 
+}
+  
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

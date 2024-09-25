@@ -24,7 +24,7 @@ a:hover {
 
 body {
   margin: 0;
-  background-color: #e7e7e7;
+  background-color: #fafafa;
   /* display: flex; */
   /* place-items: center;
   min-width: 320px;
@@ -62,3 +62,13 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Style the main content */
+.main {
+  margin-top: 150px;
+  margin-left: 300px; /* Same as the width of the sidenav */
+  padding: 0px 20px;
+}
+
+.bi{
+  padding-right: 15px;
+}

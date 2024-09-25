@@ -52,17 +52,23 @@ export default function ConfirmBlockUser(){
     };
     
     return (
-        <div>
-            <h1>Are you sure you want to block {user.email}?</h1>
-            <p>Please provide the reason:</p>
-            <textarea
-                value={blockReason}
-                onChange={(e) => setBlockReason(e.target.value)}
-                placeholder="Enter the reason for blocking this user"
-            />
-            <button onClick={handleBlock}>Confirm block</button>
-            <p style={{ color: "red" }}>{message}</p>
+        <>
+            <SideNav/>
+            <main className="main">
+                <h1>Are you sure you want to block {user.email}?</h1>
+                <div className="block-reason-area">
+                    <p>Please provide the reason of blocking:</p>
+                    <textarea className="txt-block-reason"
+                        value={blockReason}
+                        onChange={(e) => setBlockReason(e.target.value)}
+                        placeholder="Enter the reason of blocking this user..."
+                    />
+                </div>
+                <button onClick={handleBlock}>Confirm block</button>
+                <p style={{ color: "red" }}>{message}</p>
+            </main>
+            
 
-        </div>
+        </>
     )
 }

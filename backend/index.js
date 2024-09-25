@@ -37,15 +37,16 @@ connect();
 // Import Routes
 const adminRoutes = require("./modules/admin/adminRoutes");
 const authRoutes = require("./modules/auth/authRoutes");
-const clientRoutes = require("./modules/client/clientRoutes");
+// const clientRoutes = require("./modules/client/clientRoutes");
+const publicRoutes = require("./modules/public/publicRoutes");
 // const providerRoutes = require("./modules/provider/providerRoutes");
 
 // Routes to define the beginning of the path
 app.use("/admin", adminRoutes);
 app.use("/auth", authRoutes);
-app.use("/client", clientRoutes);
+// app.use("/client", clientRoutes);
 // app.use("/provider", authJWT, authorize(['provider']), providerRoutes);
-// app.use("/", publicRoutes);
+app.use("/", publicRoutes);
 
 
 // Start server only after DB connection

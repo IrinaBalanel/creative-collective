@@ -1,0 +1,99 @@
+#register{
+    text-align: center;
+    margin: 80px auto;
+    background-color: #dfe3ff;
+    background-color: #d9e8ff;
+    border-radius: 10px;
+    padding: 50px 160px;
+    width: 400px;
+}
+
+#register input[type="text"], input[type="password"], input[type="email"]{
+    min-width: 180px;
+    max-width: 300px;
+    padding: 15px 20px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+#register .PhoneInputInput{
+    padding: 15px 20px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+}
+
+.form{
+    padding: 40px 0 0;
+}
+
+input::placeholder{
+    font-size: 1.1em;
+    color:#777989;
+}
+.input{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+#register .btn-radio{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 40px 0 10px 0;
+    gap: 10px;
+}
+
+#register button{
+    margin: 30px 0;
+}
+
+
+
+/* CREATE AND UPDATE USERS FORMS*/
+.user input[type="text"], input[type="password"], input[type="email"]{
+    min-width: 180px;
+    max-width: 300px;
+    padding: 15px 20px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.user button{
+    margin: 30px 0;
+}
+
+.user .btn-radio{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 0 20px;
+    gap: 10px;
+}
+
+.user .PhoneInputInput{
+    padding: 15px 20px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+}
+
+/* SUPPORT PAGES*/
+.block-reason-area{
+    margin: 50px 0 20px 0;
+}
+.block-reason-area p{
+    font-weight: 600;
+}
+.txt-block-reason{
+    width: 50%;
+    height: auto;
+    min-height: 200px;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-family: Montserrat, sans-serif;
+}
+

@@ -48,10 +48,14 @@ export default function ConfirmDeleteUser(){
     };
 
     return (
-        <div>
-            <h1>Are you sure you want to delete {user.email}?</h1>
-            <button onClick={handleDelete}>Confirm delete</button>
-            <p style={{ color: "red" }}>{message}</p>
-        </div>
+        <>
+            <SideNav/>
+            <main className="main">
+                <h1>Are you sure you want to delete {user.email}?</h1>
+                <button onClick={handleDelete}>Confirm delete</button>
+                <p style={{ color: "red" }}>{message}</p>
+            </main>
+            
+        </>
     )
 }

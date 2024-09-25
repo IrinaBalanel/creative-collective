@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import "../public/Register.css" 
 
 export default function NewUser(){
     const [fName, setFName] = useState("");
@@ -80,7 +81,7 @@ export default function NewUser(){
     };
 
     return(
-        <div>
+        <>
             <SideNav/>
             <main className="main">
             <h1>Create new user</h1>
@@ -93,7 +94,7 @@ export default function NewUser(){
                     </ul>
                 )}
 
-                <form onSubmit={handleSubmit} className="form">
+                <form onSubmit={handleSubmit} className="form user">
                     <div className="input">
                         <input type="text" id="fName" placeholder="First Name" value={fName} onChange={(e) => setFName(e.target.value)} required></input>
                         <input type="text" id="lName" placeholder="Last Name" value={lName} onChange={(e) => setLName(e.target.value)} required></input>
@@ -141,7 +142,7 @@ export default function NewUser(){
                 </form>
             </main>
             
-        </div>
+        </>
     )
 
 }

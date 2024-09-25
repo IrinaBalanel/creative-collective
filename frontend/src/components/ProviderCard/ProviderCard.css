@@ -1,0 +1,38 @@
+
+.prof-list{
+    
+    display: flex;
+    flex-flow: row wrap;
+    gap:50px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.prof-card {
+    /* border: 2px solid black; */
+    width: 400px;
+}
+
+#special-height{
+    min-height: 48px;
+}
+
+.prof-card-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+
+.prof-card img{
+    width: 400px;
+    height: 250px;
+    object-fit: cover;
+    
+}
+
+
+.prof-card img{
+    border-radius: 10px;
+}
