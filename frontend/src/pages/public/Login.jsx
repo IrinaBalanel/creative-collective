@@ -57,7 +57,7 @@ export default function Login(){
 
     return(
         <div id="login">
-            <LogoBlack/>
+            <Link to="/"><LogoBlack/></Link>
             <h1>Login</h1>
             {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
             {errorMessages.length > 0 && (
@@ -77,10 +77,11 @@ export default function Login(){
                 <button type="submit">Login</button>
             </form>
             <div>
-                <Link to="/password-recovery">Forgot your password?</Link>
+                {/* <Link to="/password-recovery">Forgot your password?</Link> */}
                 <h2>Don't have an account yet?</h2>
                 <Link to="/register">Create new account</Link>
             </div>
+            
         </div>
     )
 

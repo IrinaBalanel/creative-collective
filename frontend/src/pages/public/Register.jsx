@@ -1,6 +1,6 @@
 import {useState} from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import LogoBlack from "../../components/LogoBlack";
@@ -87,7 +87,7 @@ export default function Register(){
 
     return(
         <div id="register">
-            <LogoBlack/>
+            <Link to="/"><LogoBlack/></Link>
             <h1>Register new account</h1>
             {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
             {errorMessages.length > 0 && (
@@ -99,6 +99,28 @@ export default function Register(){
             )}
 
             <form onSubmit={handleSubmit} className="form">
+            <div className="btn-radio">
+                    <label>
+                        <input 
+                            type="radio" 
+                            id="client"
+                            value="client"
+                            checked={role === "client"}  // Radio button is checked if the role is "client" 
+                            onChange={(e) => setRole(e.target.value)}
+                        />
+                        I am a Client
+                    </label>
+                    <label>
+                        <input 
+                            type="radio" 
+                            id="provider" 
+                            value="provider"
+                            checked={role === "provider"}
+                            onChange={(e) => setRole(e.target.value)}
+                        />
+                        I am a Provider
+                    </label>
+                </div>
                 <div className="input">
                     <input type="text" id="fName" placeholder="First Name" value={fName} onChange={(e) => setFName(e.target.value)} required></input>
                     <input type="text" id="lName" placeholder="Last Name" value={lName} onChange={(e) => setLName(e.target.value)} required></input>
@@ -121,28 +143,6 @@ export default function Register(){
                 <div className="input">
                     <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
                     <input type="password" id="password-confirm" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required></input>
-                </div>
-                <div className="btn-radio">
-                    <label>
-                        <input 
-                            type="radio" 
-                            id="client"
-                            value="client"
-                            checked={role === "client"}  // Radio button is checked if the role is "client" 
-                            onChange={(e) => setRole(e.target.value)}
-                        />
-                        Client
-                    </label>
-                    <label>
-                        <input 
-                            type="radio" 
-                            id="provider" 
-                            value="provider"
-                            checked={role === "provider"}
-                            onChange={(e) => setRole(e.target.value)}
-                        />
-                        Provider
-                    </label>
                 </div>
                 <button type="submit">Register</button>
             </form>

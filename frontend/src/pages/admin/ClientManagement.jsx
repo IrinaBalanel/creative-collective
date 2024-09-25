@@ -16,9 +16,20 @@ export default function Clients(){
             try {
                 const response = await axios.get('http://localhost:8000/admin/management-clients',  { withCredentials: true });
                 const data = response.data;
-                console.log(data);
+                // console.log("success 001");
+                // console.log(data);
+                // console.log(data.message);
+                // console.log(data.status);
+
+                //add this to every page that calls api
+                // if(data.status && data.status == "unauthorized")
+                // {
+                //     // Rediredct to login page
+                //     console.log("REDIRECT");
+                // }
                 setClients(data);
             } catch (error) {
+                console.log('error 001');
                 console.log(error);
                 setError("Error");
             }

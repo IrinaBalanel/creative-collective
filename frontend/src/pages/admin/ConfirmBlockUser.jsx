@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 
 
@@ -64,7 +64,14 @@ export default function ConfirmBlockUser(){
                         placeholder="Enter the reason of blocking this user..."
                     />
                 </div>
-                <button onClick={handleBlock}>Confirm block</button>
+                <div className="btns block">
+                    {user.role == "provider" ? (
+                        <Link to="/admin/management-providers">Cancel</Link>
+                    ) : user.role == "client" ? (
+                        <Link to="/admin/management-clients">Cancel</Link>
+                    ) : <Link to="/admin/dashboard">Cancel</Link>}
+                    <button onClick={handleBlock}>Confirm block</button>
+                </div>
                 <p style={{ color: "red" }}>{message}</p>
             </main>
             

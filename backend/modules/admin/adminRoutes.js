@@ -12,6 +12,7 @@ router.get("/dashboard", async (req, res) => {
 /////////////////////////USER MANAGEMENT/////////////////////////
 ///////////CLIENT//////////////
 router.get("/management-clients", async (req, res) => {
+
     try {
         // Fetch users using the controller
         const users = await adminController.getClientsByStatus(["active", "blocked"]);

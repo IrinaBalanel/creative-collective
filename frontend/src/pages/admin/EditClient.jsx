@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
@@ -149,7 +149,11 @@ export default function EditClient(){
                             defaultCountry="CA"
                         />
                     </div>
-                    <button type="submit">Update</button>
+                    <div className="btns">
+                        <Link to="/admin/management-clients">Cancel</Link>
+                        <button type="submit">Update</button>
+                    </div>
+                    
                 </form>
                             
             </main>

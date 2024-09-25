@@ -24,7 +24,7 @@
 }
 
 .form{
-    padding: 40px 0 0;
+    padding: 30px 0 0;
 }
 
 input::placeholder{
@@ -41,7 +41,7 @@ input::placeholder{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin: 40px 0 10px 0;
+    margin-bottom: 40px;
     gap: 10px;
 }
 
@@ -67,10 +67,10 @@ input::placeholder{
 
 .user .btn-radio{
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: flex-start;
     padding: 40px 0 20px;
-    gap: 10px;
+    gap: 50px;
 }
 
 .user .PhoneInputInput{
@@ -78,7 +78,18 @@ input::placeholder{
     border: 1px solid #16182A;
     border-radius: 5px;
 }
+.btns{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 20px;
+    width: 475px;
+}
 
+.block{
+    width: 50%;
+    justify-content: space-between;
+}
 /* SUPPORT PAGES*/
 .block-reason-area{
     margin: 50px 0 20px 0;
@@ -89,7 +100,7 @@ input::placeholder{
 .txt-block-reason{
     width: 50%;
     height: auto;
-    min-height: 200px;
+    min-height: 150px;
     padding: 20px;
     margin-top: 20px;
     border-radius: 5px;

@@ -1,6 +1,6 @@
 import {useState} from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
@@ -95,27 +95,6 @@ export default function NewUser(){
                 )}
 
                 <form onSubmit={handleSubmit} className="form user">
-                    <div className="input">
-                        <input type="text" id="fName" placeholder="First Name" value={fName} onChange={(e) => setFName(e.target.value)} required></input>
-                        <input type="text" id="lName" placeholder="Last Name" value={lName} onChange={(e) => setLName(e.target.value)} required></input>
-                    </div>
-                    <div className="input">
-                        <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
-                        <PhoneInput
-                            id="phone"
-                            placeholder="999-999-9999"
-                            value={phone}
-                            onChange={(value) => {
-                                setPhone(value);
-                                // handleInputChange();
-                            }}
-                            defaultCountry="CA"
-                        />
-                    </div>
-                    <div className="input">
-                        <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
-                        <input type="password" id="password-confirm" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required></input>
-                    </div>
                     <div className="btn-radio">
                         <label>
                             <input 
@@ -138,8 +117,34 @@ export default function NewUser(){
                             Provider
                         </label>
                     </div>
-                    <button type="submit">Create new user</button>
+                    <div className="input">
+                        <input type="text" id="fName" placeholder="First Name" value={fName} onChange={(e) => setFName(e.target.value)} required></input>
+                        <input type="text" id="lName" placeholder="Last Name" value={lName} onChange={(e) => setLName(e.target.value)} required></input>
+                    </div>
+                    <div className="input">
+                        <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
+                        <PhoneInput
+                            id="phone"
+                            placeholder="999-999-9999"
+                            value={phone}
+                            onChange={(value) => {
+                                setPhone(value);
+                                // handleInputChange();
+                            }}
+                            defaultCountry="CA"
+                        />
+                    </div>
+                    <div className="input">
+                        <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
+                        <input type="password" id="password-confirm" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required></input>
+                    </div>
+                    <div className="btns">
+                        <Link to="/admin/management-clients">Cancel</Link>
+                        <button type="submit">Create new user</button>
+                    </div>
+                    
                 </form>
+                
             </main>
             
         </>

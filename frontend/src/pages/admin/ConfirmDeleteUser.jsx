@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 export default function ConfirmDeleteUser(){
 
@@ -52,7 +52,15 @@ export default function ConfirmDeleteUser(){
             <SideNav/>
             <main className="main">
                 <h1>Are you sure you want to delete {user.email}?</h1>
-                <button onClick={handleDelete}>Confirm delete</button>
+                <div className="btns block">
+                    {user.role == "provider" ? (
+                        <Link to="/admin/management-providers">Cancel</Link>
+                    ) : user.role == "client" ? (
+                        <Link to="/admin/management-clients">Cancel</Link>
+                    ) : <Link to="/admin/dashboard">Cancel</Link>}
+                    <button onClick={handleDelete}>Confirm delete</button>
+                </div>
+                
                 <p style={{ color: "red" }}>{message}</p>
             </main>
             

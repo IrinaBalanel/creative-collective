@@ -45,9 +45,9 @@ const publicRoutes = require("./modules/public/publicRoutes");
 app.use("/admin", adminRoutes);
 app.use("/auth", authRoutes);
 // app.use("/client", clientRoutes);
-// app.use("/provider", authJWT, authorize(['provider']), providerRoutes);
+// app.use("/provider", providerRoutes);
 app.use("/", publicRoutes);
-
+//authJWT, authorize(['admin']),
 
 // Start server only after DB connection
 app.listen(port, () => {
