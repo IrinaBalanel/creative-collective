@@ -2,6 +2,7 @@ const Client = require("../../models/Client");
 const User = require("../../models/User");
 const Provider = require("../../models/Provider");
 const ProviderCategory = require("../../models/ProviderCategory");
+const Service = require("../../models/Service");
 
 async function getCategories() {
     try {
@@ -67,7 +68,9 @@ async function getProfessionalByCatAndId(category, id) {
             match: { status: 'active' }, // returns users with status 'active'
             select: 'status email'
         })
+        .populate("services")
         .exec();
+        
         // Filters providers without a valid category or an active user
         if (!professional || professional.creative_category_id === null || professional.user_id === null) {
             return null; // Return null if no valid category or active user

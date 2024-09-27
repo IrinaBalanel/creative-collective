@@ -6,6 +6,7 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom"
 import ProviderPortfolio from "../../components/ProviderPortfolio/ProviderPortfolio";
+import ProviderServices from "../../components/ProviderServices/ProviderServices";
 
 
 export default function ProviderDetails(){
@@ -47,12 +48,19 @@ export default function ProviderDetails(){
                             location={providerData.location}
                             bio={providerData.bio}
                             verified={providerData.verified}
-                            //image={providerData.portfolio[0]} 
+                            profileImage={providerData.profile_image} 
+                            //add conditional rendering for profile picture and other fields
                         />
                 
                         {providerData.portfolio && providerData.portfolio.length > 0 && (
                             <ProviderPortfolio
                                 images={providerData.portfolio}
+                            />
+                        )}
+
+                        {providerData.services && providerData.services.length > 0 && (
+                            <ProviderServices
+                                services={providerData.services}
                             />
                         )}
                     </>    

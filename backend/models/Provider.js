@@ -9,6 +9,7 @@ const ProviderSchema = new mongoose.Schema({
 	first_name: { type: String, required: true },
 	last_name: { type: String, required: true },
 	phone_number: { type: String, required: true },
+	profile_image: { type: String, default: null }, 
 	bio: { type: String, default: null }, 
 	creative_category_id: { 
         type: mongoose.Schema.Types.ObjectId, 
@@ -18,13 +19,19 @@ const ProviderSchema = new mongoose.Schema({
 	creative_category_details: { type: String, default: null },
 	location: { type: String, default: null },
 	portfolio: { type: [String], default: [] },
-	// isSearchable: { 
-    //     type: Boolean, 
-    //     default: false
-    // },
 	verified: { type: Boolean, default: false }
 });
-  
+//virtual population should be used before the Provider model is compiled with mongoose.model().
+ProviderSchema.virtual('services', {
+    ref: 'Service',
+    localField: '_id',
+    foreignField: 'provider_id',
+});
+
+// enables virtual fields when converting to JSON
+ProviderSchema.set('toObject', { virtuals: true });
+ProviderSchema.set('toJSON', { virtuals: true });
+
 const Provider = mongoose.model('Provider', ProviderSchema, "providers");
 
 module.exports = Provider;
