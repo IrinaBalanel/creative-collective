@@ -17,7 +17,8 @@ import GuestHome from "./pages/public/GuestHome"
 import Login from "./pages/public/Login"
 import Register from "./pages/public/Register"
 import Professionals from "./pages/public/Professionals"
-// import ProfessionalsByCat from "./pages/public/ProfessionalsByCat"
+import ProviderDetails from "./pages/public/ProviderDetails"
+
 
 // Client pages
 import LoggedInHome from "./pages/client/LoggedInHome"
@@ -68,6 +69,7 @@ function App() {
               <Route path="/professionals" element={<Professionals title="All Professionals" />} />
               {/* Fetches professionals by category */}
               <Route path="/professionals/:category" element={<Professionals />} />
+              <Route path="/professionals/:category/:id" element={<ProviderDetails />} />
               
               <Route path="/home" element={<LoggedInHome />} />
 

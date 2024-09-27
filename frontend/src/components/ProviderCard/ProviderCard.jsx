@@ -1,6 +1,4 @@
 import {Link} from "react-router-dom"
-import {useState, useEffect} from "react";
-import axios from "axios";
 import "./ProviderCard.css"
 
 export default function ProviderCard({ professional }){
@@ -21,7 +19,7 @@ export default function ProviderCard({ professional }){
                             </svg>
                             {professional.location}
                         </p>
-                        <Link to="#">Check services</Link>
+                        <Link to={`/professionals/${professional.creative_category_id.category}/${professional._id}`}>Check services</Link>
                     </div>
                     
                 </div>
