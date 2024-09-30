@@ -47,16 +47,18 @@ export default function ProviderDetails(){
                             specialization={providerData.creative_category_details}
                             location={providerData.location}
                             bio={providerData.bio}
+                            phone={providerData.phone_number} 
+                            email={providerData.user_id.email} 
                             verified={providerData.verified}
                             profileImage={providerData.profile_image} 
-                            //add conditional rendering for profile picture and other fields
+                            //add conditional rendering for and other fields
                         />
-                
+  
                         {providerData.portfolio && providerData.portfolio.length > 0 && (
                             <ProviderPortfolio
                                 images={providerData.portfolio}
                             />
-                        )}
+                        ) }
 
                         {providerData.services && providerData.services.length > 0 && (
                             <ProviderServices

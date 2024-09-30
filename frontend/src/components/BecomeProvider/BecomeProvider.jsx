@@ -3,7 +3,7 @@ import "./BecomeProvider.css"
 export default function BecomeProvider(){
     return(
         <div id="become-provider">
-            <h2>Are You a Creative Professional?</h2>
+            <h2>Are you a creative professional?</h2>
             <p>Share your expertise and boost your brand on Creative Collective!</p>
             <div className="become-provider-instructions">
                 <div className="demo-provider">

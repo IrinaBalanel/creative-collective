@@ -1,5 +1,5 @@
 #become-provider{
-    margin: 150px 100px;
+    margin: 150px 0px;
 }
 
 #become-provider .img-container {
@@ -15,7 +15,6 @@
     display: flex;
     justify-content: space-evenly;
     gap: 20px;
-    /* align-items: center; */
     margin: 50px 0;
     padding: 50px 0;
     position: relative;
@@ -24,13 +23,10 @@
 #messenger{
     width: 25%;
     position: absolute;
-    /* top: 25px;
-    left: -20px; */
     top: 0px;
     left: 0px;
 
 }
-
 
 #messenger img{
     border-radius: 0;
@@ -39,7 +35,6 @@
 .demo-provider p{
     max-width: 300px;
 }
-
 
 .step{
     display: flex;
@@ -58,8 +53,6 @@
     color:white;
     padding: 30px;
     border-radius: 10px;
-    /* background-color: #646cff; */
-    /* border: 1px solid #646cff; */
 }
 
 

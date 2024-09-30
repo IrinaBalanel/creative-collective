@@ -1,0 +1,101 @@
+.services{
+    margin: 100px 0;
+}
+
+
+.service-cards{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 10px;
+    justify-content: space-between;
+    margin: 50px 0;
+}
+
+.service-container {
+    position: relative;
+    width: 400px;
+}
+  
+.service-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px 10px 0 0;
+}
+  
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #16182ace;
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: .8s ease;
+    border-radius: 10px 10px 0 0;
+}
+  
+.service-container:hover .overlay {
+    height: 100%;
+}
+  
+.service-text {
+    color: white;
+    font-size: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.service-text p{
+    width: 350px;
+}
+
+.service-dur{
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.service-card-head{
+    display: flex;
+    align-items: center;
+    gap:10px;
+    justify-content: space-between;
+
+}
+.service-price{
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.service-name{
+    margin: 0;
+    font-size: 1.2em;
+
+}
+
+.service-card{
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px -6px 18.1px 0px rgba(0, 0, 0, 0.16);
+}
+
+.service-card-info{
+    padding: 30px 30px;
+}
+
+.service-loc{
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    padding: 15px 0;
+}
+
+.service-loc .bi{
+    padding-right: 8px;
+}

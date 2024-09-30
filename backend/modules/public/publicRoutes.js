@@ -54,12 +54,17 @@ router.get("/professionals/:category", async (req, res) => {
 
 router.get("/professionals/:category/:id", async (req, res) => {
     try {
-        // Fetch users using the controller
         const { category, id } = req.params;
+        
         const professional = await publicController.getProfessionalByCatAndId(category, id);
         console.log(professional);
-        if(!professional || professional === null){
-            res.json({ message: "No professional found"});
+        
+        if(!professional){
+            return res.json({ message: "No professional found"});
+        }
+
+        if (!category) {
+            return res.json({ message: "Category is required" });
         }
         res.json(professional);
 

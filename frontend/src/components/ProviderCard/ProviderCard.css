@@ -1,38 +1,136 @@
 
 .prof-list{
-    
     display: flex;
     flex-flow: row wrap;
-    gap:50px;
+    gap: 50px;
     justify-content: flex-start;
     align-items: center;
+    margin: 50px 0;
 }
 
 .prof-card {
-    /* border: 2px solid black; */
     width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px -6px 18.1px 0px rgba(0, 0, 0, 0.16);
+    position: relative;
 }
 
 #special-height{
     min-height: 48px;
+    margin-bottom: 0;
 }
 
 .prof-card-bottom{
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
     gap: 20px;
 }
-
 
 .prof-card img{
     width: 400px;
     height: 250px;
     object-fit: cover;
+    border-radius: 10px 10px 0 0;
     
 }
 
+.prof-card h2{
+    text-transform: capitalize;
+    margin: 0;
+}
 
-.prof-card img{
-    border-radius: 10px;
+.info-container{
+    padding: 30px 30px;
+}
+
+.prof-card .btn-container{
+    width: auto;
+}
+
+.fav{
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    color: white;
+    /* background-color:black;
+    border-radius: 100%;
+    padding: 10px; */
+}
+
+.bi-heart:hover{
+    color: rgb(192, 30, 30);
+}
+
+.location{
+    font-weight: 600;
+}
+
+.prof-card .img-container{
+    position: relative;
+}
+
+.badge-provider-card{
+    padding: 6px 16px 6px 16px;
+    position: absolute;
+    top: 40%;
+    left: -2%;
+    font-size: 0.9em;
+    font-weight: 600;
+    background-color: #f1f1f12b;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.bi-patch-check-fill{
+    color: #49C835; 
+}
+
+.profile .bi{
+    padding-right: 8px;
+}
+.badge-provider-card span{
+    display: flex;
+    /* align-items: center; */
+    position: relative;
+}
+
+
+/* Tooltip container */
+/* .badge span {
+    
+} */
+
+/* Tooltip text */
+.badge-provider-card .tooltiptext {
+    visibility: hidden;
+    width: 253px;
+    height: auto;
+    background-color: #f1f1f1;
+    color: #000000;
+    padding: 15px;
+    border-radius: 0 5px 5px 0;
+    font-weight: 400;
+    font-size: 0.9em;
+  
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 120%;
+    left: -6%;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+  
+/* Show the tooltip text when you mouse over the tooltip container */
+.badge-provider-card:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltiptext svg{
+    width: 100px;
 }

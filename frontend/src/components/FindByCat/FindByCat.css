@@ -1,5 +1,5 @@
 #categories{
-    margin: 50px 100px;
+    margin: 50px 0px;
 }
 
 .categories{
@@ -21,9 +21,10 @@
 }
 
 #categories img:hover{
-    border: 2px solid #646cff;
-    /* transform: scale(1.04); */
+    transform: scale(1.05);
     box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2);
+    /* border: 2px solid #646cff; */
+    transition: 1s;
 }
 
 .img-container{

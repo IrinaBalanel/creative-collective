@@ -1,0 +1,147 @@
+.profile{
+    display: flex;
+    box-shadow: 0px -6px 18.1px 0px rgba(0, 0, 0, 0.16);
+    border-radius: 10px;
+    margin: 100px 0;
+
+}
+
+.profile-img-container{
+    width: 600px;
+    /* max-width: 600px;
+    min-width: 100px; */
+    height: 430px;
+}
+
+.profile-img-container img{
+    width: 600px;
+    height: 430px;
+    object-fit: cover;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.profile-info{
+    height: auto;
+    background-color: white;
+    border-radius: 0 10px 10px 0;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.profile-name{
+    font-size: 1.8em;
+    /* text-transform: uppercase; */
+}
+
+
+.profile-spec{
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.profile-bio{
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.badge{
+    padding: 6px 16px 6px 16px;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    font-size: 0.9em;
+    font-weight: 600;
+    background-color: #f1f1f1a2;
+    border-radius: 5px;
+}
+
+.bi-patch-check-fill{
+    color: #49C835; 
+}
+
+.profile .bi{
+    padding-right: 8px;
+}
+.badge span{
+    display: flex;
+    /* align-items: center; */
+}
+
+
+.profile-loc{
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    margin: 0;
+}
+
+.profile-bottom{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Tooltip container */
+.badge span {
+    position: relative;
+}
+
+/* Tooltip text */
+.badge .tooltiptext {
+    visibility: hidden;
+    width: 153px;
+    height: auto;
+    background-color: #F1F1F1;
+    color: #000000;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 0.9em;
+  
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    right: -10%;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+  
+/* Show the tooltip text when you mouse over the tooltip container */
+.badge:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.socials svg{
+    color:#16182A;
+}
+.socials svg:hover{
+    color:#646cff;
+}
+
+.contact-info{
+    display: flex;
+    justify-content: flex-start;
+    gap: 90px;
+}
+
+.profile-phone, .profile-email{
+    display: flex;
+    align-items: center;
+    margin: 20px 0 40px 0;
+
+}
+
+.contact-info a{
+    text-decoration: none;
+    color:#000000;
+}

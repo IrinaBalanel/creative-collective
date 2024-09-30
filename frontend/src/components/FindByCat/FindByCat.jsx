@@ -26,7 +26,7 @@ export default function FindByCat(){
 
     return (
         <div id="categories">
-            <h2>Find the Perfect Talent by Category</h2>
+            <h2>Find the perfect talent by category</h2>
             <div className="categories">
                 {
                     categories.map((category) => (

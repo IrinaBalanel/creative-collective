@@ -21,6 +21,8 @@ async function getAllProfessionals() {
     try {
         // Fetches all users from the database
         const professionals = await Provider.find()
+        .populate('creative_category_id', 'category') // Populate creative_category_id with its category field
+        .exec();
         //console.log(professionals);
         return professionals; 
         
