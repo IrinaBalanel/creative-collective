@@ -39,12 +39,12 @@ router.post("/register", async (req, res) => {
     try {
         const result = await authController.register(firstName, lastName, email, phone, password, role);
         const token = result.token;
-        console.log("this is my token", token);
+        console.log("Token", token);
         const cookie = await res.cookie("token", token, {
             httpOnly: true, // prevents client-side from accessing the cookie
             maxAge: 24 * 60 * 60 * 1000, // cookie will expire in 1 day and be deleted from browser
         });
-        console.log("this is my cookie", cookie);
+        console.log("Token", cookie);
         res.json({ message: "Registration successful", user: result.user });
     } catch (error) {
         console.error(error.message);
@@ -88,6 +88,25 @@ router.post("/logout", async (req, res) => {
     res.clearCookie("token");
     res.json({ message: "Logged out", user});
 });
+
+router.get("/verify-token", async (req, res) => {
+    const token = req.cookies.token;
+    console.log("Token:", token); 
+    if (!token) {
+        return res.json({ message: "No token provided" });
+    }
+    try {
+        const user = await authController.verifyToken(token);
+        if (!user) {
+            return res.json({ message: "User not found" });
+        }
+        res.json({ user });
+    } catch (error) {
+        console.error("Token verification failed:", error.message);
+        res.json({ message: "Invalid token" });
+    }
+});
+
     
 
 module.exports = router;

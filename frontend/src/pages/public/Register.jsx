@@ -1,10 +1,11 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import LogoBlack from "../../components/LogoBlack";
 import "./Register.css" 
+import { UserContext } from "../../context/UserContext";
 
 export default function Register(){
     const [fName, setFName] = useState("");
@@ -16,6 +17,7 @@ export default function Register(){
     const [role, setRole] = useState("client");
     const [errorMessages, setErrorMessages] = useState([]);
     const navigate = useNavigate();
+    const { login } = useContext(UserContext); 
     
     axios.defaults.withCredentials = true; //for token auth
 
@@ -59,7 +61,7 @@ export default function Register(){
             const user = response.data.user; // the user object from the data object
             //OR { user } = response.data; // which is one object named user from the response of the data object
             console.log("Registered user: ", user);
-
+            login(user); // updates context with user data
             // redirects to different home pages depending on the role
             if (user.role === "client") {
                 navigate("/home");

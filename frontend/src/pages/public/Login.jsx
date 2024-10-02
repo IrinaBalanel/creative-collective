@@ -1,5 +1,6 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import {Link} from "react-router-dom"
+import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import "./Login.css"
@@ -10,6 +11,7 @@ export default function Login(){
     const [password, setPassword] = useState("");
     const [errorMessages, setErrorMessages] = useState([]);
     const navigate = useNavigate();
+    const { login } = useContext(UserContext); 
 
     axios.defaults.withCredentials = true; //for token auth
 
@@ -27,11 +29,11 @@ export default function Login(){
             }
             
             const user = response.data.user;
-            console.log(user);  
-            
+            console.log(user.role);  
+            login(user); // updates context with user data
             // redirects to different home pages depending on the role
             if (user.role === "client") {
-                navigate("/home");
+                navigate("/");
                 console.log("Success:", data);
             } else if (user.role === "provider") {
                 navigate("/dashboard");

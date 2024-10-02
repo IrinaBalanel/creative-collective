@@ -3,9 +3,9 @@ const router = express.Router();
 const adminController = require("./adminController");
 
 // Routes to display users on /admin page
-router.get("/dashboard", async (req, res) => {
-    res.json("protected by middleware");
-});
+// router.get("/dashboard", async (req, res) => {
+//     res.json("protected by middleware");
+// });
 
 
 

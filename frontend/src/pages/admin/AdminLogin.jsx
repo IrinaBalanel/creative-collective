@@ -1,13 +1,15 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import LogoBlack from "../../components/LogoBlack";
+import { UserContext } from "../../context/UserContext";
 
 export default function AdminLogin(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const { login } = useContext(UserContext); 
 
     axios.defaults.withCredentials = true; //for token auth
 
@@ -19,7 +21,8 @@ export default function AdminLogin(){
             const data = response.data;  // the whole data object
             const user = data.user;      // the user object from the data object
             //OR { user } = response.data; // which is one object named user from the response of the data object
-            //console.log(user)
+            console.log(user.role)
+            login(user);
             if (user.role === "admin") {
                 navigate("/admin/dashboard");
             } else {

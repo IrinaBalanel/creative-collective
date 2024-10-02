@@ -53,7 +53,7 @@ export default function EditProvider(){
                 ...prevState,
                 user_id: {
                     ...prevState.user_id,
-                    email: value  // Update the email inside user_id
+                    email: value  // updates the email inside user_id
                 }
             }));
         } else {
@@ -71,7 +71,7 @@ export default function EditProvider(){
     const handlePhoneChange = (value) => {
         setUser((prevState) => ({
             ...prevState,
-            phone_number: value  // Update phone_number field directly
+            phone_number: value  // updates phone_number field directly
         }));
     };
 

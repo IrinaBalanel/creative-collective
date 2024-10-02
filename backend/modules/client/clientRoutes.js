@@ -1,12 +1,13 @@
-// const express = require("express");
-// const router = express.Router();
-// const clientController = require("./clientController");
+const express = require("express");
+const router = express.Router();
+const clientController = require("./clientController");
 
 // // Define your admin routes here
-// router.get("/home", (req, res) => {
-//     res.send("Welcome to the client home page panel");
-// });
+router.get("/appointments", async (req, res) => {
+    const test = await clientController.test();
+    return test;
+});
 
-// module.exports = router;
+module.exports = router;
 
 

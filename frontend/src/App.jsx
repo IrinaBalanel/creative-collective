@@ -1,5 +1,5 @@
 import './App.css'
-// import { PopupButton } from "react-calendly";
+
 // Admin pages
 import AdminLogin from "./pages/admin/AdminLogin"
 import AdminDashboard from "./pages/admin/AdminDashboard"
@@ -21,15 +21,17 @@ import ProviderDetails from "./pages/public/ProviderDetails"
 
 
 // Client pages
-import LoggedInHome from "./pages/client/LoggedInHome"
+// import LoggedInHome from "./pages/client/LoggedInHome"
 
 // Provider pages
 import ProviderDashboard from "./pages/provider/ProviderDashboard"
+import ProviderPageCustom from "./pages/provider/ProviderPageCustom"
 
-
+// Other imports
+// import { PopupButton } from "react-calendly";
+import { UserProvider } from './context/UserContext';
+import Protected from "./context/Protected";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-
-// import { AdminUser } from './context/AdminContext'
 
 function App() {
 
@@ -43,66 +45,43 @@ function App() {
       </div> */}
       
       <BrowserRouter>
-        {/* <AdminUser> */}
+        <UserProvider>
           <Routes>
             {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
-
-              <Route path="/admin/management-clients" element={<ClientManagement />} />
-              <Route path="/admin/management-clients/new-user" element={<NewUser />} />
-              <Route path="/admin/management-clients/update-client/:id" element={<EditClient />} />
-              <Route path="/admin/management-clients/block-user/:id" element={<ConfirmBlockUser />} />
-              <Route path="/admin/management-clients/delete-user/:id" element={<ConfirmDeleteUser />} />
-              
-              <Route path="/admin/management-providers" element={<ProviderManagement />} />
-              <Route path="/admin/management-providers/new-user" element={<NewUser />} />
-              <Route path="/admin/management-providers/update-provider/:id" element={<EditProvider />} />
-              <Route path="/admin/management-providers/block-user/:id" element={<ConfirmBlockUser />} />
-              <Route path="/admin/management-providers/delete-user/:id" element={<ConfirmDeleteUser />} />
+              <Route path="/admin/dashboard" element={<Protected adminRoute={true}><AdminDashboard /></Protected>} />
+              <Route path="/admin/management-clients" element={<Protected adminRoute={true}><ClientManagement /></Protected>} />
+              <Route path="/admin/management-clients/new-user" element={<Protected adminRoute={true}><NewUser /></Protected>} />
+              <Route path="/admin/management-clients/update-client/:id" element={<Protected adminRoute={true}><EditClient /></Protected>} />
+              <Route path="/admin/management-clients/block-user/:id" element={<Protected adminRoute={true}><ConfirmBlockUser /></Protected>} />
+              <Route path="/admin/management-clients/delete-user/:id" element={<Protected adminRoute={true}><ConfirmDeleteUser /></Protected>} />
+              <Route path="/admin/management-providers" element={<Protected adminRoute={true}><ProviderManagement /></Protected>} />
+              <Route path="/admin/management-providers/new-user" element={<Protected adminRoute={true}><NewUser /></Protected>} />
+              <Route path="/admin/management-providers/update-provider/:id" element={<Protected adminRoute={true}><EditProvider /></Protected>} />
+              <Route path="/admin/management-providers/block-user/:id" element={<Protected adminRoute={true}><ConfirmBlockUser /></Protected>} />
+              <Route path="/admin/management-providers/delete-user/:id" element={<Protected adminRoute={true}><ConfirmDeleteUser /></Protected>} />
               
 
               <Route path="/" element={<GuestHome />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              {/* Fetches all professionals */}
               <Route path="/professionals" element={<Professionals title="All Professionals" />} />
-              {/* Fetches professionals by category */}
               <Route path="/professionals/:category" element={<Professionals />} />
               <Route path="/professionals/:category/:id" element={<ProviderDetails />} />
               
-              <Route path="/home" element={<LoggedInHome />} />
 
+              {/* Client Routes */}
+              {/* <Route path="/home" element={<LoggedInHome />} /> */}
 
-
-
-
-
-              <Route path="/dashboard" element={<ProviderDashboard />} />
+              {/* Provider Routes */}
+              {/* <Route path="/dashboard" element={<Protected adminRoute={false}><ProviderDashboard/></Protected>} /> */}
+              <Route path="/dashboard" element={<ProviderDashboard/> }/>
+              <Route path="/profile-customization/:user_id" element={<ProviderPageCustom />} />
 
               <Route path="*" element={<NotFoundPage />} />
           </Routes>
-        {/* </AdminUser> */}
-        {/* <GuestUser>
-          <Routes>
-            <Route path="/" element={<GuestHome />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </GuestUser>
-        <ClientUser>
-          <Routes>
-            <Route path="/home" element={<LoggedInHome />} />
-          </Routes>
-        </ClientUser>
-        <ProviderUser>
-          <Routes>
-            <Route path="/dashboard" element={<ProviderDashboard />} />
-          </Routes>
-        </ProviderUser> */}
+        </UserProvider>
       </BrowserRouter>
-        
-
     </>
   )
 }

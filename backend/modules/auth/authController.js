@@ -169,9 +169,21 @@ async function logout(id){
     
 }
 
+async function verifyToken(token){
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const user = await User.findById(decoded.id);
+        return user;
+    } catch (error) {
+        throw new Error('Invalid token');
+    }
+    
+}
+
 module.exports = {
     login,
     register,
     adminLogin,
-    logout
+    logout,
+    verifyToken
 };

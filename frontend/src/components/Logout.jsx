@@ -1,9 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import {useState} from "react";
+import {useState, useContext} from "react";
+// import { UserContext } from "../context/UserContext";
 
 export default function Logout() {
     const navigate = useNavigate();
+    // const { logout } = useContext(UserContext);
+
     const [error, setError] = useState(null);
 
     const handleLogout = async () => {
@@ -20,6 +23,7 @@ export default function Logout() {
                 navigate('/');
                 console.log("User logged out");
             }
+            // logout();
         } catch (error) {
             console.error('Error logging out:', error);
             setError('Error logging out');

@@ -37,20 +37,19 @@ connect();
 // Import Routes
 const adminRoutes = require("./modules/admin/adminRoutes");
 const authRoutes = require("./modules/auth/authRoutes");
-// const clientRoutes = require("./modules/client/clientRoutes");
+const clientRoutes = require("./modules/client/clientRoutes");
 const publicRoutes = require("./modules/public/publicRoutes");
-// const providerRoutes = require("./modules/provider/providerRoutes");
+const providerRoutes = require("./modules/provider/providerRoutes");
 
 // Routes to define the beginning of the path
-app.use("/admin", adminRoutes);
+app.use("/admin", authJWT, authorize(['admin']), adminRoutes);
 app.use("/auth", authRoutes);
-// app.use("/client", clientRoutes);
-// app.use("/provider", providerRoutes);
+app.use("/client", authJWT, authorize(['client']), clientRoutes);
+app.use("/provider", providerRoutes);
 app.use("/", publicRoutes);
-//authJWT, authorize(['admin']),
+
 
 // Start server only after DB connection
-app.listen(port, () => {
+app.listen(port, () => { 
   console.log(`Listening on http://localhost:${port}`);
 });
-//authJWT, authorize(['admin']), 
