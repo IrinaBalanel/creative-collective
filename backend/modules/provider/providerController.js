@@ -1,6 +1,7 @@
 const Provider = require("../../models/Provider");
 const ProviderCategory = require("../../models/ProviderCategory");
 const User = require("../../models/User");
+const Service = require("../../models/Service");
 const mongoose = require("mongoose");
 
 async function getProviderByUserId (userId) {
@@ -13,9 +14,10 @@ async function getProviderByUserId (userId) {
         .populate({
             path: 'creative_category_id',
             select: 'category'
-        });
-        
-        if (!provider) {
+        })
+        .populate("services")
+        .exec();
+        if (!provider|| provider.creative_category_id === null || provider.user_id === null) {
             return { message: 'Provider not found' };
         }
 
@@ -27,7 +29,7 @@ async function getProviderByUserId (userId) {
     }
 };
 
-// UPDATE PROVIDER
+
 async function getCategories() {
     try {
         // Fetch all users from the database
@@ -41,31 +43,153 @@ async function getCategories() {
     }
 }
 
+//ADD NEW SERVICE
+async function addNewService(provider_id, serviceData) {
+    try{
+        console.log("Service Data from function ", serviceData);
+        console.log("Provider ID ", provider_id);
+        
+        const providerId = new mongoose.Types.ObjectId(provider_id);
+        
+        const price = serviceData.newService.service_price;
+        const duration = serviceData.newService.service_duration;
+
+        console.log("service_price (before conversion):", price, "typeof:", typeof price);
+        console.log("service_duration (before conversion):", duration, "typeof:", typeof duration);
+
+        // Validate that the service_price and service_duration are valid numbers
+        if (!price || isNaN(price)) {
+            throw new Error('Invalid service_price value');
+        }
+
+        if (!duration || isNaN(duration)) {
+            throw new Error('Invalid service_duration value');
+        }
+        
+        // Validate if fields are missing or undefined
+        if (!serviceData.newService.service_name || !serviceData.newService.service_description || !serviceData.newService.service_thumbnail_url || !serviceData.newService.service_location || !serviceData.newService.calendly_event_url) {
+            throw new Error("Missing required fields");
+        }
+        console.log("My submitted new service: ", serviceData.newService.service_description);
+
+
+        const newService = await Service.create(
+            {
+                provider_id: providerId,
+                service_name: serviceData.newService.service_name,
+                service_description: serviceData.newService.service_description,
+                service_price: mongoose.Types.Decimal128.fromString(price.toString()),  // Convert to Decimal128
+                service_duration: mongoose.Types.Decimal128.fromString(duration.toString()),
+                service_thumbnail_url: serviceData.newService.service_thumbnail_url,
+                service_location: serviceData.newService.service_location,
+                calendly_event_url: serviceData.newService.calendly_event_url
+            }
+        );
+        console.log(newService);
+        return { newService };
+    } catch(error) {
+        console.error('Error addin service ', error);
+        throw error;
+
+    }
+}
+// UPDATE SERVICE
+async function updateService(provider_id, service_id, serviceData) {
+    try{
+        // console.log("Provider ID ", provider_id);
+        // console.log("Service ID ", service_id);
+        
+        // converts the user_id string to ObjectId
+        const providerId = new mongoose.Types.ObjectId(provider_id);
+        const serviceId = new mongoose.Types.ObjectId(service_id);
+
+        const price = serviceData.service_price;
+        const duration = serviceData.service_duration;
+
+        // console.log("service_price (before conversion):", price, "typeof:", typeof price);
+        // console.log("service_duration (before conversion):", duration, "typeof:", typeof duration);
+
+        // check if they're valid numbers
+        if (!price || isNaN(price)) {
+            throw new Error('Invalid service_price value');
+        }
+        if (!duration || isNaN(duration)) {
+            throw new Error('Invalid service_duration value');
+        }
+
+        const updatedService = await Service.findByIdAndUpdate(
+            serviceId,
+            {
+                provider_id: providerId,
+                service_name: serviceData.service_name,
+                service_description: serviceData.service_description,
+                service_price: mongoose.Types.Decimal128.fromString(price.toString()),  // converts to Decimal128
+                service_duration: mongoose.Types.Decimal128.fromString(duration.toString()),
+                service_thumbnail_url: serviceData.service_thumbnail_url,
+                service_location: serviceData.service_location,
+                calendly_event_url: serviceData.calendly_event_url
+            },
+            { new: true }
+        );
+        if (!updatedService) {
+            throw new Error('Service not found or failed to update');
+        }
+
+        console.log(updatedService);
+        return { updatedService };
+    } catch(error) {
+        console.error('Error addin service ', error);
+        throw error;
+
+    }
+}
+
+//UPDATE PROVIDER PERSONAL INFO AND PORTFOLIO
 async function updateProvider(user_id, providerData) {
     try{
-        console.log(providerData);
+        //console.log(providerData);
         
-        // Check if user_id is a valid ObjectId string
         if (!mongoose.Types.ObjectId.isValid(user_id)) {
             throw new Error('Invalid user_id format');
         }
-        // Convert the user_id string to ObjectId
+        // converts the user_id string to ObjectId
         const objectId = new mongoose.Types.ObjectId(user_id);
 
-        const categoryObjectId = new mongoose.Types.ObjectId(providerData.creative_category_id);
+        //const categoryObjectId = new mongoose.Types.ObjectId(providerData.creative_category_id);
+        // const updatedProvider = await Provider.findOneAndUpdate(
+        //     { user_id: objectId },
+        //     {
+        //         first_name: providerData.first_name,
+        //         last_name: providerData.last_name,
+        //         creative_category_id: categoryObjectId,
+        //         creative_category_details: providerData.creative_category_details,
+        //         profile_image: providerData.profile_image,
+        //         bio: providerData.bio,
+        //         phone_number: providerData.phone_number,
+        //         location: providerData.location,
+        //         portfolio: providerData.portfolio
+        //     }, 
+        //     { new: true }
+        // );
+
+        // update object (conditionally add fields only if they exist in providerData)
+        const updateFields = {};
+        if (providerData.first_name) updateFields.first_name = providerData.first_name;
+        if (providerData.last_name) updateFields.last_name = providerData.last_name;
+        if (providerData.creative_category_id) updateFields.creative_category_id = new mongoose.Types.ObjectId(providerData.creative_category_id);
+        if (providerData.creative_category_details) updateFields.creative_category_details = providerData.creative_category_details;
+        if (providerData.profile_image) updateFields.profile_image = providerData.profile_image;
+        if (providerData.bio) updateFields.bio = providerData.bio;
+        if (providerData.phone_number) updateFields.phone_number = providerData.phone_number;
+        if (providerData.location) updateFields.location = providerData.location;
+        if (providerData.portfolio) updateFields.portfolio = providerData.portfolio;
+
+        // updates only the fields that are included
         const updatedProvider = await Provider.findOneAndUpdate(
             { user_id: objectId },
-            {
-                first_name: providerData.first_name,
-                last_name: providerData.last_name,
-                creative_category_id: categoryObjectId,
-                creative_category_details: providerData.creative_category_details,
-                profile_image: providerData.profile_image,
-                bio: providerData.bio,
-                phone_number: providerData.phone_number,
-                location: providerData.location,
-            }, 
-            { new: true });
+            updateFields,
+            { new: true }  // Return the updated document
+        );
 
         if (!updatedProvider) {
             return { message: 'Provider not found' };
@@ -80,10 +204,30 @@ async function updateProvider(user_id, providerData) {
 }
 
 
+// DELETE SERVICE
+async function deleteService(service_id) {
+    try{
+        // console.log("Service ID ", service_id);
+
+        const deletedService = await Service.findByIdAndDelete(service_id);
+        if (!deletedService) {
+            throw new Error('Service not found or failed to delete');
+        }
+        //console.log(deletedService);
+        return { deletedService };
+    } catch(error) {
+        console.error('Error addin service ', error);
+        throw error;
+
+    }
+}
 
 
 module.exports = {
     getProviderByUserId,
     updateProvider,
-    getCategories
+    getCategories,
+    addNewService,
+    updateService,
+    deleteService
 }

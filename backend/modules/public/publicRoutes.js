@@ -21,7 +21,7 @@ router.get("/professionals", async (req, res) => {
     try {
         // Fetch users using the controller
         const professionals = await publicController.getAllProfessionals();
-        //console.log(professionals);
+        console.log(professionals);
         if(!professionals){
             res.json({ message: "No professionals found"});
         }

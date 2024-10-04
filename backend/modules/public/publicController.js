@@ -22,9 +22,15 @@ async function getAllProfessionals() {
         // Fetches all users from the database
         const professionals = await Provider.find()
         .populate('creative_category_id', 'category') // Populate creative_category_id with its category field
+        .populate({
+            path: "user_id",
+            match: { status: 'active' }, // returns users with status 'active'
+            select: 'status'
+        })
         .exec();
+        const filteredProfessionals = professionals.filter(prof => prof.creative_category_id !== null && prof.user_id !== null);
         //console.log(professionals);
-        return professionals; 
+        return filteredProfessionals; 
         
     } catch (error) {
         console.error(error);

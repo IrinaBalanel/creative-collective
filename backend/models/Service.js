@@ -6,7 +6,8 @@ const ServiceSchema = new mongoose.Schema({
         required: true 
     },
     service_description: { 
-        type: String, 
+        type: String,
+        maxlength: 255,
         required: true 
     },
     service_price: { 

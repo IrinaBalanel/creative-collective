@@ -10,7 +10,7 @@ import Logout from "../Logout";
 export default function Header(){
     const [categories, setCategories] = useState([]);
     const { user } = useContext(UserContext);
-    console.log(user);
+    //console.log(user);
     const [error, setError] = useState(null); 
 
     useEffect(() => {
@@ -18,7 +18,7 @@ export default function Header(){
             try {
                 const response = await axios.get('http://localhost:8000/');
                 const data = response.data;
-                //console.log(data);
+                console.log(data);
                 setCategories(data);
             } catch (error) {
                 //console.log(error);
@@ -54,7 +54,7 @@ export default function Header(){
                     <li className="nav-item">
                         <Link to="/#contact">Contact</Link>
                     </li>
-                    {user && user.role === "client" ? (
+                    {user && user.role === "client" && (
                         <>
                             <li className="nav-item">
                                 <Link to="/appointments" className="">Appointments</Link>
@@ -70,8 +70,8 @@ export default function Header(){
                             </ul>
                         </>
                         
-
-                    ) : (
+                    )}
+                    {!user && (
                         
                         <ul className="nav-list">
                             <li className="nav-item">

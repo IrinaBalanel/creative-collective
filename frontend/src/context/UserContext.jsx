@@ -10,12 +10,7 @@ export const UserProvider = ({ children }) => {
         setUser(userData);
         localStorage.setItem("token", userData.token); // Store token if needed
     };
-
-    // Function to log out the user
-    // const logout = () => {
-    //     setUser(null); // Clear user from context
-    //     localStorage.removeItem("token"); // Clear token
-    // };
+    
     // Check for the token and verify it on page load
     useEffect(() => {
         const verifyUserToken = async () => {

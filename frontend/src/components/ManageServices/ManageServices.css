@@ -1,0 +1,116 @@
+.manage-services{
+    margin-top: 50px;
+}
+
+
+/* ADD NEW SERVICE */
+#service-update-form{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 60px;
+}
+/* #service-update-form .input{
+    width: 100%;
+} */
+#service-update-form input {
+    width: 100%;
+    /* min-width: 180px;
+    max-width: 350px; */
+    padding: 15px 25px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+    margin: 10px 0;
+    font: inherit;
+    font-size: 0.9em;
+}
+
+#service-update-form textarea{
+    width: 455px;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid #16182A;
+    margin: 10px 0;
+    padding: 15px 20px;
+    font: inherit;
+    font-size: 1em;
+}
+
+#service-update-form .PhoneInputInput{
+    padding: 15px 0px 15px 15px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+}
+/* #preview-pic-container{
+    width: 400px;
+    height: 250px;
+} */
+
+#preview-pic-container img{
+    width: 400px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.calendly-input{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    gap:5px;
+    width: 445px;
+}
+
+.calendly-input h4{
+    margin: 10px 0 30px;
+}
+
+.manage-services .service-cards{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 10px;
+    justify-content: space-around;
+    gap: 30px;
+    margin: 50px 0;
+}
+
+#service-update{
+    margin: 0 0 50px 0;
+}
+
+#service-update .service-card-info{
+    padding: 30px 25px;
+}
+
+.service-management-btns{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0 0;
+    gap: 10px;
+}
+
+/* .service-management-btns .btn{
+
+} */
+/* #service-update{
+    position: relative;
+}
+
+.service-delete-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.service-update-btn{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 20px 10px;
+} */
+
+.service-loc{
+    max-width: 345px;
+}
