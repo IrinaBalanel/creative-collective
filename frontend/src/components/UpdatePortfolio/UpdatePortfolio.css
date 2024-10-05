@@ -1,0 +1,52 @@
+#page-custom .portfolio{
+    margin: 50px 0;
+}
+
+#page-custom .portfolio-container{
+    margin: 0px;
+}
+
+.update-portfolio-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+
+.portfolio-items{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    justify-content: flex-start;
+}
+
+.portfolio-items input{
+    min-width: 180px;
+    max-width: 350px;
+    padding: 15px 25px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+    margin: 10px 0;
+    font: inherit;
+    font-size: 0.9em;
+}
+
+.portfolio-item{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    
+}
+.portfolio-input-container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+}
+
+.portfolio-item:last-of-type{
+    align-self: flex-start;
+}
+.portfolio-item-margin{
+    margin: 30px 30px;
+}

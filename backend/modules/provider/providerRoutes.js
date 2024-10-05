@@ -29,17 +29,22 @@ router.get("/categories", async (req, res) => {
 });
 
 //UPDATE PROVIDER PERSONAL INFO AND PORTFOLIO
-router.post("/profile-customization/:user_id/submit", async (req, res) => {
+router.post("/profile-customization/update-info-portfolio/:user_id/submit", async (req, res) => {
+    
     const { user_id } = req.params;
+    console.log("Update provider info route called, user_id:", user_id);
     //console.log("Received user_id:", typeof user_id);
     const providerData = req.body;
 
-    //console.log("Received user_id:", user_id);
+    console.log("Received user_id:", user_id); 
+    console.log("Received provider data:", providerData);
     try {
-        const updatedProvider = await providerController.updateProvider(user_id, providerData);
-        if (!updatedProvider) {
+        const response = await providerController.updateProvider(user_id, providerData);
+        if (!response) {
             return res.json({ message: "Failed to update provider" });
         }
+        const updatedProvider = response.updatedProvider;
+        console.log(updatedProvider);
         res.json({ message: "Updated successfully", updatedProvider });
     } catch (error) {
         console.error(error.message);
@@ -50,17 +55,21 @@ router.post("/profile-customization/:user_id/submit", async (req, res) => {
 
 //ADD SERVICE
 router.post("/profile-customization/add-service/submit", async (req, res) => {
-    const { provider_id } = req.body;
-    const serviceData = req.body;
+    console.log("Add service route called");
 
-    // console.log("Received provider_id:", provider_id);
-    // console.log("Received newService data:", serviceData.newService);
+    const {provider_id, serviceData} = req.body;
+
+    console.log("Received provider_id:", provider_id);
+    console.log("Received newService data:", serviceData);
+
     try {
         const response = await providerController.addNewService(provider_id, serviceData);
         if (!response) {
             return res.json({ message: "Failed to add service" });
         }
-        res.json({ message: "Service added successfully", newService: response.newService });
+        console.log("Added service ", response.newService);
+        const newService = response.newService;
+        res.json({ message: "Service added successfully", newService });
     } catch (error) {
         console.error(error.message);
         res.json({ error: "Error" });
@@ -70,18 +79,22 @@ router.post("/profile-customization/add-service/submit", async (req, res) => {
 
 //UPDATE SERVICE
 router.post("/profile-customization/update-service/:service_id/submit", async (req, res) => {
+    console.log("Update service route called");
     const { service_id} = req.params;
     const { provider_id, serviceData } = req.body;
 
-    // console.log("Received service_id:", service_id);
-    // console.log("Received provider_id:", provider_id);
-    // console.log("Received updatedService data:", serviceData);
+    console.log("Received service_id:", service_id);
+    console.log("Received provider_id:", provider_id);
+    console.log("Received updatedService data:", serviceData);
+
     try {
         const response = await providerController.updateService(provider_id, service_id, serviceData);
         if (!response) {
             return res.json({ message: "Failed to update service" });
         }
-        res.json({ message: "Service updated successfully", serviceData: response.updatedService });
+        console.log("Updated service ", response.updatedService);
+        const updatedService = response.updatedService;
+        res.json({ message: "Service updated successfully", updatedService});
     } catch (error) {
         console.error(error.message);
         res.json({ error: "Error" });

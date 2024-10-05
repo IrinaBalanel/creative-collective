@@ -97,7 +97,7 @@
 
 .service-loc{
     display: flex;
-    align-items: center;
+    align-items: baseline;
     font-size: 1.1em;
     padding: 15px 0;
 }

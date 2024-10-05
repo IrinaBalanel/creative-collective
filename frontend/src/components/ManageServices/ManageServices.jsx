@@ -2,13 +2,13 @@ import { useState } from 'react';
 import AddNewService from './AddNewService';
 import UpdateService from './UpdateService';
 import "./ManageServices.css"
-//user_id
-export default function ManageServices({ initialServices, provider_id }) {
+
+export default function ManageServices({ initialServices, provider_id}) {
     const [services, setServices] = useState(initialServices);
     const [isAddingNew, setIsAddingNew] = useState(false);  // Track add mode
     const [editingIndex, setEditingIndex] = useState(null);  // Track which service is being edited
 
-
+    console.log("Services from MAnageServices: ", services)
     // Handle adding a new service
     const handleServiceAdded = (newService) => {
         setServices([...services, newService]);
@@ -60,10 +60,10 @@ export default function ManageServices({ initialServices, provider_id }) {
                     onCancel={handleCancelAdd}
                 />
             )}
-            <div className="service-cards">
+            <div className="service-cards scroll-container">
                 {/* Existing Services */}
                 {services.map((service, index) => (
-                    <div key={service._id}>
+                    <div key={service._id} id="service-update">
                         <UpdateService
                             provider_id={provider_id}
                             service={service}

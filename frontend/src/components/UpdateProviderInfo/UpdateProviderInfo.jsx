@@ -7,9 +7,9 @@ import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import {capitalizeFirstLetter, cutS} from "../../functions"
 
-export default function UpdateProviderInfo({ provider, user_id, categories}){
+export default function UpdateProviderInfo({ provider, user_id, categories, onProviderUpdated}){
     const [isEditing, setIsEditing] = useState(false);  // edit/view mode
-    const navigate = useNavigate();
+
     const [providerData, setProviderData] = useState({
         first_name: provider.first_name || '',
         last_name: provider.last_name || '',
@@ -21,25 +21,39 @@ export default function UpdateProviderInfo({ provider, user_id, categories}){
         location: provider.location || ''
     });
     
-
+    
     // axios.defaults.withCredentials = true; //for token auth
+
+    const [localUserId, setLocalUserId] = useState(user_id); // stores user_id separately to save it to make it always available
+
+    // Ensure user_id is always set in case it's lost in the form
+    useEffect(() => {
+        if (user_id && !localUserId) {
+            setLocalUserId(user_id);
+        }
+    }, [user_id, localUserId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Provider in UpdateProviderPage", providerData)
+        console.log("Provider in UpdateProviderPage before sending request", providerData.creative_category_id)
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/${user_id}/submit`, providerData);
+            const response = await axios.post(`http://localhost:8000/provider/profile-customization/update-info-portfolio/${localUserId}/submit`, providerData);
             if (response.data.message === "Updated successfully") {
-                console.log('Provider info updated successfully');
+                console.log(response.data.updatedProvider);
+                const updatedProviderData = response.data.updatedProvider;  // New updated data from the response
+                setProviderData(updatedProviderData); 
+                
+                onProviderUpdated(updatedProviderData);
+                console.log("Provider in UpdateProviderPage after receiving response", updatedProviderData.creative_category_id)
                 setIsEditing(false);
-                navigate(`/profile-customization/${user_id}`);
-                window.location.reload();
+                // window.location.reload();
             } else {
                 console.error('Failed to update provider:', response.data.message);
             }
             
         } catch (error) {
             console.error('Error updating provider info:', error);
+            
         }
     };
 
@@ -50,7 +64,7 @@ export default function UpdateProviderInfo({ provider, user_id, categories}){
 
     const handleCategoryChange = (e) => {
         const selectedCategoryId = e.target.value;
-        setProviderData({ ...providerData, creative_category_id: selectedCategoryId });
+        setProviderData({ ...providerData, creative_category_id: selectedCategoryId});
     };
 
     // Separate handler for phone input
@@ -83,7 +97,7 @@ export default function UpdateProviderInfo({ provider, user_id, categories}){
                 // View Mode
                 <>
                     <div className="personal-info view">
-                        <div id="profile-pic"><img src={provider.profile_image} alt={`${providerData.first_name} ${providerData.last_name}`}/></div>
+                        <div id="profile-pic"><img src={provider.profile_image} alt={`${provider.first_name} ${provider.last_name}`}/></div>
                         <div>
                             <p><strong>Name:</strong> {provider.first_name} {provider.last_name}</p>
                             <p><strong>Profession:</strong> {capitalizeFirstLetter(cutS(provider.creative_category_id.category))}</p>
@@ -108,6 +122,8 @@ export default function UpdateProviderInfo({ provider, user_id, categories}){
                     </div>
                     
                     <div className="udpate-inputs">
+                        <p style={{color: "red"}}>* All fields are required.</p>
+
                         <div className="input">
                             <input type="text" id="fName" placeholder="First Name" name="first_name" value={providerData.first_name} onChange={handleChange} required/>
                             <input type="text" id="lName" placeholder="Last Name"  name="last_name" value={providerData.last_name} onChange={handleChange} required/>
@@ -116,7 +132,7 @@ export default function UpdateProviderInfo({ provider, user_id, categories}){
                             <select 
                                 id="creative_category" 
                                 name="creative_category_id" 
-                                value={providerData.creative_category_id} 
+                                value={providerData.creative_category_id?._id || providerData.creative_category_id || ''}  // Ensure correct value is set
                                 onChange={handleCategoryChange} 
                                 required
                             >

@@ -10,7 +10,7 @@ const ProviderSchema = new mongoose.Schema({
 	last_name: { type: String, required: true },
 	phone_number: { type: String, required: true },
 	profile_image: { type: String, default: null }, 
-	bio: { type: String, default: null }, 
+	bio: { type: String, maxlength: 255, default: null }, 
 	creative_category_id: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'ProviderCategory', 
