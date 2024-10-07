@@ -8,7 +8,8 @@
 .table{
     /* border: 2px solid black; */
     margin: 10px 0px;
-    max-width: 1100px;
+    width: 100%;
+    /* max-width: 1100px; */
 }
 .head{
     background-color: #dbdfff;
@@ -26,6 +27,8 @@
 
 .actions-col{
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 5px;
+    padding: 10px 0;
 }

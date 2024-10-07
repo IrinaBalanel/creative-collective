@@ -17,7 +17,7 @@ async function getProviderByUserId (userId) {
         })
         .populate("services")
         .exec();
-        if (!provider|| provider.creative_category_id === null || provider.user_id === null) {
+        if (!provider || provider.user_id === null) {
             return { message: 'Provider not found' };
         }
 
@@ -46,10 +46,10 @@ async function getCategories() {
 //UPDATE PROVIDER PERSONAL INFO AND PORTFOLIO
 async function updateProvider(user_id, providerData) {
     try{
-        //console.log(providerData);
+        console.log(providerData);
         
         if (!mongoose.Types.ObjectId.isValid(user_id)) {
-            throw new Error('Invalid user_id format');
+            throw new Error('Invalid provider_id format');
         }
         // converts the user_id string to ObjectId
         const objectId = new mongoose.Types.ObjectId(user_id);

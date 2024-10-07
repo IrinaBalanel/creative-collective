@@ -20,7 +20,7 @@ import axios from "axios";
 //     )
 // }
 
-export default function ProfileButton(){
+export default function AdminProfileButton(){
 
     const { user } = useContext(UserContext);
 
@@ -29,24 +29,24 @@ export default function ProfileButton(){
     }
     console.log("This is my user context ", user);
     const userId = user._id;
-    const [provider, setProvider] = useState({});
+    const [admin, setAdmin] = useState({});
 
     useEffect(() => {
-        const getUserwithProvider = async () => {
+        const getUserAdmin = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/provider/dashboard/${userId}`, {
+                const response = await axios.get(`http://localhost:8000/admin/profile/${userId}`, {
                     withCredentials: true 
                 });
-                if (response.data.provider) {
-                    setProvider(response.data.provider);
-                    console.log("User with provider info: ", response.data.provider);
+                if (response.data.admin) {
+                    setAdmin(response.data.admin);
+                    console.log("User with provider info: ", response.data.admin);
                 }
             } catch (error) {
                 console.error("Token verification failed:", error);
             }
         };
         if (userId) {
-            getUserwithProvider();
+            getUserAdmin();
         }
         
     }, [userId]);
@@ -58,19 +58,19 @@ export default function ProfileButton(){
                 <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
             </svg>
             <div>
-                {provider._id ? (
+                {admin._id ? (
                     <>
-                        <strong>{provider.first_name} {provider.last_name}</strong>
-                        <p>{user.email}</p>
+                        <strong>Admin</strong>
+                        <p>{admin.email}</p>
                     </>
                     
                 ) : (
-                    <>
-                        <strong>Admin</strong>
-                        <p>{user.email}</p>
-                    </>
+                    <></>
                     
                 )}
+                
+                
+
             </div>    
         </div>
         

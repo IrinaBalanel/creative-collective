@@ -13,12 +13,10 @@ export default function Login(){
     const navigate = useNavigate();
     const { login } = useContext(UserContext); 
 
-    axios.defaults.withCredentials = true; //for token auth
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        setErrorMessages([]); //resets the errors array on submit if there is no more errors
+        setErrorMessages([]); //resets the errors array on submit
         
         try {
             const response = await axios.post('http://localhost:8000/auth/login', {email, password}, { withCredentials: true });
@@ -61,7 +59,6 @@ export default function Login(){
         <div id="login">
             <Link to="/"><LogoBlack/></Link>
             <h1>Login</h1>
-            {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
             {errorMessages.length > 0 && (
                 <ul style={{ color: "red" }}>
                     {errorMessages.map((msg, index) => (

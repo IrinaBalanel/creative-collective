@@ -3,15 +3,15 @@ import axios from "axios";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState();
 
-    // Function to log in the user
     const login = (userData) => {
         setUser(userData);
-        localStorage.setItem("token", userData.token); // Store token if needed
+        localStorage.setItem("token", userData.token); // stores token
+        console.log("token", userData.token);
     };
     
-    // Check for the token and verify it on page load
+    // checks for the token and verifies it when page loads
     useEffect(() => {
         const verifyUserToken = async () => {
             try {
@@ -20,11 +20,11 @@ export const UserProvider = ({ children }) => {
                 });
                 if (response.data.user) {
                     setUser(response.data.user);
-                    console.log(response.data.user);
+                    console.log("User context: ", response.data.user);
                 }
             } catch (error) {
                 console.error("Token verification failed:", error);
-                // logout(); // if token verification fails, log out the user
+
             }
         };
     

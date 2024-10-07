@@ -10,11 +10,7 @@ export default function BecomeProvider(){
                     <div id="messenger"><img src="./messenger.png" alt="service provider's message" aria-label="Hey there! I'm Issac Davis, a stylist on Creative Collective! | leveled up my business — now it's your turn! Join the Collective today!"/></div>
                     <div className="img-container">
                         <img src="./provider.png" alt="Portrait of a service provider"/>
-                        {/* <img src="./provider2.jpeg" alt="service provider"/> */}
                     </div>
-                    {/* <p>"Hey there!</p>
-                    <p>I am Isac Davis, I am service provider on Creative Collective!</p>
-                    <p>Are you?"</p> */}
                 </div>
                 <div className="steps">
                     <div className="step">

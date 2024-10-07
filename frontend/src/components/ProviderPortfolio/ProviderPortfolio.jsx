@@ -6,26 +6,25 @@ export default function ProviderPortfolio({ images }){
 
     const [currentPage, setCurrentPage] = useState(1);
     const imagesPerPage = 12;
-    const [isModalOpen, setIsModalOpen] = useState(false); // Track modal state
-    const [selectedImage, setSelectedImage] = useState(null); // Track the selected image
+    const [isModalOpen, setIsModalOpen] = useState(false); // tracks modal state
+    const [selectedImage, setSelectedImage] = useState(null); // tracks selected image
 
-    // Calculate the indexes of the first and last image for the current page
+    // calculates indexes of the first and last image for the current page
     const indexOfLastImage = currentPage * imagesPerPage;
     const indexOfFirstImage = indexOfLastImage - imagesPerPage;
     const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
 
-    // Calculate total pages
+    // calculates pages
     const totalPages = Math.ceil(images.length / imagesPerPage);
     // Function to change the page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    // Open modal with the selected image
+    // opens modal with the selected image
     const openModal = (image) => {
         setSelectedImage(image);
         setIsModalOpen(true);
     };
 
-    // Close modal
     const closeModal = () => {
         setSelectedImage(null);
         setIsModalOpen(false);
@@ -50,7 +49,7 @@ export default function ProviderPortfolio({ images }){
                     </div>
                 </div>
             )}
-            {/* Pagination Controls */}
+            {/* Pagination */}
             <div className="pagination">
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
                     <button

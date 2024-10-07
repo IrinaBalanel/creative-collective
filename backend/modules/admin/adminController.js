@@ -231,7 +231,7 @@ async function getUserById(id) {
     try {
         // Fetch all users from the database
         const user = await User.findById(id)
-        console.log(user);
+        console.log("User: ", user);
         return user; 
         
     } catch (error) {
@@ -248,6 +248,7 @@ async function deleteUser(id) {
             },
             { new: true }
         )
+        console.log("Deleted user: ", deletedUser)
         return deletedUser; 
 
     } catch (error) {
@@ -287,6 +288,7 @@ async function unblockUser(id) {
             },
             { new: true }
         )
+        console.log("Unblocked user from function", unblockedUser)
         return unblockedUser; 
 
     } catch (error) {

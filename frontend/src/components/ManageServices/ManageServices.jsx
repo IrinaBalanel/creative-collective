@@ -5,35 +5,34 @@ import "./ManageServices.css"
 
 export default function ManageServices({ initialServices, provider_id}) {
     const [services, setServices] = useState(initialServices);
-    const [isAddingNew, setIsAddingNew] = useState(false);  // Track add mode
-    const [editingIndex, setEditingIndex] = useState(null);  // Track which service is being edited
+    const [isAddingNew, setIsAddingNew] = useState(false);  // tracks add mode
+    const [editingIndex, setEditingIndex] = useState(null);  // tracks which service is being edited
 
     console.log("Services from MAnageServices: ", services)
-    // Handle adding a new service
+
     const handleServiceAdded = (newService) => {
         setServices([...services, newService]);
-        setIsAddingNew(false);  // Exit add mode
+        setIsAddingNew(false);  // exits add mode
     };
 
-    // Handle service updates
     const handleServiceUpdated = (updatedService, index) => {
         const updatedServices = [...services];
         updatedServices[index] = updatedService;
         setServices(updatedServices);
-        setEditingIndex(null);  // Exit edit mode
+        setEditingIndex(null);  // exits edit mode
     };
 
     const handleCancelAdd = () => {
-        setIsAddingNew(false);  // Cancel adding mode
+        setIsAddingNew(false);  //cancels adding mode
     };
 
     const handleCancelEdit = () => {
-        setEditingIndex(null);  // Cancel editing mode
+        setEditingIndex(null);  // cancels editing mode
     };
 
     const handleServiceDeleted = (index) => {
-        const updatedServices = services.filter((_, i) => i !== index);  // Remove the service at the given index
-        setServices(updatedServices);  // Update the state
+        const updatedServices = services.filter((_, i) => i !== index);  // removs the service at the given index
+        setServices(updatedServices);
     };
 
     return (
@@ -44,7 +43,7 @@ export default function ManageServices({ initialServices, provider_id}) {
                     <p>List the services you offer and upload relevant images to give clients a clear idea of what they can expect. Add multiple services to match your full range of expertise. Integrate your Calendly URL to let clients book your services with ease.</p>
                 </div>
             
-                {!isAddingNew && (  // Show "Add New" button only if not already adding a service
+                {!isAddingNew && (  // show button only if not already adding a service
                     <div>
                         <button onClick={() => setIsAddingNew(true)}>Add New</button>
                     </div>

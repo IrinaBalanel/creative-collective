@@ -4,6 +4,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import AdminProfileButton from "../../components/AdminProfileButton";
 
 export default function EditProvider(){
     const { id } = useParams();
@@ -22,7 +23,7 @@ export default function EditProvider(){
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/admin/update-provider/${id}`);
+                const response = await axios.get(`http://localhost:8000/admin/update-provider/${id}`,  { withCredentials: true });
                 const data = response.data;
                 console.log(data);
                 setUser({
@@ -42,12 +43,10 @@ export default function EditProvider(){
     }, [id]);
     
 
-
-    // Handle form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
     
-        // If the name is "email", update the nested user_id object
+        // If the name is "email", updates user_id object
         if (name === "email") {
             setUser((prevState) => ({
                 ...prevState,
@@ -57,7 +56,7 @@ export default function EditProvider(){
                 }
             }));
         } else {
-            // Otherwise, update other fields normally
+            // else updates other fields normally
             setUser((prevState) => ({
                 ...prevState,
                 [name]: value
@@ -66,8 +65,6 @@ export default function EditProvider(){
     };
     
 
-
-    // Separate handler for phone input
     const handlePhoneChange = (value) => {
         setUser((prevState) => ({
             ...prevState,
@@ -78,7 +75,7 @@ export default function EditProvider(){
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        setErrorMessages([]); //resets the errors array on submit if there is no more errors
+        setErrorMessages([]); //resets the errors array on submit
 
         let errors = [];
 
@@ -98,7 +95,7 @@ export default function EditProvider(){
         };
 
         try {
-            const response = await axios.post(`http://localhost:8000/admin/update-provider/${id}/submit`, { providerData, userData });
+            const response = await axios.post(`http://localhost:8000/admin/update-provider/${id}/submit`, { providerData, userData },  { withCredentials: true });
             console.log(response.data);
 
             navigate("/admin/management-providers");
@@ -124,8 +121,8 @@ export default function EditProvider(){
         <div>
             <SideNav/>
             <main className="main">
+                <AdminProfileButton/>
                 <h1>Update Provider</h1>
-                {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
                 {errorMessages.length > 0 && (
                     <ul style={{ color: "red" }}>
                         {errorMessages.map((msg, index) => (

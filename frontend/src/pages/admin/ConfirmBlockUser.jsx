@@ -2,11 +2,11 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
-
+import AdminProfileButton from "../../components/AdminProfileButton";
 
 export default function ConfirmBlockUser(){
 
-    const { id } = useParams();  // Get user ID from the URL params
+    const { id } = useParams();
     const [user, setUser] = useState("");
     const [blockReason, setBlockReason] = useState("");
     const [message, setMessage] = useState("");
@@ -16,7 +16,7 @@ export default function ConfirmBlockUser(){
     useEffect(() => {
         const getUser = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/admin/block-user/${id}`);
+                const response = await axios.get(`http://localhost:8000/admin/block-user/${id}`,  { withCredentials: true });
                 const data = response.data;
                 console.log(data);
                 setUser(data);
@@ -32,9 +32,11 @@ export default function ConfirmBlockUser(){
         try {
             const response = await axios.post(`http://localhost:8000/admin/block-user/${id}/submit`, {
                 blockReason: blockReason,
-            });
+            },  { withCredentials: true });
             setMessage(response.data.message); 
             alert("User blocked successfully");
+
+            //redirect back depeding on the role of the blocked user
             if(user.role==="client"){
                 navigate("/admin/management-clients");
             }
@@ -55,6 +57,7 @@ export default function ConfirmBlockUser(){
         <>
             <SideNav/>
             <main className="main">
+                <AdminProfileButton/>
                 <h1>Are you sure you want to block {user.email}?</h1>
                 <div className="block-reason-area">
                     <p>Please provide the reason of blocking:</p>
@@ -65,6 +68,7 @@ export default function ConfirmBlockUser(){
                     />
                 </div>
                 <div className="btns block">
+                    {/* //redirect back depeding on the role of the blocked user */}
                     {user.role == "provider" ? (
                         <Link to="/admin/management-providers">Cancel</Link>
                     ) : user.role == "client" ? (

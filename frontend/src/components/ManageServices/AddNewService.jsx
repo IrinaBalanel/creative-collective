@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { isValidUrl, isValidCalendlyUrl, isValidDecimal} from '../../functions';
 
 export default function AddNewService({ provider_id, onServiceAdded, isEditing, setIsEditing, onCancel }) {
+    const [errorMessages, setErrorMessages] = useState({}); 
     const [newService, setNewService] = useState({
         service_name: '',
         service_description: '',
@@ -15,15 +17,67 @@ export default function AddNewService({ provider_id, onServiceAdded, isEditing, 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setNewService({ ...newService, [name]: value });
+
+        // Validates decimals
+        if (name === 'service_price' || name === 'service_duration') {
+            if (!isValidDecimal(value)) {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: "Please enter a valid decimal number (e.g., 1 or 1.5)."
+                }));
+            } else {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: ""
+                }));
+            }
+        }
+        
+
+        // Validates url
+        if (name === "service_thumbnail_url") {
+            if (!isValidUrl(value)) {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    service_thumbnail_url: "Invalid image URL format"
+                }));
+            } else {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    service_thumbnail_url: ""
+                }));
+            }
+        }
+        
+        // Validates Calendly url
+        if (name === "calendly_event_url") {
+            if (!isValidCalendlyUrl(value)) {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    calendly_event_url: "Invalid Calendly URL format"
+                }));
+            } else {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    calendly_event_url: ""
+                }));
+            }
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Debugging to see if the values exist before sending
+        // if the values exist before sending
         console.log("New Service Data:", newService);
+        
+        // if any fields have error messages with actual values
+        const hasErrors = Object.values(errorMessages).some((msg) => msg);
+        if (hasErrors) {
+            return;
+        }
 
-        // Convert service_price and service_duration to numbers
+        // converted price and duration to decimal format
         const convertedServicePrice = parseFloat(newService.service_price);
         const convertedServiceDuration = parseFloat(newService.service_duration);
         console.log(convertedServicePrice, convertedServiceDuration);
@@ -36,10 +90,10 @@ export default function AddNewService({ provider_id, onServiceAdded, isEditing, 
         console.log("Service Data with converted decimals:", serviceData);
 
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/add-service/submit`, {serviceData, provider_id});
-            onServiceAdded(response.data.newService);  // Trigger the update in ManageServices
+            const response = await axios.post(`http://localhost:8000/provider/profile-customization/add-service/submit`, {serviceData, provider_id},  { withCredentials: true });
+            onServiceAdded(response.data.newService);  // triggers update in ManageServices
             console.log(response.data.newService)
-            setNewService({  // Reset form
+            setNewService({  // resets form
                 service_name: '',
                 service_description: '',
                 service_price: '',
@@ -49,8 +103,6 @@ export default function AddNewService({ provider_id, onServiceAdded, isEditing, 
                 calendly_event_url: ''
             });
 
-            
-            // setIsEditing(false);
 
         } catch (error) {
             console.error('Error adding service:', error);
@@ -65,7 +117,6 @@ export default function AddNewService({ provider_id, onServiceAdded, isEditing, 
                 </div>
             ) : (
                 <div>
-                    
                     <form id="service-update-form" onSubmit={handleSubmit}>
                         <div id="preview-pic-container">
                             <img className="preview-pic" src={newService.service_thumbnail_url} alt="Image Preview" />
@@ -73,6 +124,11 @@ export default function AddNewService({ provider_id, onServiceAdded, isEditing, 
                         </div>
                         <div className="udpate-inputs">
                             <p style={{color: "red"}}>* All fields are required.</p>
+                            <div className="error-list">
+                                {Object.entries(errorMessages).map(([key, message]) => (
+                                    message && <p key={key} style={{ color: 'red' }}>{message}</p>
+                                ))}
+                            </div>
                             <div className="input"><input type="text" name="service_name" placeholder="Service Name" value={newService.service_name} onChange={handleChange} required /></div>
                             <div className="input">
                                 <input type="text" name="service_price" placeholder="Price, e.g. 50" value={newService.service_price} onChange={handleChange} required />
@@ -107,7 +163,6 @@ export default function AddNewService({ provider_id, onServiceAdded, isEditing, 
                                 <button type="submit">Submit</button>
                                 
                             </div>
-                            
                         </div>
                     </form>
                 </div>

@@ -26,9 +26,10 @@ import ProviderDetails from "./pages/public/ProviderDetails"
 // Provider pages
 import ProviderDashboard from "./pages/provider/ProviderDashboard"
 import ProviderPageCustom from "./pages/provider/ProviderPageCustom"
+import ProviderSettings from "./pages/provider/ProviderSettings"
+import ProviderAppointments from "./pages/provider/ProviderAppointments"
 
 // Other imports
-// import { PopupButton } from "react-calendly";
 import { UserProvider } from './context/UserContext';
 import Protected from "./context/Protected";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
@@ -39,10 +40,6 @@ function App() {
 
   return (
     <>
-      {/* <div>
-        <PopupButton url="https://calendly.com/irina-cowork/30min" rootElement={document.getElementById("root")}
-        text="Click here to schedule!"/>
-      </div> */}
       
       <BrowserRouter>
         <UserProvider>
@@ -55,7 +52,9 @@ function App() {
               <Route path="/admin/management-clients/update-client/:id" element={<Protected adminRoute={true}><EditClient /></Protected>} />
               <Route path="/admin/management-clients/block-user/:id" element={<Protected adminRoute={true}><ConfirmBlockUser /></Protected>} />
               <Route path="/admin/management-clients/delete-user/:id" element={<Protected adminRoute={true}><ConfirmDeleteUser /></Protected>} />
-              <Route path="/admin/management-providers" element={<Protected adminRoute={true}><ProviderManagement /></Protected>} />
+              
+              {/* <Route path="/admin/management-providers" element={<Protected adminRoute={true}><ProviderManagement /></Protected>} /> */}
+              <Route path="/admin/management-providers" element={<ProviderManagement/>}/>
               <Route path="/admin/management-providers/new-user" element={<Protected adminRoute={true}><NewUser /></Protected>} />
               <Route path="/admin/management-providers/update-provider/:id" element={<Protected adminRoute={true}><EditProvider /></Protected>} />
               <Route path="/admin/management-providers/block-user/:id" element={<Protected adminRoute={true}><ConfirmBlockUser /></Protected>} />
@@ -75,8 +74,10 @@ function App() {
 
               {/* Provider Routes */}
               {/* <Route path="/dashboard" element={<Protected adminRoute={false}><ProviderDashboard/></Protected>} /> */}
-              <Route path="/dashboard" element={<ProviderDashboard/> }/>
-              <Route path="/profile-customization/:user_id" element={<ProviderPageCustom />} />
+              <Route path="/dashboard" element={<Protected providerRoute={true}><ProviderDashboard/></Protected> }/>
+              <Route path="/profile-customization/:user_id" element={<Protected providerRoute={true}><ProviderPageCustom /></Protected>} />
+              <Route path="/settings" element={<Protected providerRoute={true}><ProviderSettings/> </Protected>}/>
+              <Route path="/appointments" element={<Protected providerRoute={true}><ProviderAppointments/> </Protected>}/>
 
               <Route path="*" element={<NotFoundPage />} />
           </Routes>

@@ -23,6 +23,17 @@ const UserSchema = new mongoose.Schema({
 
 	createdAt: { type: Date, default: Date.now }
 });
+
+//virtual population should be used before the Provider model is compiled with mongoose.model().
+// UserSchema.virtual('providers', {
+//     ref: 'Provider',
+//     localField: '_id',
+//     foreignField: 'user_id',
+// });
+
+// // enables virtual fields when converting to JSON
+// UserSchema.set('toObject', { virtuals: true });
+// UserSchema.set('toJSON', { virtuals: true });
     
 const User = mongoose.model("User", UserSchema, "users");
 

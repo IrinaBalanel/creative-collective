@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import AdminProfileButton from "../../components/AdminProfileButton";
 import "../public/Register.css" 
 
 export default function NewUser(){
@@ -21,11 +22,11 @@ export default function NewUser(){
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        setErrorMessages([]); //resets the errors array on submit if there is no more errors
+        setErrorMessages([]); //resets the errors array on submit
 
         let errors = [];
 
-        var passRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        let passRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if(!passRegEx.test(password) || !passRegEx.test(confirmPassword)){
             errors.push("Password should contain at least 8 characters, one letter, and one number.");
         }
@@ -52,7 +53,7 @@ export default function NewUser(){
             },  { withCredentials: true });
             // console.log(response);
             const user = response.data.user; // the user object from the data object
-            //OR { user } = response.data; // which is one object named user from the response of the data object
+
             console.log("Registered user: ", user);
 
             // redirects to different home pages depending on the role
@@ -84,15 +85,15 @@ export default function NewUser(){
         <>
             <SideNav/>
             <main className="main">
-            <h1>Create new user</h1>
-                {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
-                {errorMessages.length > 0 && (
-                    <ul style={{ color: "red" }}>
-                        {errorMessages.map((msg, index) => (
-                            <li key={index}>{msg}</li>
-                        ))}
-                    </ul>
-                )}
+                <AdminProfileButton/>
+                <h1>Create new user</h1>
+                    {errorMessages.length > 0 && (
+                        <ul style={{ color: "red" }}>
+                            {errorMessages.map((msg, index) => (
+                                <li key={index}>{msg}</li>
+                            ))}
+                        </ul>
+                    )}
 
                 <form onSubmit={handleSubmit} className="form user">
                     <div className="btn-radio">
@@ -101,7 +102,7 @@ export default function NewUser(){
                                 type="radio" 
                                 id="client"
                                 value="client"
-                                checked={role === "client"}  // Radio button is checked if the role is "client" 
+                                checked={role === "client"}
                                 onChange={(e) => setRole(e.target.value)}
                             />
                             Client
@@ -129,7 +130,6 @@ export default function NewUser(){
                             value={phone}
                             onChange={(value) => {
                                 setPhone(value);
-                                // handleInputChange();
                             }}
                             defaultCountry="CA"
                         />

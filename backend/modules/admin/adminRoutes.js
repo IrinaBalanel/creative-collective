@@ -3,9 +3,24 @@ const router = express.Router();
 const adminController = require("./adminController");
 
 // Routes to display users on /admin page
-// router.get("/dashboard", async (req, res) => {
-//     res.json("protected by middleware");
-// });
+router.get("/profile/:user_id", async (req, res) => {
+    console.log("Admin profile route was called")
+    const { user_id} = req.params;
+
+    console.log("Received user_id:", user_id);
+
+    try {
+        const admin = await adminController.getUserById(user_id);
+        if (!admin) {
+            return res.json({ message: "Failed to fetch user" });
+        }
+        console.log("User fetched successfully ", admin);
+        res.json({ message: "User fetched successfully", admin});
+    } catch (error) {
+        console.error(error.message);
+        res.json({ error: "Error" });
+    }
+});
 
 
 
@@ -120,6 +135,7 @@ router.post("/new-user/submit", async (req, res) => {
 
 // SOFT DELETE USER
 router.get("/delete-user/:id", async (req, res) => {
+    console.log("Get user to Delete route was called")
     const { id } = req.params;
     try {
         const user = await adminController.getUserById(id);
@@ -136,12 +152,14 @@ router.get("/delete-user/:id", async (req, res) => {
 });
 
 router.post("/delete-user/:id/submit", async (req, res) => {
+    console.log("Delete user route was called")
     const { id } = req.params;
     try {
         const user = await adminController.deleteUser(id);
         if (!user) {
           return res.json({ message: "User not found" });
         }
+        console.log("User:", user);
         res.json({ message: "User deleted successfully", user });
     } catch (error) {
         console.error("Error deleting user: ", error);
@@ -192,6 +210,7 @@ router.post("/unblock-user/:id/submit", async (req, res) => {
         if (!user) {
           return res.json({ message: "User not found" });
         }
+        console.log("Unblocked user from routes", user)
         res.json({ message: "User unblocked successfully", user });
     } catch (error) {
         console.error("Error blocking user: ", error);

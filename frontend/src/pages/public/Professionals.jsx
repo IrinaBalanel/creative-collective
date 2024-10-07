@@ -5,7 +5,6 @@ import ProviderCard from "../../components/ProviderCard/ProviderCard"
 import { useParams } from 'react-router-dom';
 import {useState, useEffect} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom"
 import { capitalizeFirstLetter } from "../../functions";
 
 export default function Professionals({ title }){

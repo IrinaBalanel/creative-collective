@@ -54,25 +54,45 @@ export default function Header(){
                     <li className="nav-item">
                         <Link to="/#contact">Contact</Link>
                     </li>
+
                     {user && user.role === "client" && (
                         <>
                             <li className="nav-item">
                                 <Link to="/appointments" className="">Appointments</Link>
                             </li>
-                            
-                            <ul className="nav-list">
-                                <li className="nav-item">
+                            <li className="nav-item">
                                     <Link to="/profile" className="">Profile</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Logout/>
-                                </li>
-                            </ul>
+                            </li>
                         </>
                         
                     )}
-                    {!user && (
+                    {user && user.role === "provider" && (
+                        <ul className="nav-list">
+                            <li className="nav-item">
+                                <Link to="/login" className="btn-light">Login</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/register">Register</Link>
+                            </li>
+                        </ul>
                         
+                    )}
+                    {user && user.role === "admin" && (
+                        <ul className="nav-list">
+                            <li className="nav-item">
+                                <Link to="/login" className="btn-light">Login</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/register">Register</Link>
+                            </li>
+                        </ul>
+                        
+                    )}
+
+                    {!user && (
                         <ul className="nav-list">
                             <li className="nav-item">
                                 <Link to="/login" className="btn-light">Login</Link>

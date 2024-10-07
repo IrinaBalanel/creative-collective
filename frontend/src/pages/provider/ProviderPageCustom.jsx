@@ -29,7 +29,7 @@ export default function ProviderPageCustom(){
                     }
                 });
                 // Fetch categories data
-                const categoriesResponse = await axios.get('http://localhost:8000/provider/categories');
+                const categoriesResponse = await axios.get('http://localhost:8000/provider/categories',  { withCredentials: true });
 
                 setProviderData(providerResponse.data);
                 setCategories(categoriesResponse.data);
@@ -53,7 +53,7 @@ export default function ProviderPageCustom(){
         }
     }, [user_id]);
     if (!providerData) {
-        return <p>No provider data found.</p>;
+        return <div>Loading...</div>;
     }
     if (error) return <p>{error}</p>;
 
@@ -65,11 +65,7 @@ export default function ProviderPageCustom(){
         <>
             <SideNav/>
             <main className="main">
-                <ProfileButton
-                    providerFName={providerData.first_name}
-                    providerLName={providerData.last_name}
-                    providerEmail={providerData.user_id.email}
-                />
+                <ProfileButton/>
                 <div id="page-custom">
                     <h1 className="dashboard-header-one">Profile Page Customization</h1>
                     <UpdateProviderInfo

@@ -51,7 +51,6 @@ export default function ProviderDetails(){
                             email={providerData.user_id.email} 
                             verified={providerData.verified}
                             profileImage={providerData.profile_image} 
-                            //add conditional rendering for and other fields
                         />
   
                         {providerData.portfolio && providerData.portfolio.length > 0 && (

@@ -124,4 +124,24 @@ router.post("/profile-customization/delete-service/:service_id/submit", async (r
 });
 
 
+router.get("/dashboard/:user_id", async (req, res) => {
+    console.log("Provider Dashboard route was called")
+    const { user_id} = req.params;
+
+    console.log("Received user_id:", user_id);
+
+    try {
+        const provider = await providerController.getProviderByUserId(user_id);
+        if (!provider) {
+            return res.json({ message: "Failed to fetch user" });
+        }
+        console.log("User fetched successfully ", provider);
+        res.json({ message: "User fetched successfully", provider});
+    } catch (error) {
+        console.error(error.message);
+        res.json({ error: "Error" });
+    }
+
+});
+
 module.exports = router;

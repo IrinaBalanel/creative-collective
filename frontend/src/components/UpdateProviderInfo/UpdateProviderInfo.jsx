@@ -6,9 +6,11 @@ import {Link} from "react-router-dom"
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import {capitalizeFirstLetter, cutS} from "../../functions"
+import { isValidUrl, isPhoneNumberValid} from '../../functions';
 
 export default function UpdateProviderInfo({ provider, user_id, categories, onProviderUpdated}){
     const [isEditing, setIsEditing] = useState(false);  // edit/view mode
+    const [errorMessages, setErrorMessages] = useState({}); 
 
     const [providerData, setProviderData] = useState({
         first_name: provider.first_name || '',
@@ -21,23 +23,76 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
         location: provider.location || ''
     });
     
-    
-    // axios.defaults.withCredentials = true; //for token auth
 
     const [localUserId, setLocalUserId] = useState(user_id); // stores user_id separately to save it to make it always available
 
-    // Ensure user_id is always set in case it's lost in the form
+    // so user_id is always set in case it's lost in the form
     useEffect(() => {
         if (user_id && !localUserId) {
             setLocalUserId(user_id);
         }
     }, [user_id, localUserId]);
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setProviderData({ ...providerData, [name]: value });
+        // Validate url
+        if (name === "profile_image") {
+            if (!isValidUrl(value)) {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    profile_image: "Invalid image URL format"
+                }));
+            } else {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    profile_image: ""
+                }));
+            }
+        }
+
+        
+    };
+
+    const handleCategoryChange = (e) => {
+        const selectedCategoryId = e.target.value;
+        setProviderData({ ...providerData, creative_category_id: selectedCategoryId});
+    };
+
+    // Separate handler for phone input
+    const handlePhoneChange = (value) => {
+        setProviderData((prevState) => ({
+            ...prevState,
+            phone_number: value  // updates phone_number field directly
+        }));
+
+        // Validate phone number on change
+        if (!isPhoneNumberValid(value)) {
+            setErrorMessages((prevErrors) => ({
+                ...prevErrors,
+                phone_number: "Invalid phone number"
+            }));
+        } else {
+            setErrorMessages((prevErrors) => ({
+                ...prevErrors,
+                phone_number: ""
+            }));
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         console.log("Provider in UpdateProviderPage before sending request", providerData.creative_category_id)
+        // if any fields have error messages with actual values
+        
+        const hasErrors = Object.values(errorMessages).some((msg) => msg);
+        if (hasErrors) {
+            return;
+        }
+
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/update-info-portfolio/${localUserId}/submit`, providerData);
+            const response = await axios.post(`http://localhost:8000/provider/profile-customization/update-info-portfolio/${localUserId}/submit`, providerData,  { withCredentials: true });
             if (response.data.message === "Updated successfully") {
                 console.log(response.data.updatedProvider);
                 const updatedProviderData = response.data.updatedProvider;  // New updated data from the response
@@ -57,27 +112,24 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProviderData({ ...providerData, [name]: value });
-    };
 
-    const handleCategoryChange = (e) => {
-        const selectedCategoryId = e.target.value;
-        setProviderData({ ...providerData, creative_category_id: selectedCategoryId});
-    };
-
-    // Separate handler for phone input
-    const handlePhoneChange = (value) => {
-        setProviderData((prevState) => ({
-            ...prevState,
-            phone_number: value  // updates phone_number field directly
-        }));
-    };
 
     const handleCancel = () => {
         setIsEditing(false);  // back to view mode
+        setErrorMessages({});
+        // Resets form data to the original
+        setProviderData({
+            first_name: provider.first_name || '',
+            last_name: provider.last_name || '',
+            creative_category_id: provider.creative_category_id?._id || '',
+            creative_category_details: provider.creative_category_details || '',
+            profile_image: provider.profile_image || '',
+            bio: provider.bio || '',
+            phone_number: provider.phone_number || '',
+            location: provider.location || ''
+        });
     };
+
     return(
         <div className="pers-info">
             <div className="pers-info customization-head">
@@ -123,7 +175,12 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                     
                     <div className="udpate-inputs">
                         <p style={{color: "red"}}>* All fields are required.</p>
-
+                        {/* error messages */}
+                        <div className="error-list">
+                            {Object.entries(errorMessages).map(([key, message]) => (
+                                message && <p key={key} style={{ color: 'red' }}>{message}</p>
+                            ))}
+                        </div>
                         <div className="input">
                             <input type="text" id="fName" placeholder="First Name" name="first_name" value={providerData.first_name} onChange={handleChange} required/>
                             <input type="text" id="lName" placeholder="Last Name"  name="last_name" value={providerData.last_name} onChange={handleChange} required/>
@@ -155,10 +212,8 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                             />
                             <input type="text" id="location" placeholder="e.g., Toronto, Canada" name="location" value={providerData.location} onChange={handleChange} required/>
                         </div>
-                        
-
                         <div className="input">
-                            <textarea id="bio" placeholder="Tell the clients about yourself..."  name="bio" value={providerData.bio} onChange={handleChange} required/>
+                            <textarea id="bio" placeholder="Tell the clients about yourself... (up to 255 characters)"  name="bio" maxLength={255} value={providerData.bio} onChange={handleChange} required/>
                         </div>
                         <div className="btns-update">
                             <button type="button" onClick={handleCancel}>Cancel</button>

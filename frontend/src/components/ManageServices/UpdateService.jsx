@@ -1,25 +1,79 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom"
+import { isValidUrl, isValidCalendlyUrl, isValidDecimal} from '../../functions';
 
 export default function UpdateService({ provider_id, service, index, onServiceUpdated, onServiceDeleted, isEditing, setIsEditing, onCancel }) {
-    // const [error, setError] = useState();
     const [serviceData, setServiceData] = useState({
         ...service,
         service_price: service.service_price.$numberDecimal || service.service_price || '',
-        service_duration: service.service_duration.$numberDecimal || service.service_duration || ''
+        service_duration: service.service_duration.$numberDecimal || service.service_duration || '',
     });
+    const [errorMessages, setErrorMessages] = useState({}); 
 
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
+       
         setServiceData({ ...serviceData, [name]: value });
+        
+        // Validates decimals
+        if (name === 'service_price' || name === 'service_duration') {
+            if (!isValidDecimal(value)) {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: "Please enter a valid decimal number (e.g., 1 or 1.5)."
+                }));
+            } else {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: ""
+                }));
+            }
+        }
+        
+
+        // Validates url
+        if (name === "service_thumbnail_url") {
+            if (!isValidUrl(value)) {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    service_thumbnail_url: "Invalid image URL format"
+                }));
+            } else {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    service_thumbnail_url: ""
+                }));
+            }
+        }
+        
+        // Validates Calendly url
+        if (name === "calendly_event_url") {
+            if (!isValidCalendlyUrl(value)) {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    calendly_event_url: "Invalid Calendly URL format"
+                }));
+            } else {
+                setErrorMessages((prevErrors) => ({
+                    ...prevErrors,
+                    calendly_event_url: ""
+                }));
+            }
+        }
     };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-
-        // Convert price and duration back to Decimal128 format
+        // if any fields have error messages with actual values
+        const hasErrors = Object.values(errorMessages).some((msg) => msg);
+        if (hasErrors) {
+            return;
+        }
+        // converted price and duration to decimal format
         const convertedServicePrice = parseFloat(serviceData.service_price);
         const convertedServiceDuration = parseFloat(serviceData.service_duration);
 
@@ -28,21 +82,15 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
             service_price: convertedServicePrice,
             service_duration: convertedServiceDuration
         };
-
+        
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/update-service/${service._id}/submit`, {serviceData: updatedServiceData, provider_id});
+            const response = await axios.post(`http://localhost:8000/provider/profile-customization/update-service/${service._id}/submit`, {serviceData: updatedServiceData, provider_id}, { withCredentials: true });
             if (response.data.message === "Service updated successfully") {
-                onServiceUpdated(response.data.updatedService, index);  // Trigger the update in ManageServices
+                onServiceUpdated(response.data.updatedService, index);  // triggers update in ManageServices
                 console.log("Response mess: ", response.data.message)
                 console.log("Updates Service on frontend", response.data.updatedService)
-                // setIsEditing(false);
+                setErrorMessages({});
             }
-            
-
-            // console.log(response.data)
-            // if (response.data.message === "Invalid service_price value") {
-            //     setError(response.data.error)
-            // }
             
         } catch (error) {
             console.error('Error updating service:', error);
@@ -50,14 +98,22 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
         }
     };
 
-
+    const handleCancel = () => {
+        // resets form data to the original service data
+        setServiceData({
+            ...service,
+            service_price: service.service_price.$numberDecimal || service.service_price || '',
+            service_duration: service.service_duration.$numberDecimal || service.service_duration || '',
+        });
+        onCancel(); // exits the editing mode by calling parent method
+    };
     const handleDelete = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/delete-service/${service._id}/submit`);
+            const response = await axios.post(`http://localhost:8000/provider/profile-customization/delete-service/${service._id}/submit`,  { withCredentials: true });
             if (response.data.message === "Service deleted successfully") {
-                onServiceDeleted(index);  // Trigger the update in ManageServices
+                onServiceDeleted(index);  // triggers update in ManageServices
             }
             console.log(response.data.serviceData)
         } catch (error) {
@@ -69,7 +125,6 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
     return (
         <>
             {!isEditing ? (
-
                 <div className="service-card">
                     <div className="service-container">
                         <img className="service-img" src={service.service_thumbnail_url} alt="" />
@@ -104,36 +159,32 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
                             <button className="btn" onClick={handleDelete}>Delete Service</button>
                         </div>
                     </div>
-                    
-                    
                 </div>
                     
                     
 
             ) : (
                 <div>
-                   
                     <form id="service-update-form" onSubmit={handleSubmit}>
                         <div id="preview-pic-container">
                             <img className="preview-pic" src={serviceData.service_thumbnail_url} alt="Image Preview" />
                             <div className="image-url-container"><input type="text" name="service_thumbnail_url" value={serviceData.service_thumbnail_url || ''} placeholder="Thumbnail URL" onChange={handleChange} required/></div>
                         </div>
-                        
                         <div className="udpate-inputs">
                             <p style={{color: "red"}}>* All fields are required.</p>
-                            {/* <p>{error}</p> */}
+                            <div className="error-list">
+                                {Object.entries(errorMessages).map(([key, message]) => (
+                                    message && <p key={key} style={{ color: 'red' }}>{message}</p>
+                                ))}
+                            </div>
                             <div className="input"><input type="text" name="service_name" value={serviceData.service_name || ''} placeholder="Service Name" onChange={handleChange} required /></div>
-                            
                             <div className="input">
                                 <input type="text" name="service_price" value={serviceData.service_price} placeholder="Price, e.g. 50" onChange={handleChange} required />
                                 <input type="text" name="service_duration" value={serviceData.service_duration} placeholder="Duration, e.g. 1.5" onChange={handleChange} required />
                             </div>
-                            
-                            
                             <div className="input">
                                 <input type="text" name="service_location" value={serviceData.service_location || ''} placeholder="Address" onChange={handleChange} required/>
                             </div>
-                            
                             <textarea name="service_description" value={serviceData.service_description || ''} placeholder="Service Description (up to 255 characters)" maxLength={255} onChange={handleChange} required />
                             <div className="input calendly-input">
                                 <input type="text" name="calendly_event_url" value={serviceData.calendly_event_url || ''} placeholder="Calendly URL" onChange={handleChange} required/>
@@ -152,14 +203,10 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
                                         <p><strong>4.</strong>	Go back to your <strong>Provider Page Customization</strong> on Creative Collective and paste the copied link into the Calendly event URL field.</p>
                                         <p><strong>5.  That's it! Clients can now book with you directly.</strong></p>
                                     </span>
-                                    
                                 </div>
-                                
-                                
-        
                             </div>
                             <div className="btns-update add-margin-top">
-                                <button type="button" onClick={onCancel}>Cancel</button>
+                                <button type="button" onClick={handleCancel}>Cancel</button>
                                 <button type="submit">Update</button>
                             </div>
                         </div>

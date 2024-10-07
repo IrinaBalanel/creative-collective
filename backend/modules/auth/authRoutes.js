@@ -5,11 +5,11 @@ const jwt = require("jsonwebtoken");
 
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
-    console.log(req.body);
+    console.log("Req body from login route ", req.body);
 
     try {
         const result = await authController.login(email, password);
-        console.log(result.errors);
+        console.log("Result errors from login", result.errors);
         if (result.errors) {
             return res.json({ errors: result.errors });
         }
@@ -24,7 +24,7 @@ router.post("/login", async (req, res) => {
             httpOnly: true, // prevents client-side from accessing the cookie
             maxAge: 24 * 60 * 60 * 1000, // cookie will expire in 1 day and be deleted from browser
         });
-        console.log("this is my cookie", cookie);
+        //console.log("this is my cookie", cookie);
         res.json({ message: "Login successful", user: result.user });
     } catch (error) {
         console.error(error.message);
@@ -34,7 +34,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", async (req, res) => {
     const { firstName, lastName, email, phone, password, role } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
 
     try {
         const result = await authController.register(firstName, lastName, email, phone, password, role);
@@ -79,9 +79,9 @@ router.post("/logout", async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     console.log("Decoded token:", decoded);
     const userId = decoded.id; // decode the token that was created from user info, so it contains id
-    console.log(userId);
+    //console.log(userId);
     let user = await authController.logout(userId);
-    console.log(user);
+    console.log("Logged out user", user);
     if (!user) {
         return res.json({ message: "User not found" });
     }
@@ -91,7 +91,7 @@ router.post("/logout", async (req, res) => {
 
 router.get("/verify-token", async (req, res) => {
     const token = req.cookies.token;
-    console.log("Token:", token); 
+    console.log("Token from verify token:", token); 
     if (!token) {
         return res.json({ message: "No token provided" });
     }
@@ -100,6 +100,7 @@ router.get("/verify-token", async (req, res) => {
         if (!user) {
             return res.json({ message: "User not found" });
         }
+        //console.log("User from verify token:", user); 
         res.json({ user });
     } catch (error) {
         console.error("Token verification failed:", error.message);

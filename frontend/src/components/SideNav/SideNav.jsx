@@ -7,7 +7,7 @@ import { UserContext } from "../../context/UserContext";
 
 export default function SideNav(){
     const { user } = useContext(UserContext);
-    console.log(user._id);
+    //console.log(user._id);
     return(
         <header>
             <nav id="side-nav">
@@ -33,10 +33,18 @@ export default function SideNav(){
                         <div className="side-nav-item">
                             <Link to={`/profile-customization/${user._id}`}><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Profile Customization</Link>
                         </div>
+                        <div className="side-nav-item">
+                            <Link to="/appointments"><i aria-hidden="true" className="bi bi-card-list"></i>Appointments</Link>
+                        </div>
+                        <div className="side-nav-item">
+                            <Link to="/settings"><i aria-hidden="true" className="bi bi-gear-wide-connected"></i>Settings</Link>
+                        </div>
                     </>
                 )}
                 <Logout/>
+                <div style={{color: "white", fontWeight: 400, fontSize: "0.8em", textAlign: "center", alignSelf:"center"}}><p>version 1.0</p></div>
             </nav>
+            
         </header>
 
     )

@@ -18,20 +18,13 @@ export default function Register(){
     const [errorMessages, setErrorMessages] = useState([]);
     const navigate = useNavigate();
     const { login } = useContext(UserContext); 
-    
-    axios.defaults.withCredentials = true; //for token auth
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        setErrorMessages([]); //resets the errors array on submit if there is no more errors
+        setErrorMessages([]); //resets the errors array on submit
 
         let errors = [];
-
-        // var phoneRegEx = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
-        // if(!phoneRegEx.test(phone)){
-        //     errors.push("Please, provide a valid phone number");
-        // }
 
         var passRegEx = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if(!passRegEx.test(password) || !passRegEx.test(confirmPassword)){
@@ -44,7 +37,7 @@ export default function Register(){
 
         if (errors.length > 0) {
             setErrorMessages(errors);
-            return; //doesn't submit form if there are any errors
+            return;
         }
 
         console.log(fName, lName, email, phone, password, role);
@@ -59,9 +52,9 @@ export default function Register(){
                 role
             }, { withCredentials: true });
             const user = response.data.user; // the user object from the data object
-            //OR { user } = response.data; // which is one object named user from the response of the data object
             console.log("Registered user: ", user);
             login(user); // updates context with user data
+            
             // redirects to different home pages depending on the role
             if (user.role === "client") {
                 navigate("/home");
@@ -91,7 +84,6 @@ export default function Register(){
         <div id="register">
             <Link to="/"><LogoBlack/></Link>
             <h1>Register new account</h1>
-            {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
             {errorMessages.length > 0 && (
                 <ul style={{ color: "red" }}>
                     {errorMessages.map((msg, index) => (
@@ -107,7 +99,7 @@ export default function Register(){
                             type="radio" 
                             id="client"
                             value="client"
-                            checked={role === "client"}  // Radio button is checked if the role is "client" 
+                            checked={role === "client"}
                             onChange={(e) => setRole(e.target.value)}
                         />
                         I am a Client
@@ -135,9 +127,7 @@ export default function Register(){
                         value={phone}
                         onChange={(value) => {
                             setPhone(value);
-                            // handleInputChange();
                         }}
-                        // international
                         defaultCountry="CA"
                     />
                 </div>

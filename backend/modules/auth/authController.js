@@ -9,7 +9,7 @@ async function login(email, password){
     const errors = []; // array to store error messages
     try{
         const user = await User.findOne({email}); //checks if the user exists
-        console.log(user);
+        console.log("User from login", user);
         // if (!user || user.status == "deleted"){
         //     errors.push("User with this email doesn't exist");
         // } else if (user && user.status == "blocked") {
@@ -117,8 +117,8 @@ async function register(firstName, lastName, email, phone, password, role){
             process.env.JWT_SECRET_KEY, 
             {expiresIn: "1d"}
         );
-        console.log(token); 
-        console.log(user); 
+        // console.log(token); 
+        // console.log(user); 
 
         return {user, token};
    
@@ -173,12 +173,26 @@ async function verifyToken(token){
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const user = await User.findById(decoded.id);
+        console.log("this is my user from verifyToken", user); 
         return user;
     } catch (error) {
         throw new Error('Invalid token');
     }
     
 }
+
+// async function getUserAndProvider(token){
+//     try {
+//         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+//         const user = await User.findById(decoded.id).populate("providers");
+//         console.log("this is my user from verifyToken", user); 
+//         return user;
+//     } catch (error) {
+//         throw new Error('Invalid token');
+//     }
+    
+// }
+
 
 module.exports = {
     login,

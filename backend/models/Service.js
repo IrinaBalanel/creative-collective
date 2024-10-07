@@ -28,12 +28,6 @@ const ServiceSchema = new mongoose.Schema({
     },
     calendly_event_url: { 
         type: String, 
-        validate: {
-            validator: function(v) {
-            return /^(http|https):\/\/[^ "]+$/.test(v);  // URL validation
-            },
-            message: props => `${props.value} is not a valid URL!`
-        },
         required: true
     },
     provider_id: { 

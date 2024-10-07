@@ -4,6 +4,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import AdminProfileButton from "../../components/AdminProfileButton";
 
 export default function EditClient(){
     const { id } = useParams();
@@ -22,7 +23,7 @@ export default function EditClient(){
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/admin/update-client/${id}`);
+                const response = await axios.get(`http://localhost:8000/admin/update-client/${id}`, { withCredentials: true });
                 const data = response.data;
                 console.log(data);
                 setUser({
@@ -43,21 +44,20 @@ export default function EditClient(){
     
 
 
-    // Handle form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
     
-        // If the name is "email", update the nested user_id object
+        // If the name is "email", updates user_id object
         if (name === "email") {
             setUser((prevState) => ({
                 ...prevState,
                 user_id: {
                     ...prevState.user_id,
-                    email: value  // Update the email inside user_id
+                    email: value  // updates the email inside user_id
                 }
             }));
         } else {
-            // Otherwise, update other fields normally
+            // else, updates other fields normally
             setUser((prevState) => ({
                 ...prevState,
                 [name]: value
@@ -66,25 +66,23 @@ export default function EditClient(){
     };
     
 
-
-    // Separate handler for phone input
     const handlePhoneChange = (value) => {
         setUser((prevState) => ({
             ...prevState,
-            phone_number: value  // Update phone_number field directly
+            phone_number: value  // updates phone_number field directly
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        setErrorMessages([]); //resets the errors array on submit if there is no more errors
+        setErrorMessages([]); //resets the errors array on submit
 
         let errors = [];
 
         if (errors.length > 0) {
             setErrorMessages(errors);
-            return; //doesn't submit form if there are any errors
+            return;
         }
 
         const clientData = {
@@ -98,7 +96,7 @@ export default function EditClient(){
         };
 
         try {
-            const response = await axios.post(`http://localhost:8000/admin/update-client/${id}/submit`, { clientData, userData });
+            const response = await axios.post(`http://localhost:8000/admin/update-client/${id}/submit`, { clientData, userData },  { withCredentials: true });
             console.log(response.data);
 
             navigate("/admin/management-clients");
@@ -124,9 +122,8 @@ export default function EditClient(){
         <div>
             <SideNav/>
             <main className="main">
-
+                <AdminProfileButton/>
                 <h1>Update Client</h1>
-                {/* <p style={{ color: "red" }}>{errorMessage}</p> */}
                 {errorMessages.length > 0 && (
                     <ul style={{ color: "red" }}>
                         {errorMessages.map((msg, index) => (

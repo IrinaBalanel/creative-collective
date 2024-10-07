@@ -11,8 +11,6 @@ export default function AdminLogin(){
     const navigate = useNavigate();
     const { login } = useContext(UserContext); 
 
-    axios.defaults.withCredentials = true; //for token auth
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -20,9 +18,10 @@ export default function AdminLogin(){
             
             const data = response.data;  // the whole data object
             const user = data.user;      // the user object from the data object
-            //OR { user } = response.data; // which is one object named user from the response of the data object
             console.log(user.role)
+
             login(user);
+            
             if (user.role === "admin") {
                 navigate("/admin/dashboard");
             } else {
