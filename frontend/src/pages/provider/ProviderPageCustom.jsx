@@ -7,7 +7,7 @@ import UpdateProviderInfo from "../../components/UpdateProviderInfo/UpdateProvid
 import UpdatePortfolio from "../../components/UpdatePortfolio/UpdatePortfolio";
 import ManageServices from "../../components/ManageServices/ManageServices";
 import ProfileButton from "../../components/ProfileButton"
-
+import UpdateSocials from "../../components/UpdateSocials/UpdateSocials";
 
 export default function ProviderPageCustom(){
 
@@ -73,6 +73,11 @@ export default function ProviderPageCustom(){
                         user_id={providerData.user_id._id}
                         categories={categories}
                         onProviderUpdated={handleProviderUpdate}
+                    />
+
+                    <UpdateSocials
+                        user_id={providerData.user_id._id}
+                        socials={providerData.socials}
                     />
 
                     <ManageServices

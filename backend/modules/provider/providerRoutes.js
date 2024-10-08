@@ -144,4 +144,31 @@ router.get("/dashboard/:user_id", async (req, res) => {
 
 });
 
+
+//UPDATE PROVIDER SOCIALS
+router.post("/profile-customization/update-socials/:user_id/submit", async (req, res) => {
+    console.log("Update provider socials route called");
+    const { user_id } = req.params;
+
+    //console.log("Received user_id:", typeof user_id);
+    const socials = req.body;
+
+    console.log("Received user_id:", user_id); 
+    console.log("Received socials :", socials);
+    try {
+        const response = await providerController.updateProviderSocials(user_id, socials);
+        if (!response) {
+            return res.json({ message: "Failed to update provider" });
+        }
+        const updatedProvider = response.updatedProvider;
+        console.log(updatedProvider);
+        res.json({ message: "Updated successfully", updatedProvider });
+    } catch (error) {
+        console.error(error.message);
+        res.json({ error: "Error" });
+    }
+
+});
+
+
 module.exports = router;

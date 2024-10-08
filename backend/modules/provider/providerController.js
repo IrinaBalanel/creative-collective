@@ -46,8 +46,7 @@ async function getCategories() {
 //UPDATE PROVIDER PERSONAL INFO AND PORTFOLIO
 async function updateProvider(user_id, providerData) {
     try{
-        console.log(providerData);
-        
+        // console.log(providerData);
         if (!mongoose.Types.ObjectId.isValid(user_id)) {
             throw new Error('Invalid provider_id format');
         }
@@ -96,7 +95,7 @@ async function updateProvider(user_id, providerData) {
         if (providerData.phone_number) updateFields.phone_number = providerData.phone_number;
         if (providerData.location) updateFields.location = providerData.location;
         if (providerData.portfolio) updateFields.portfolio = providerData.portfolio;
-
+        
         // updates only the fields that are included
         const updatedProvider = await Provider.findOneAndUpdate(
             { user_id: objectId },
@@ -243,11 +242,49 @@ async function deleteService(service_id) {
     }
 }
 
+// UPDATE PROVIDER SOCIALS
+async function updateProviderSocials(user_id, socials) {
+
+    console.log(socials);
+    try {
+        if (!mongoose.Types.ObjectId.isValid(user_id)) {
+            throw new Error('Invalid provider_id format');
+        }
+        
+        const objectId = new mongoose.Types.ObjectId(user_id);
+
+        // Use the socials object directly for updating
+        const updateFields = {
+            'socials.instagram': socials.instagram || '',
+            'socials.linkedin': socials.linkedin || '',
+            'socials.facebook': socials.facebook || '',
+            'socials.tiktok': socials.tiktok || ''
+        };
+
+        const updatedProvider = await Provider.findOneAndUpdate(
+            { user_id: objectId },
+            { $set: updateFields },
+            { new: true }
+        );
+
+        if (!updatedProvider) {
+            return { message: 'Provider not found' };
+        }
+
+        console.log("Updated provider socials ", updatedProvider);
+        return { updatedProvider };
+
+    } catch (error) {
+        console.error('Error updating provider socials:', error);
+        throw error;
+    }
+}
 module.exports = {
     getProviderByUserId,
     updateProvider,
     getCategories,
     addNewService,
     updateService,
-    deleteService
+    deleteService,
+    updateProviderSocials
 }

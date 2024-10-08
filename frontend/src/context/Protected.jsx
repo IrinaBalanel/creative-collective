@@ -34,6 +34,15 @@ const Protected = ({ children, adminRoute = false,  providerRoute = false, clien
 	if (adminRoute && user.role !== "admin") {
 		return <Navigate to="/admin/login" />;
 	}
+
+
+	if(user.token === null){
+		if (adminRoute) {
+			return <Navigate to="/admin/login" state={{ from: location }} />;
+		} else {
+			return <Navigate to="/login" state={{ from: location }} />;
+		}
+	}
 	return children;
 };
 

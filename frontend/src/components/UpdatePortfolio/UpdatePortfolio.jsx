@@ -131,7 +131,7 @@ export default function UpdatePortfolio({ initialImages = [], user_id }){
                 // View Mode
                 <div className="portfolio-container">
                     {imageUrls.length === 0 || imageUrls.every(url => !url.trim()) ? (
-                        <p>No images in the portfolio yet.</p>
+                        <p><i>No images in the portfolio yet.</i></p>
                     ) : (
                         imageUrls.map((url, index) => (
                             // renders non-empty URLs

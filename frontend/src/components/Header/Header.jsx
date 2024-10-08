@@ -71,22 +71,23 @@ export default function Header(){
                     )}
                     {user && user.role === "provider" && (
                         <ul className="nav-list">
+                            <li className="nav-item provider-access-link">
+                                <Link to="/login" state={{ fromProvider: true }} >Are You a Provider?</Link>
+                            </li>
                             <li className="nav-item">
                                 <Link to="/login" className="btn-light">Login</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link to="/register">Register</Link>
-                            </li>
+                            
                         </ul>
                         
                     )}
                     {user && user.role === "admin" && (
                         <ul className="nav-list">
                             <li className="nav-item">
-                                <Link to="/login" className="btn-light">Login</Link>
+                                <Link to="/login" state={{ fromProvider: true }}>Are You a Provider?</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/register">Register</Link>
+                                <Link to="/login" className="btn-light">Login</Link>
                             </li>
                         </ul>
                         
@@ -95,10 +96,10 @@ export default function Header(){
                     {!user && (
                         <ul className="nav-list">
                             <li className="nav-item">
-                                <Link to="/login" className="btn-light">Login</Link>
+                                <Link to="/login" state={{ fromProvider: true }}>Are You a Provider?</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/register">Register</Link>
+                                <Link to="/login" className="btn-light">Login</Link>
                             </li>
                         </ul>
                         

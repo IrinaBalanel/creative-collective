@@ -36,7 +36,7 @@ export default function BecomeProvider(){
                         </svg>
                         <p>Receive your first booking and grow</p>
                     </div>
-                    <button id="btn-become-provider">Become provider</button>
+                    <button id="btn-become-provider">Join as Provider</button>
                 </div>
                 
             </div>

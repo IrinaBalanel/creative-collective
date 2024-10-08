@@ -1,0 +1,54 @@
+.socials-section{
+    margin: 100px 0 100px;
+}
+.socials-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    gap: 50px;
+    margin: 30px 0;
+}
+
+.social-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background-color: #d9e8ff;
+    border-radius: 10px;
+    padding: 20px 30px;
+    box-shadow: 0px -6px 18.1px 0px rgba(0, 0, 0, 0.061)
+}
+
+.socials-container a{
+    text-decoration: none;
+    color: black;
+}
+
+.social-update{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 40%;
+}
+.input-container{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start ;
+    gap: 20px;
+}
+
+.social-input{
+    /* min-width: 20%; */
+    width: 40%;
+    padding: 15px 25px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+    margin: 10px 0;
+    font: inherit;
+    font-size: 0.9em;
+}
+
+.social-update-form label{
+    font-weight: 600;
+}

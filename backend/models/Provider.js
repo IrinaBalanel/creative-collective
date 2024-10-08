@@ -18,8 +18,27 @@ const ProviderSchema = new mongoose.Schema({
     },
 	creative_category_details: { type: String, default: null },
 	location: { type: String, default: null },
+	socials: { 
+        instagram: { 
+            type: String, 
+            default: null
+        },
+        facebook: { 
+            type: String, 
+            default: null
+        },
+        tiktok: { 
+            type: String, 
+            default: null
+        },
+        linkedin: { 
+            type: String, 
+            default: null
+        }
+    },
 	portfolio: { type: [String], default: [] },
-	verified: { type: Boolean, default: false }
+	verified: { type: Boolean, default: false },
+	calendly_token: { type: String, default: null}
 });
 //virtual population should be used before the Provider model is compiled with mongoose.model().
 ProviderSchema.virtual('services', {

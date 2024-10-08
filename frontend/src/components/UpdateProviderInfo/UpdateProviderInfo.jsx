@@ -149,10 +149,23 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                 // View Mode
                 <>
                     <div className="personal-info view">
-                        <div id="profile-pic"><img src={provider.profile_image} alt={`${provider.first_name} ${provider.last_name}`}/></div>
+                        <div id="profile-pic">
+                            {provider.profile_image ? (
+                                <img src={provider.profile_image} alt={`${provider.first_name} ${provider.last_name}`}/>
+                        
+                            ) : (
+                                <div style={{textAlign: "center", margin: "50px"}}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="116" height="116" fill="currentColor" className="bi bi-card-image" viewBox="0 0 16 16">
+                                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                                        <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54L1 12.5v-9a.5.5 0 0 1 .5-.5z"/>
+                                    </svg>
+                                </div>
+                            )}
+                        </div> 
                         <div>
                             <p><strong>Name:</strong> {provider.first_name} {provider.last_name}</p>
-                            <p><strong>Profession:</strong> {capitalizeFirstLetter(cutS(provider.creative_category_id.category))}</p>
+                            {/* <p><strong>Profession:</strong> {capitalizeFirstLetter(cutS(provider.creative_category_id.category))}</p> */}
+                            <p><strong>Profession:</strong> {provider.creative_category_id ? capitalizeFirstLetter(cutS(provider.creative_category_id.category)) : 'N/A'}</p>
                             <p><strong>Specialization:</strong> {provider.creative_category_details}</p>
                             <p><strong>Phone Number:</strong> {provider.phone_number}</p>
                             <p><strong>Location:</strong> {provider.location}</p>

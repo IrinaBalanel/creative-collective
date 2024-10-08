@@ -21,7 +21,8 @@ export default function ProviderDetails(){
             try {
                 const response = await axios.get(`http://localhost:8000/professionals/${category}/${id}`);
                 const data = response.data;
-                console.log(data);
+                // console.log(data);
+                console.log(data.socials);
                 setProviderData(data);
                 if(!providerData){
                     setError("No professional found")
@@ -50,7 +51,8 @@ export default function ProviderDetails(){
                             phone={providerData.phone_number} 
                             email={providerData.user_id.email} 
                             verified={providerData.verified}
-                            profileImage={providerData.profile_image} 
+                            profileImage={providerData.profile_image}
+                            socials={providerData.socials}
                         />
   
                         {providerData.portfolio && providerData.portfolio.length > 0 && (

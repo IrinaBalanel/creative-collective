@@ -43,7 +43,8 @@
     color: rgb(241, 241, 241);
     cursor: pointer;
     transition: border-color 0.25s;
-    border-color: #646cff;
+    /* border-color: #646cff; */
+    background-color: #646cff;
 }
 
 
@@ -115,4 +116,9 @@
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.provider-access-link a{
+    text-decoration: underline #5b63ff;
+    text-underline-offset: 5px;
 }
