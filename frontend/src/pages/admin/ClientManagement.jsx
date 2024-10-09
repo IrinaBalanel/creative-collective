@@ -15,7 +15,8 @@ export default function Clients(){
                 const response = await axios.get('http://localhost:8000/admin/management-clients',  { withCredentials: true });
                 const data = response.data;
                 setClients(data);
-                console.log(data)
+                // console.log(data)
+                console.log("Response from fetching clients", data)
             } catch (error) {
                 console.log(error);
                 setError("Error");
@@ -23,13 +24,16 @@ export default function Clients(){
         }
         getClients();
     }, []);
-
+    
+    
     const handleUnblock = async (clientId) => {
         try {
-            const response = await axios.post(`http://localhost:8000/admin/unblock-user/${clientId}/submit`,  { withCredentials: true });
+            console.log("client id", clientId);
+            const response = await axios.post(`http://localhost:8000/admin/unblock-user/${clientId}/submit`, {}, { withCredentials: true });
             alert(response.data.message);
+            console.log("updatedUser ", response)
             const updatedUser = response.data.user;
-            console.log("Response from front handle block", response.data.user)
+            // console.log("Response from front handle block", response.data.user)
 
             setClients((prevClients) =>
                 prevClients.map((client) =>

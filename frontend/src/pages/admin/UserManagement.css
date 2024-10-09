@@ -32,3 +32,8 @@
     gap: 5px;
     padding: 10px 0;
 }
+
+.centered-header{
+    text-align: center;
+    padding: 30px 0;
+}

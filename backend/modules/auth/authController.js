@@ -181,17 +181,6 @@ async function verifyToken(token){
     
 }
 
-// async function getUserAndProvider(token){
-//     try {
-//         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-//         const user = await User.findById(decoded.id).populate("providers");
-//         console.log("this is my user from verifyToken", user); 
-//         return user;
-//     } catch (error) {
-//         throw new Error('Invalid token');
-//     }
-    
-// }
 
 
 module.exports = {

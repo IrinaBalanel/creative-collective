@@ -5,10 +5,12 @@
 .categories{
     display: flex;
     justify-content: space-between;
-    gap: 20px;
-    flex-flow: row wrap;
+    gap: 10px;
+    flex-flow: row;
 
 }
+
+
 
 .category h3{
     text-align: center;
@@ -27,6 +29,11 @@
     transition: 1s;
 }
 
+#categories .img-container{
+    max-width: 340px;
+
+}
+
 .img-container{
     max-width: 240px;
 
@@ -35,4 +42,14 @@
 #categories a{
     color:black;
     text-decoration: none;
+}
+
+@media (max-width: 1100px) {
+    .categories{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-flow: row wrap;
+    
+    }
 }

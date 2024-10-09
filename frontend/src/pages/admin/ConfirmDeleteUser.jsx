@@ -58,15 +58,22 @@ export default function ConfirmDeleteUser(){
             <main className="main">
                 <AdminProfileButton/>
                 <div className="confirm-delete">
-                    <h1>Are you sure you want to delete {user.email}?</h1>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" className="bi bi-exclamation-circle" viewBox="0 0 16 16" color="red">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
+                    </svg>
+                    <h1>
+                        
+                        Are you sure you want to delete {user.email}?
+                    </h1>
                     <div className="btns confirm-delete-btns">
                         {/* redirects back depeding on the role of the deleted user */}
                         {user.role == "provider" ? (
-                            <Link to="/admin/management-providers">Cancel</Link>
+                            <Link to="/admin/management-providers" className="btn-link">Cancel</Link>
                         ) : user.role == "client" ? (
-                            <Link to="/admin/management-clients">Cancel</Link>
-                        ) : <Link to="/admin/dashboard">Cancel</Link>}
-                        <button onClick={handleDelete}>Confirm delete</button>
+                            <Link to="/admin/management-clients" className="btn-link">Cancel</Link>
+                        ) : <Link to="/admin/dashboard" className="btn-link">Cancel</Link>}
+                        <button onClick={handleDelete}>Delete</button>
                     </div>
                     
                     <p style={{ color: "red" }}>{message}</p>

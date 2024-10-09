@@ -11,7 +11,6 @@ export default function Header(){
     const [categories, setCategories] = useState([]);
     const { user } = useContext(UserContext);
     //console.log(user);
-    const [error, setError] = useState(null); 
 
     useEffect(() => {
         const getCategories = async () => {
@@ -83,7 +82,7 @@ export default function Header(){
                     )}
                     {user && user.role === "admin" && (
                         <ul className="nav-list">
-                            <li className="nav-item">
+                            <li className="nav-item provider-access-link">
                                 <Link to="/login" state={{ fromProvider: true }}>Are You a Provider?</Link>
                             </li>
                             <li className="nav-item">
@@ -95,7 +94,7 @@ export default function Header(){
 
                     {!user && (
                         <ul className="nav-list">
-                            <li className="nav-item">
+                            <li className="nav-item provider-access-link">
                                 <Link to="/login" state={{ fromProvider: true }}>Are You a Provider?</Link>
                             </li>
                             <li className="nav-item">

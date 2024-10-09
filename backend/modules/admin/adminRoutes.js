@@ -204,7 +204,9 @@ router.post("/block-user/:id/submit", async (req, res) => {
 
 // UNBLOCK USER
 router.post("/unblock-user/:id/submit", async (req, res) => {
+    
     const { id } = req.params;
+    console.log("received user id to unblock: ", id);
     try {
         const user = await adminController.unblockUser(id);
         if (!user) {

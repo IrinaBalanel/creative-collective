@@ -73,7 +73,6 @@ function App() {
               {/* <Route path="/home" element={<LoggedInHome />} /> */}
 
               {/* Provider Routes */}
-              {/* <Route path="/dashboard" element={<Protected adminRoute={false}><ProviderDashboard/></Protected>} /> */}
               <Route path="/dashboard" element={<Protected providerRoute={true}><ProviderDashboard/></Protected> }/>
               <Route path="/profile-customization/:user_id" element={<Protected providerRoute={true}><ProviderPageCustom /></Protected>} />
               <Route path="/settings" element={<Protected providerRoute={true}><ProviderSettings/> </Protected>}/>

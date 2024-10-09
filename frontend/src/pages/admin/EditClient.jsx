@@ -5,6 +5,7 @@ import SideNav from "../../components/SideNav/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import AdminProfileButton from "../../components/AdminProfileButton";
+import { isPhoneNumberValid} from '../../functions';
 
 export default function EditClient(){
     const { id } = useParams();
@@ -80,6 +81,10 @@ export default function EditClient(){
 
         let errors = [];
 
+        if (!isPhoneNumberValid(user.phone_number)) {
+            errors.push("Invalid phone number.");
+        }
+
         if (errors.length > 0) {
             setErrorMessages(errors);
             return;
@@ -123,16 +128,15 @@ export default function EditClient(){
             <SideNav/>
             <main className="main">
                 <AdminProfileButton/>
-                <h1>Update Client</h1>
-                {errorMessages.length > 0 && (
-                    <ul style={{ color: "red" }}>
-                        {errorMessages.map((msg, index) => (
-                            <li key={index}>{msg}</li>
-                        ))}
-                    </ul>
-                )}
-
+                <h1 className="centered-header">Update Client</h1>
                 <form onSubmit={handleSubmit} className="form user">
+                    {errorMessages.length > 0 && (
+                        <ul style={{ color: "red" }}>
+                            {errorMessages.map((msg, index) => (
+                                <li key={index}>{msg}</li>
+                            ))}
+                        </ul>
+                    )}
                     <div className="input">
                         <input type="text" id="fName" placeholder="First Name" name="first_name" value={user.first_name} onChange={handleChange} required/>
                         <input type="text" id="lName" placeholder="Last Name"  name="last_name" value={user.last_name} onChange={handleChange} required/>
@@ -147,7 +151,7 @@ export default function EditClient(){
                         />
                     </div>
                     <div className="btns">
-                        <Link to="/admin/management-clients">Cancel</Link>
+                        <Link to="/admin/management-clients" className="btn-link">Cancel</Link>
                         <button type="submit">Update</button>
                     </div>
                     

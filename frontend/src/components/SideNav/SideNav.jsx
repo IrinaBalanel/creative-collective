@@ -10,40 +10,47 @@ export default function SideNav(){
     //console.log(user._id);
     return(
         <header>
-            <nav id="side-nav">
-                {user && user.role==="admin" ? (
-                    <>
-                        <Link to="/admin/dashboard"><LogoWhite/></Link>
-                        <div className="side-nav-item">
-                            <Link to="/admin/dashboard"><i aria-hidden="true" className="bi bi-clipboard-data"></i>Dashboard</Link>
-                        </div>
-                        <div className="side-nav-item">
-                            <Link to="/admin/management-clients"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Client Management</Link>
-                        </div>
-                        <div className="side-nav-item">
-                            <Link to="/admin/management-providers"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Provider Management</Link>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/dashboard"><LogoWhite/></Link>
-                        <div className="side-nav-item">
-                            <Link to="/dashboard"><i aria-hidden="true" className="bi bi-clipboard-data"></i>Dashboard</Link>
-                        </div>
-                        <div className="side-nav-item">
-                            <Link to={`/profile-customization/${user._id}`}><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Profile Customization</Link>
-                        </div>
-                        <div className="side-nav-item">
-                            <Link to="/appointments"><i aria-hidden="true" className="bi bi-card-list"></i>Appointments</Link>
-                        </div>
-                        <div className="side-nav-item">
-                            <Link to="/settings"><i aria-hidden="true" className="bi bi-gear-wide-connected"></i>Settings</Link>
-                        </div>
-                    </>
-                )}
-                <Logout/>
-                <div style={{color: "white", fontWeight: 400, fontSize: "0.8em", textAlign: "center", alignSelf:"center"}}><p>version 1.0</p></div>
-            </nav>
+            {!user || user.role === "client" ? (
+                <Navigate to="/"/>
+            ) : (
+                <nav id="side-nav">
+                    {user && user.role==="admin" && (
+                        <>
+                            <Link to="/admin/dashboard"><LogoWhite/></Link>
+                            <div className="side-nav-item">
+                                <Link to="/admin/dashboard"><i aria-hidden="true" className="bi bi-clipboard-data"></i>Dashboard</Link>
+                            </div>
+                            <div className="side-nav-item">
+                                <Link to="/admin/management-clients"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Client Management</Link>
+                            </div>
+                            <div className="side-nav-item">
+                                <Link to="/admin/management-providers"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Provider Management</Link>
+                            </div>
+                        </>
+                    )}
+
+                    {user && user.role==="provider" && (
+                        <>
+                            <Link to="/dashboard"><LogoWhite/></Link>
+                            <div className="side-nav-item">
+                                <Link to="/dashboard"><i aria-hidden="true" className="bi bi-clipboard-data"></i>Dashboard</Link>
+                            </div>
+                            <div className="side-nav-item">
+                                <Link to={`/profile-customization/${user._id}`}><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Profile Customization</Link>
+                            </div>
+                            <div className="side-nav-item">
+                                <Link to="/appointments"><i aria-hidden="true" className="bi bi-card-list"></i>Appointments</Link>
+                            </div>
+                            <div className="side-nav-item">
+                                <Link to="/settings"><i aria-hidden="true" className="bi bi-gear-wide-connected"></i>Settings</Link>
+                            </div>
+                        </>
+                    )}
+                    <Logout/>
+                    <div style={{color: "white", fontWeight: 400, fontSize: "0.8em", textAlign: "center", alignSelf:"center"}}><p>version 1.0</p></div>
+                </nav>
+            )}
+            
             
         </header>
 
@@ -51,3 +58,35 @@ export default function SideNav(){
         
 
 }
+
+
+{/* {user && user.role==="admin" ? (
+    <>
+        <Link to="/admin/dashboard"><LogoWhite/></Link>
+        <div className="side-nav-item">
+            <Link to="/admin/dashboard"><i aria-hidden="true" className="bi bi-clipboard-data"></i>Dashboard</Link>
+        </div>
+        <div className="side-nav-item">
+            <Link to="/admin/management-clients"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Client Management</Link>
+        </div>
+        <div className="side-nav-item">
+            <Link to="/admin/management-providers"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Provider Management</Link>
+        </div>
+    </>
+) : (
+    <>
+        <Link to="/dashboard"><LogoWhite/></Link>
+        <div className="side-nav-item">
+            <Link to="/dashboard"><i aria-hidden="true" className="bi bi-clipboard-data"></i>Dashboard</Link>
+        </div>
+        <div className="side-nav-item">
+            <Link to={`/profile-customization/${user._id}`}><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Profile Customization</Link>
+        </div>
+        <div className="side-nav-item">
+            <Link to="/appointments"><i aria-hidden="true" className="bi bi-card-list"></i>Appointments</Link>
+        </div>
+        <div className="side-nav-item">
+            <Link to="/settings"><i aria-hidden="true" className="bi bi-gear-wide-connected"></i>Settings</Link>
+        </div>
+    </>
+)} */}

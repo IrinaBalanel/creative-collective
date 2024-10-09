@@ -31,7 +31,10 @@ export default function Login(){
             
             const user = response.data.user;
             console.log(user.role);  
+            
             login(user); // updates context with user data
+            console.log("User Context after log in:", user);
+            
             // redirects to different home pages depending on the role
             if (user.role === "client") {
                 navigate("/");

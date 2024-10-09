@@ -29,6 +29,6 @@ export function isValidDecimal(decimal){
 }
 
 export function isPhoneNumberValid(phoneNumber){
-    const phoneNumberRegex = /^\+?[1-9]\d{1,14}$/;
+    const phoneNumberRegex = /^\+?[1-9]\d{9,14}$/;
     return phoneNumberRegex.test(phoneNumber);
 }

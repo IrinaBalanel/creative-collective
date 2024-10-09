@@ -26,7 +26,7 @@ export default function Providers(){
 
     const handleUnblock = async (providerId) => {
         try {
-            const response = await axios.post(`http://localhost:8000/admin/unblock-user/${providerId}/submit`,  { withCredentials: true });
+            const response = await axios.post(`http://localhost:8000/admin/unblock-user/${providerId}/submit`, {}, { withCredentials: true });
             console.log("Response from front handle block", response.data)
             alert(response.data.message);
             

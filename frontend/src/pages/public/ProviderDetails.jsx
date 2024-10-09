@@ -4,7 +4,7 @@ import ProviderInfo from "../../components/ProviderInfo/ProviderInfo"
 import { useParams } from 'react-router-dom';
 import {useState, useEffect} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom"
+import {Link, Navigate} from "react-router-dom"
 import ProviderPortfolio from "../../components/ProviderPortfolio/ProviderPortfolio";
 import ProviderServices from "../../components/ProviderServices/ProviderServices";
 
@@ -61,10 +61,12 @@ export default function ProviderDetails(){
                             />
                         ) }
 
-                        {providerData.services && providerData.services.length > 0 && (
+                        {providerData.services && providerData.services.length > 0 ? (
                             <ProviderServices
                                 services={providerData.services}
                             />
+                        ) : (
+                            <Navigate to="/professionals"/>
                         )}
                     </>    
                 ) : (

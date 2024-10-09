@@ -8,17 +8,21 @@
 
 .profile-img-container{
     width: 600px;
-    /* max-width: 600px;
-    min-width: 100px; */
     height: 430px;
 }
+
 
 .profile-img-container img{
     width: 600px;
     height: 430px;
     object-fit: cover;
     border-radius: 10px 0px 0px 10px;
+    /* transition: 2s; */
 }
+
+/* .profile-img-container img:hover{
+    transform: scale(1.1);
+} */
 
 .profile-info{
     height: auto;

@@ -9,7 +9,7 @@ router.post("/login", async (req, res) => {
 
     try {
         const result = await authController.login(email, password);
-        console.log("Result errors from login", result.errors);
+        //console.log("Result errors from login", result.errors);
         if (result.errors) {
             return res.json({ errors: result.errors });
         }

@@ -14,8 +14,12 @@
     border-radius: 10px;
     box-shadow: 0px -6px 18.1px 0px rgba(0, 0, 0, 0.16);
     position: relative;
+    transition: 2s;
 }
 
+.prof-card:hover {
+    transform: scale(1.05);
+}
 #special-height{
     min-height: 48px;
     margin-bottom: 0;

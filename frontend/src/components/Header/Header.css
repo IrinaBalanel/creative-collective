@@ -4,18 +4,17 @@
 }
 .nav{
     display: flex;
-    gap: 60px;
+    /* gap: 10px; */
     flex-flow: row wrap;
     justify-content: space-between;
-    padding: 20px 100px;
+    padding: 20px 80px;
     align-items: center;
-    gap: 60px;
 
 }
 
 .nav-list{
     display: flex;
-    gap: 25px;
+    gap: 10px;
     list-style: none;
     padding: 0;
     
@@ -30,6 +29,12 @@
 
 .logo{
     margin: 0;
+    /* display: flex; */
+    /* width: 200px; */
+}
+
+.logo img{
+    width: 180px;
 }
 
 .btn-light{
@@ -121,4 +126,6 @@
 .provider-access-link a{
     text-decoration: underline #5b63ff;
     text-underline-offset: 5px;
+    font-weight: 500;
+    font-size: 1.1em;
 }

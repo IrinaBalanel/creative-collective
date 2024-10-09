@@ -6,6 +6,8 @@ import PhoneInput from 'react-phone-number-input';
 import LogoBlack from "../../components/LogoBlack";
 import "./Register.css" 
 import { UserContext } from "../../context/UserContext";
+import { isPhoneNumberValid} from '../../functions';
+
 
 export default function Register(){
     const [fName, setFName] = useState("");
@@ -34,7 +36,11 @@ export default function Register(){
         if(password !==confirmPassword){
             errors.push("Passwords don't match.");
         }
-
+        
+        if(!isPhoneNumberValid(phone)){
+            errors.push("Invalid phone number.");
+        }
+        
         if (errors.length > 0) {
             setErrorMessages(errors);
             return;
@@ -57,7 +63,7 @@ export default function Register(){
             
             // redirects to different home pages depending on the role
             if (user.role === "client") {
-                navigate("/home");
+                navigate("/");
                 console.log("Success:", user);
             } else if (user.role === "provider") {
                 navigate("/dashboard");
@@ -84,16 +90,17 @@ export default function Register(){
         <div id="register">
             <Link to="/"><LogoBlack/></Link>
             <h1>Register new account</h1>
-            {errorMessages.length > 0 && (
-                <ul style={{ color: "red" }}>
-                    {errorMessages.map((msg, index) => (
-                        <li key={index}>{msg}</li>
-                    ))}
-                </ul>
-            )}
+            
 
             <form onSubmit={handleSubmit} className="form">
-            <div className="btn-radio">
+                {errorMessages.length > 0 && (
+                    <ul style={{ color: "red" }}>
+                        {errorMessages.map((msg, index) => (
+                            <li key={index}>{msg}</li>
+                        ))}
+                    </ul>
+                )}
+                <div className="btn-radio">
                     <label>
                         <input 
                             type="radio" 

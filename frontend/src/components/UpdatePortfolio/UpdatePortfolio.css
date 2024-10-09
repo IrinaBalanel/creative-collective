@@ -55,3 +55,7 @@
     margin-top: 50px;
     margin-bottom: 150px;
 }
+
+.portfolio-container p{
+    width: 300px;
+}

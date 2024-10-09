@@ -6,6 +6,7 @@ import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import AdminProfileButton from "../../components/AdminProfileButton";
 import "../public/Register.css" 
+import { isPhoneNumberValid} from '../../functions';
 
 export default function NewUser(){
     const [fName, setFName] = useState("");
@@ -33,6 +34,10 @@ export default function NewUser(){
 
         if(password !==confirmPassword){
             errors.push("Passwords don't match.");
+        }
+
+        if(!isPhoneNumberValid(phone)){
+            errors.push("Invalid phone number.");
         }
 
         if (errors.length > 0) {
@@ -86,7 +91,8 @@ export default function NewUser(){
             <SideNav/>
             <main className="main">
                 <AdminProfileButton/>
-                <h1>Create new user</h1>
+                <h1 className="centered-header">Create new user</h1>
+                <form onSubmit={handleSubmit} className="form user">
                     {errorMessages.length > 0 && (
                         <ul style={{ color: "red" }}>
                             {errorMessages.map((msg, index) => (
@@ -94,8 +100,6 @@ export default function NewUser(){
                             ))}
                         </ul>
                     )}
-
-                <form onSubmit={handleSubmit} className="form user">
                     <div className="btn-radio">
                         <label>
                             <input 
@@ -139,8 +143,8 @@ export default function NewUser(){
                         <input type="password" id="password-confirm" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required></input>
                     </div>
                     <div className="btns">
-                        <Link to="/admin/management-clients">Cancel</Link>
-                        <button type="submit">Create new user</button>
+                        <Link to="/admin/management-clients" className="btn-link">Cancel</Link>
+                        <button type="submit">Submit</button>
                     </div>
                     
                 </form>

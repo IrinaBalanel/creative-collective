@@ -4,7 +4,7 @@ import "./ProviderCard.css"
 export default function ProviderCard({ professional }){
     return(
         <> 
-            <Link style={{textDecoration: 0, color:"black"}} to={`/professionals/${professional.creative_category_id.category}/${professional._id}`}>
+            {/* <Link style={{textDecoration: 0, color:"black"}} to={`/professionals/${professional.creative_category_id.category}/${professional._id}`}> */}
                 <div className="prof-card" key={professional._id}>
                     
                     <div className="img-container">
@@ -48,7 +48,7 @@ export default function ProviderCard({ professional }){
                     
                     
                 </div>
-            </Link>
+            {/* </Link> */}
         </>
         
     )

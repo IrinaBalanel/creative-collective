@@ -5,6 +5,7 @@ import SideNav from "../../components/SideNav/SideNav";
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import AdminProfileButton from "../../components/AdminProfileButton";
+import { isPhoneNumberValid} from '../../functions';
 
 export default function EditProvider(){
     const { id } = useParams();
@@ -70,8 +71,9 @@ export default function EditProvider(){
             ...prevState,
             phone_number: value  // updates phone_number field directly
         }));
-    };
 
+    };
+    console.log("Errors: ", errorMessages);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -79,10 +81,16 @@ export default function EditProvider(){
 
         let errors = [];
 
+        if (!isPhoneNumberValid(user.phone_number)) {
+            errors.push("Invalid phone number.");
+        }
+
         if (errors.length > 0) {
             setErrorMessages(errors);
             return; //doesn't submit form if there are any errors
         }
+
+
 
         const providerData = {
             first_name: user.first_name,
@@ -122,16 +130,15 @@ export default function EditProvider(){
             <SideNav/>
             <main className="main">
                 <AdminProfileButton/>
-                <h1>Update Provider</h1>
-                {errorMessages.length > 0 && (
-                    <ul style={{ color: "red" }}>
-                        {errorMessages.map((msg, index) => (
-                            <li key={index}>{msg}</li>
-                        ))}
-                    </ul>
-                )}
-
+                <h1 className="centered-header">Update Provider</h1>
                 <form onSubmit={handleSubmit} className="form user">
+                    {errorMessages.length > 0 && (
+                        <ul style={{ color: "red" }}>
+                            {errorMessages.map((msg, index) => (
+                                <li key={index}>{msg}</li>
+                            ))}
+                        </ul>
+                    )}
                     <div className="input">
                         <input type="text" id="fName" placeholder="First Name" name="first_name" value={user.first_name} onChange={handleChange} required/>
                         <input type="text" id="lName" placeholder="Last Name"  name="last_name" value={user.last_name} onChange={handleChange} required/>
@@ -147,7 +154,7 @@ export default function EditProvider(){
                         
                     </div>
                     <div className="btns">
-                        <Link to="/admin/management-providers">Cancel</Link>
+                        <Link to="/admin/management-providers" className="btn-link">Cancel</Link>
                         <button type="submit">Update</button>
                     </div>
                     

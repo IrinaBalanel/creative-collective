@@ -1,13 +1,18 @@
 #register{
     text-align: center;
     margin: 80px auto;
-    background-color: #dfe3ff;
     background-color: #d9e8ff;
+    /* background-color: #16182A; */
+    /* background-color: #1e2135; */
     border-radius: 10px;
     padding: 50px 160px;
     width: 400px;
 }
 
+#register h1{
+    font-size: 1.5em;
+    margin-top: 50px;
+}
 #register input[type="text"], input[type="password"], input[type="email"]{
     min-width: 180px;
     max-width: 300px;
@@ -17,15 +22,19 @@
     margin: 10px 0;
 }
 
+input[type="radio"]{
+    margin-right: 10px;
+}
+
 #register .PhoneInputInput{
     padding: 15px 20px;
     border: 1px solid #16182A;
     border-radius: 5px;
 }
 
-.form{
+/* .form{
     padding: 30px 0 0;
-}
+} */
 
 input::placeholder{
     font-size: 1.1em;
@@ -43,13 +52,24 @@ input::placeholder{
     align-items: flex-start;
     margin-bottom: 40px;
     gap: 10px;
+    padding: 30px 0 0;
 }
 
 #register button{
     margin: 30px 0;
+    /* border: 2px solid #646cff; */
+    /* background-color: #646cff; */
 }
 
-
+/* #logout button{
+    display: flex;
+    align-self: center;
+    border: 2px solid #646cff;
+} */
+  
+#register button:hover{
+    background-color: #646cff;
+}
 
 /* CREATE AND UPDATE USERS FORMS*/
 .user input[type="text"], input[type="password"], input[type="email"]{
@@ -69,7 +89,7 @@ input::placeholder{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    padding: 40px 0 20px;
+    padding: 0px 0 30px;
     gap: 50px;
 }
 
@@ -81,15 +101,12 @@ input::placeholder{
 .btns{
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    gap: 20px;
+    /* justify-content: space-evenly; */
+    justify-content: center;
+    gap: 30px;
     width: 475px;
 }
 
-.block{
-    width: 50%;
-    justify-content: space-between;
-}
 .confirm-delete{
     display: flex;
     flex-direction: column;
@@ -97,9 +114,37 @@ input::placeholder{
     margin-top: 150px;
 }
 
+.confirm-delete h1{
+    max-width: 700px;
+    text-align: center;
+    font-size: 1.5em;
+    margin: 50px 0 0;
+}
+.confirm-delete-btns{
+    margin: 50px 0 0;
+    display: flex;
+    justify-content: center;
+}
+
 /* SUPPORT PAGES*/
+.block{
+    width: 50%;
+    justify-content: center;
+    margin: 50px 0 0;
+
+}
 .block-reason-area{
-    margin: 50px 0 20px 0;
+    margin: 100px 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.block-reason-area h1{
+    max-width: 700px;
+    text-align: center;
+    font-size: 1.5em;
+    margin: 50px 0 0;
 }
 .block-reason-area p{
     font-weight: 600;
@@ -107,7 +152,7 @@ input::placeholder{
 .txt-block-reason{
     width: 50%;
     height: auto;
-    min-height: 150px;
+    min-height: 100px;
     padding: 20px;
     margin-top: 20px;
     border-radius: 5px;
@@ -115,3 +160,16 @@ input::placeholder{
     font-family: Montserrat, sans-serif;
 }
 
+.btn-link{
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.4em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #16182A;
+    color: rgb(241, 241, 241);
+    cursor: pointer;
+    transition: border-color 0.25s;
+    text-decoration: none;
+}
