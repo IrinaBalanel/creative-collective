@@ -10,6 +10,10 @@ import EditProvider from "./pages/admin/EditProvider"
 import ConfirmBlockUser from "./pages/admin/ConfirmBlockUser"
 import ConfirmDeleteUser from "./pages/admin/ConfirmDeleteUser"
 import ProviderManagement from "./pages/admin/ProviderManagement"
+import FormMessages from "./pages/admin/FormMessages"
+import ProviderVerification from "./pages/admin/ProviderVerification"
+import RejectProviderVerification from "./pages/admin/RejectProviderVerification"
+
 
 // Public pages
 import NotFoundPage from "./pages/public/NotFoundPage"
@@ -28,6 +32,7 @@ import ProviderDashboard from "./pages/provider/ProviderDashboard"
 import ProviderPageCustom from "./pages/provider/ProviderPageCustom"
 import ProviderSettings from "./pages/provider/ProviderSettings"
 import ProviderAppointments from "./pages/provider/ProviderAppointments"
+import ProviderCredentialsVerification from "./pages/provider/ProviderCredentialsVerification"
 
 // Other imports
 import { UserProvider } from './context/UserContext';
@@ -35,8 +40,6 @@ import Protected from "./context/Protected";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 function App() {
-
-  
 
   return (
     <>
@@ -60,6 +63,9 @@ function App() {
               <Route path="/admin/management-providers/block-user/:id" element={<Protected adminRoute={true}><ConfirmBlockUser /></Protected>} />
               <Route path="/admin/management-providers/delete-user/:id" element={<Protected adminRoute={true}><ConfirmDeleteUser /></Protected>} />
               
+              <Route path="/admin/form-messages" element={<Protected adminRoute={true}><FormMessages /></Protected>} />
+              <Route path="/admin/provider-verification" element={<Protected adminRoute={true}><ProviderVerification /></Protected>} />
+              <Route path="/admin/provider-verification/reject-credential/:credential_id" element={<Protected adminRoute={true}><RejectProviderVerification /></Protected>} />
 
               <Route path="/" element={<GuestHome />} />
               <Route path="/login" element={<Login />} />
@@ -77,6 +83,7 @@ function App() {
               <Route path="/profile-customization/:user_id" element={<Protected providerRoute={true}><ProviderPageCustom /></Protected>} />
               <Route path="/settings" element={<Protected providerRoute={true}><ProviderSettings/> </Protected>}/>
               <Route path="/appointments" element={<Protected providerRoute={true}><ProviderAppointments/> </Protected>}/>
+              <Route path="/verification/:id" element={<Protected providerRoute={true}><ProviderCredentialsVerification /></Protected>} />
 
               <Route path="*" element={<NotFoundPage />} />
           </Routes>

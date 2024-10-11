@@ -32,3 +32,8 @@ export function isPhoneNumberValid(phoneNumber){
     const phoneNumberRegex = /^\+?[1-9]\d{9,14}$/;
     return phoneNumberRegex.test(phoneNumber);
 }
+
+export function formatDate(date){
+    const formattedDate = date.split("T")[0];
+    return formattedDate;
+}

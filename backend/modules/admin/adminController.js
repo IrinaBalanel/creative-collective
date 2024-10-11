@@ -3,6 +3,8 @@ const Client = require("../../models/Client");
 const User = require("../../models/User");
 const Provider = require("../../models/Provider");
 const bcrypt = require('bcryptjs');
+const FormMessage = require("../../models/FormMessage");
+const Credential = require("../../models/Credential");
 
 
 /////////////////////////USER MANAGEMENT/////////////////////////
@@ -297,9 +299,146 @@ async function unblockUser(id) {
     }
 }
 
+async function getFormMessages() {
+    try {
+        // Fetch all users from the database
+        const messages = await FormMessage.find()
+        // console.log(messages);
+        const filteredMessages = messages.filter(message => message.isRead === false);
+        //console.log(filteredMessages);
+        return filteredMessages; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function setMsgRead(id) {
+    try {
+        // Fetch all users from the database
+        const message = await FormMessage.findByIdAndUpdate(
+            id, 
+            {
+                isRead: true
+            },
+            { new: true }
+        )
+        console.log(message);
+        return message; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+
+async function getVerificationRequests() {
+    try {
+        // Fetch all users from the database
+        const requests = await Credential.find()
+        .populate({
+            path: 'provider_id',  // foreign key
+            select: 'first_name last_name'  // specific fields
+        })
+        .populate({
+            path: 'category_id',  // foreign key
+            select: 'category'  // specific fields
+        })
+        // console.log(requests);
+        const filteredRequests = requests.filter(request => request.status === "pending");
+        //console.log(filteredRequests);
+        return filteredRequests; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function approveVerifRequest(provider_id, credential_id) {
+    try {
+        const request = await Credential.findByIdAndUpdate(
+            {_id: credential_id}, 
+            {
+                status: "approved"
+            },
+            { new: true }
+        )
+        const verifiedProvider = await Provider.findByIdAndUpdate(
+            {_id: provider_id}, 
+            {
+                verified: true
+            },
+            { new: true }
+        )
+        console.log(request, verifiedProvider);
+        return {request, verifiedProvider}; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function getCredentialById (credential_id) {
+    try {
+        const credential = await Credential.findById(credential_id)
+        .populate({
+            path: 'provider_id',
+            select: 'first_name last_name verified'
+        })
+        .populate({
+            path: 'category_id',
+            select: 'category'
+        })
+        .exec();
+
+        // const provider = await Provider.find(
+        //     {_id : provider_id}
+        // )
+
+        if (!credential || credential.provider_id === null || credential.creative_category_id === null) {
+            return { message: 'Credentials not found' };
+        }
+
+        //console.log('credentials info:', credentials);
+        return credential;
+    } catch (error) {
+        console.error('Error fetching credentials:', error);
+        throw error;
+    }
+};
 
 
 
+
+async function rejectVerifRequest(provider_id, credential_id, feedback) {
+    try {
+        const request = await Credential.findByIdAndUpdate(
+            {_id: credential_id}, 
+            {
+                status: "rejected",
+                review_feedback: feedback
+            },
+            { new: true }
+        )
+        const verifiedProvider = await Provider.findByIdAndUpdate(
+            {_id: provider_id}, 
+            {
+                verified: false
+            },
+            { new: true }
+        )
+        console.log(request, verifiedProvider);
+        return {request, verifiedProvider}; 
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
 module.exports = {
     getClients,
@@ -316,5 +455,12 @@ module.exports = {
     getProviders,
     getProvidersByStatus,
     getProviderById,
-    updateProvider
+    updateProvider,
+
+    getFormMessages,
+    setMsgRead,
+    getVerificationRequests,
+    approveVerifRequest,
+    getCredentialById,
+    rejectVerifRequest
 };

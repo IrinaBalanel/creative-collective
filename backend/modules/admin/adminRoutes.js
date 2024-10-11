@@ -221,4 +221,112 @@ router.post("/unblock-user/:id/submit", async (req, res) => {
 });
 
 
+router.get("/form-messages", async (req, res) => {
+
+    try {
+        const messages = await adminController.getFormMessages();
+        console.log(messages);
+        res.json(messages);
+
+    } catch (error) {
+        console.error(error);
+        res.json({ message: "Server Error" });
+    }
+});
+
+
+router.post("/form-messages/mark-read/:id/submit", async (req, res) => {
+    const { id } = req.params;
+    console.log("Received Message idon backend", id);
+    try {
+        const message = await adminController.setMsgRead(id);
+        
+        if (!message) {
+            return res.json({ message: "Message not found" });
+        }
+        console.log(message);
+        res.json(message);
+    } catch (error) {
+        console.error(error);
+        res.json({ message: "Server Error" });
+    }
+});
+
+
+//PROVIDER VERIFICATION 
+
+router.get("/provider-verification", async (req, res) => {
+
+    try {
+        const requests = await adminController.getVerificationRequests();
+        console.log(requests);
+        res.json(requests);
+
+    } catch (error) {
+        console.error(error);
+        res.json({ message: "Server Error" });
+    }
+});
+
+router.post("/provider-verification/:provider_id/approve-credential/:credential_id/submit", async (req, res) => {
+    console.log("Credential approve verificaiton endpoint has been called")
+    const { provider_id, credential_id } = req.params;
+
+    console.log("Received credential info on backend", credential_id, provider_id);
+    try {
+        const request = await adminController.approveVerifRequest(provider_id, credential_id);
+        
+        if (!request) {
+            return res.json({ message: "Credential not found" });
+        }
+        console.log(request);
+        res.json(request);
+    } catch (error) {
+        console.error(error);
+        res.json({ message: "Server Error" });
+    }
+});
+
+
+
+
+router.get("/provider-verification/reject-credential/:credential_id", async (req, res) => {
+    console.log("Credential get reject verificaiton endpoint has been called")
+    const { credential_id } = req.params;
+
+    console.log("Received credential info on backend", credential_id);
+    try {
+        const request = await adminController.getCredentialById(credential_id);
+        
+        if (!request) {
+            return res.json({ message: "Credential not found" });
+        }
+        console.log("Credential to reject", request);
+        res.json(request);
+    } catch (error) {
+        console.error(error);
+        res.json({ message: "Server Error" });
+    }
+});
+
+router.post("/provider-verification/:provider_id/reject-credential/:credential_id/submit", async (req, res) => {
+    console.log("Credential reject verificaiton endpoint has been called")
+    const { provider_id, credential_id } = req.params;
+    const { feedback } = req.body;
+
+    console.log("Received credential info on backend", credential_id, provider_id, feedback);
+    try {
+        const request = await adminController.rejectVerifRequest(provider_id, credential_id, feedback);
+        
+        if (!request) {
+            return res.json({ message: "Credential not found" });
+        }
+        console.log(request);
+        res.json(request);
+    } catch (error) {
+        console.error(error);
+        res.json({ message: "Server Error" });
+    }
+});
+
 module.exports = router;

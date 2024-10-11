@@ -1,0 +1,222 @@
+import { useParams, useNavigate } from 'react-router-dom';
+import {useState, useEffect} from "react";
+import axios from "axios";
+import {Link} from "react-router-dom"
+import SideNav from "../../components/SideNav/SideNav";
+import ProfileButton from "../../components/ProfileButton"
+import { isValidUrl, formatDate, cutS, capitalizeFirstLetter} from '../../functions';
+import {useContext} from "react";
+import { UserContext } from "../../context/UserContext";
+
+
+export default function ProviderCredentialsVerification(){
+    const [isEditing, setIsEditing] = useState(false);  // edit/view mode
+    const { user } = useContext(UserContext);
+    console.log(user._id);
+    const [errorMessage, setErrorMessage] = useState(); 
+    const [providerId, setProviderId] = useState();
+    const [categoryId, setCategoryId] = useState();
+    const [credentialsAttempts, setCredentialsAttempts] = useState([]);
+   
+    const [file, setFile] = useState("");
+
+
+    useEffect(() => {
+        const getProviderData = async () => {
+            
+            try {
+                const response = await axios.get(`http://localhost:8000/provider/fetch-provider/${user._id}`,  { withCredentials: true });
+                const data = response.data;
+                //console.log(data);
+                setProviderId(data._id);
+                setCategoryId(data.creative_category_id._id);
+                console.log("provider: ", data._id);
+                console.log("category: ", data.creative_category_id._id);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getProviderData();
+    }, [user._id]);
+
+
+    const handleCancel = () => {
+        setIsEditing(false);  // back to view mode
+        setFile("");
+        setErrorMessage("");
+    };
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const credentialData = {
+            category_id: categoryId,
+            provider_id: providerId,
+            file: file
+        }
+        console.log("before sending request for verififcation", credentialData);
+        // if any fields have error messages with actual values
+        
+        // const hasErrors = Object.values(errorMessages).some((msg) => msg);
+        // if (hasErrors) {
+        //     return;
+        // }
+
+        try {
+            const response = await axios.post(`http://localhost:8000/provider/credentials-verification/submit`, {credentialData},  { withCredentials: true });
+            console.log(response.data);
+            if (response.data.message === "Verification was added successfully") {
+                const newCredential = response.data.newVerification;
+                console.log("New Credential from backend:", newCredential);
+                // updates the displayed credentials after adding the new one
+                // setCredentialsAttempts((prevAttempts) => [...prevAttempts, newCredential]);
+                setCredentialsAttempts((prevAttempts) => [
+                    ...prevAttempts,
+                    {
+                        _id: newCredential._id, // Ensure you pass all the necessary fields
+                        provider_id: newCredential.provider_id,
+                        category_id: newCredential.category_id,
+                        file: newCredential.file,
+                        submitted_at: newCredential.submitted_at,
+                        status: newCredential.status,
+                        review_feedback: newCredential.review_feedback,
+                    }
+                ]);
+
+                // Clear the file input
+                setFile("");
+                setIsEditing(false);
+            } else {
+                console.error('Failed to submit verification:', response.data.message);
+            }
+            
+        } catch (error) {
+            console.error('Error: ', error);
+            
+        }
+    };
+
+    useEffect(() => {
+        const getCredentialAttempts = async () => {
+            
+            try {
+                const response = await axios.get(`http://localhost:8000/provider/credentials-verification/attempts-list/${providerId}`,  { withCredentials: true });
+                const data = response.data;
+                setCredentialsAttempts(data);
+                console.log("credentials list: ", data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getCredentialAttempts();
+    }, [providerId]);
+
+    const handleChange = (e) => {
+        const { value } = e.target;
+        setFile(value);
+        // Validate url
+        if (!isValidUrl(value)) {
+            setErrorMessage( "Invalid image URL format");
+        } else {
+            setErrorMessage("");
+        }
+        
+    };
+    return(
+        <>
+        <SideNav/>
+        <main className='main'>
+            
+            <ProfileButton/>
+            <h1 className="dashboard-header-one" style={{textAlign:"center"}}>Credentials Verification</h1>
+            <div className="pers-info">
+                <div className="pers-info customization-head">
+                    <div className="pers-info customization-text">
+                        <h2>How to get Verified?</h2>
+                        <p>To become a verified service provider, send your professional credentials proving your credibility and competency. 
+                        The document will be evaluated by admin. If it is approved, the 'verified' badge will become visible on your provider's page.</p>
+                    </div>
+                    {!isEditing ? (
+                        <div><button onClick={() => setIsEditing(true)}>Apply</button></div>
+                    ) : (
+                        <div></div>
+                    )}
+                </div>
+                
+                
+                {!isEditing ? (
+                    // View Mode
+                    <>
+                        {credentialsAttempts.length > 0 ? (
+                        
+                            <table className="table">
+                                <thead className="head">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Profession</th>
+                                        <th>File</th>
+                                        <th>Submitted At</th>
+                                        <th>Status</th>
+                                        <th>Feedback</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody className="list">
+                                    {Array.isArray(credentialsAttempts) && credentialsAttempts.map((attempt) => (
+                                        <tr key={attempt._id}>
+                                            <td>{attempt.provider_id.first_name} {attempt.provider_id.last_name}</td>
+                                            <td>{capitalizeFirstLetter(cutS(attempt.category_id.category))}</td>
+                                            <td><a href={attempt.file} target="_blank">Click to view file</a></td>
+                                            <td>{formatDate(attempt.submitted_at)}</td>
+                                            {attempt.status === "approved" && (
+                                                <td style={{color: "green"}}>{capitalizeFirstLetter(attempt.status)}</td>
+                                            )}
+                                            {attempt.status === "rejected" && (
+                                                <td style={{color: "red"}}>{capitalizeFirstLetter(attempt.status)}</td>
+                                            )}
+                                            {attempt.status === "pending" && (
+                                                <td style={{color: "blue"}}>{capitalizeFirstLetter(attempt.status)}</td>
+                                            )}
+                                            
+                                            
+                                            {attempt.review_feedback === null ? (
+                                            <td>N/A</td>
+                                                ) : (
+                                                <td className="block-reason-col">{attempt.review_feedback}</td>
+                                            )}
+                                            
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            
+                            </table>
+                        ) : (
+                            <p><i>No submitted credentials yet.</i></p>
+                        )}
+                    </>
+                    
+                ) : (
+                    // Edit Mode
+                    <form onSubmit={handleSubmit}>
+                        <p style={{ color: 'red' }}>{errorMessage}</p>
+                        <div id="preview-pic-container">
+                            <img className="preview-pic" src={file} alt="File Preview" required/>
+                            <div className="input image-url-container">
+                                <input type="text" id="file" placeholder="File URL" name="file" onChange={handleChange} required/>
+                            </div>
+                        </div>
+                        
+                        <div className="btns-update">
+                            <button type="button" onClick={handleCancel}>Cancel</button>
+                            <button type="submit">Save</button>
+                        </div>
+                    </form>
+                )}
+
+            </div>
+        </main>   
+        </>
+        
+    )
+}

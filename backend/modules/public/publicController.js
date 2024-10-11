@@ -2,7 +2,7 @@ const Client = require("../../models/Client");
 const User = require("../../models/User");
 const Provider = require("../../models/Provider");
 const ProviderCategory = require("../../models/ProviderCategory");
-const Service = require("../../models/Service");
+const FormMessage = require("../../models/FormMessage");
 
 async function getCategories() {
     try {
@@ -94,10 +94,31 @@ async function getProfessionalByCatAndId(category, id) {
     }
 }
 
+// CONTACT FORM
+async function contactUs(formData) {
+    try {
+        const newMessage = await FormMessage.create(
+            {
+                full_name: formData.full_name,
+                email: formData.email,
+                message: formData.message,
+            }
+        );
+        
+        console.log("Message added:", newMessage);
+        return { newMessage };
+        
+        
+    } catch (error) {
+        console.error("Error saving message:", error);
+        throw error;
+    }
+}
 
 module.exports = {
     getCategories,
     getAllProfessionals,
     getProfessionalsByCat,
-    getProfessionalByCatAndId
+    getProfessionalByCatAndId,
+    contactUs
 }

@@ -73,4 +73,25 @@ router.get("/professionals/:category/:id", async (req, res) => {
         res.json({ message: "Server Error" });
     }
 });
+
+
+router.post("/contact-us-form/submit", async (req, res) => {
+    console.log("Contact us form route has been called");
+    const { formData } = req.body;
+
+    console.log("Received form data ", formData); 
+    try {
+        const response = await publicController.contactUs(formData);
+        if (!response) {
+            return res.json({ message: "Failed to submit a message" });
+        }
+        const submittedMessage = response.newMessage;
+        console.log("Submitted message", submittedMessage);
+        res.json({ message: "Submitted message successfully", submittedMessage });
+    } catch (error) {
+        console.error(error.message);
+        res.json({ error: "Error" });
+    }
+
+});
 module.exports = router;

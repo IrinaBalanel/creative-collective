@@ -170,5 +170,52 @@ router.post("/profile-customization/update-socials/:user_id/submit", async (req,
 
 });
 
+router.get("/fetch-provider/:user_id", async (req, res) => {
+    const { user_id } = req.params;
+    try {
+        const provider = await providerController.getProviderByUserId(user_id);
+        //console.log("Provider:", provider);
+        res.json(provider);
+
+    } catch (error) {
+        console.error(error);
+        res.json({ message: "Server Error" });
+    }
+});
+
+router.post("/credentials-verification/submit", async (req, res) => {
+    console.log("Add verification request route called");
+
+    const {credentialData} = req.body;
+
+    console.log("Received credential data:", credentialData);
+
+    try {
+        const response = await providerController.submitCredentialVerification(credentialData);
+        if (!response) {
+            return res.json({ message: "Failed to submit credential verification" });
+        }
+        console.log("credential verification ", response.newVerification);
+        const newVerification = response.newVerification;
+        res.json({ message: "Verification was added successfully", newVerification });
+    } catch (error) {
+        console.error(error.message);
+        res.json({ error: "Error" });
+    }
+
+});
+
+router.get("/credentials-verification/attempts-list/:provider_id", async (req, res) => {
+    const { provider_id } = req.params;
+    try {
+        const credentials = await providerController.getCredentialsByProviderId(provider_id);
+        //console.log("Provider:", provider);
+        res.json(credentials);
+
+    } catch (error) {
+        console.error(error);
+        res.json({ message: "Server Error" });
+    }
+});
 
 module.exports = router;

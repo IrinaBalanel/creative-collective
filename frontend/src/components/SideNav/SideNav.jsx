@@ -26,6 +26,12 @@ export default function SideNav(){
                             <div className="side-nav-item">
                                 <Link to="/admin/management-providers"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Provider Management</Link>
                             </div>
+                            <div className="side-nav-item">
+                                <Link to="/admin/form-messages"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Messages & Inquiries</Link>
+                            </div>
+                            <div className="side-nav-item">
+                                <Link to="/admin/provider-verification"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Provider Verification</Link>
+                            </div>
                         </>
                     )}
 
@@ -40,6 +46,9 @@ export default function SideNav(){
                             </div>
                             <div className="side-nav-item">
                                 <Link to="/appointments"><i aria-hidden="true" className="bi bi-card-list"></i>Appointments</Link>
+                            </div>
+                            <div className="side-nav-item">
+                                <Link to={`/verification/${user._id}`}><i aria-hidden="true" className="bi bi-card-list"></i>Credentials Verification</Link>
                             </div>
                             <div className="side-nav-item">
                                 <Link to="/settings"><i aria-hidden="true" className="bi bi-gear-wide-connected"></i>Settings</Link>

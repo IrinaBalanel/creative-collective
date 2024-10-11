@@ -2,7 +2,9 @@ const Provider = require("../../models/Provider");
 const ProviderCategory = require("../../models/ProviderCategory");
 const User = require("../../models/User");
 const Service = require("../../models/Service");
+const Credential = require("../../models/Credential");
 const mongoose = require("mongoose");
+
 
 async function getProviderByUserId (userId) {
     try {
@@ -279,6 +281,59 @@ async function updateProviderSocials(user_id, socials) {
         throw error;
     }
 }
+
+async function submitCredentialVerification(credentialData) {
+    try{
+        console.log("credentialData from function ", credentialData);
+
+        const providerId = new mongoose.Types.ObjectId(credentialData.provider_id);
+        const categoryId = new mongoose.Types.ObjectId(credentialData.category_id);
+
+        const newVerification = await Credential.create(
+            {
+                provider_id: providerId,
+                category_id: categoryId,
+                file: credentialData.file
+            }
+        );
+        const populatedVerification = await Credential.findById(newVerification._id)
+        .populate('provider_id')  // Populate provider details
+        .populate('category_id');  // Populate category details
+
+        console.log(populatedVerification);
+        return { newVerification: populatedVerification };
+    } catch(error) {
+        console.error('Error submiting verification', error);
+        throw error;
+
+    }
+}
+
+async function getCredentialsByProviderId (id) {
+    try {
+        const credentials = await Credential.find({provider_id : id})
+        .populate({
+            path: 'provider_id',
+            select: 'first_name last_name verified'
+        })
+        .populate({
+            path: 'category_id',
+            select: 'category'
+        })
+        .exec();
+        if (!credentials || credentials.provider_id === null || credentials.creative_category_id === null) {
+            return { message: 'Credentials not found' };
+        }
+
+        //console.log('credentials info:', credentials);
+        return credentials;
+    } catch (error) {
+        console.error('Error fetching credentials:', error);
+        throw error;
+    }
+};
+
+
 module.exports = {
     getProviderByUserId,
     updateProvider,
@@ -286,5 +341,7 @@ module.exports = {
     addNewService,
     updateService,
     deleteService,
-    updateProviderSocials
+    updateProviderSocials,
+    submitCredentialVerification,
+    getCredentialsByProviderId
 }

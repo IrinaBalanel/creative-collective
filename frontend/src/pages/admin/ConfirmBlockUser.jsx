@@ -68,6 +68,7 @@ export default function ConfirmBlockUser(){
                     <p>Please provide the reason of blocking:</p>
                     <textarea className="txt-block-reason"
                         value={blockReason}
+                        maxLength={255}
                         onChange={(e) => setBlockReason(e.target.value)}
                         placeholder="Enter the reason of blocking this user..."
                     />
