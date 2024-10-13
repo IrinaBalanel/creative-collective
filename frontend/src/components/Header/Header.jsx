@@ -1,6 +1,7 @@
 import "./Header.css"
 import LogoWhite from "../LogoWhite"
-import {Link} from "react-router-dom"
+// import {Link} from "react-router-dom"
+import {HashLink as Link} from "react-router-hash-link"
 import {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import {capitalizeFirstLetter} from "../../functions"
@@ -11,6 +12,10 @@ export default function Header(){
     const [categories, setCategories] = useState([]);
     const { user } = useContext(UserContext);
     //console.log(user);
+    const [menuVisible, setMenuVisible] = useState(false);
+	const toggleMenu = () => {
+		setMenuVisible(!menuVisible);
+	};
 
     useEffect(() => {
         const getCategories = async () => {
@@ -31,76 +36,76 @@ export default function Header(){
         <header id="header">
             <nav className="nav">
                 <Link to="/"><LogoWhite/></Link>
-                <ul className="nav-list">
+                <button type="button" className={`menu-toggle ${menuVisible ? 'open' : ''}`} onClick={toggleMenu}>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                </button>
+                <ul className={`nav-list ${menuVisible ? 'show' : ''}`}>
                     <li className="nav-item">
                         <Link to="/">Home</Link>
                     </li>
-                    <li className="nav-item">
-                        <div className="dropdown">
-                            <Link className="btn-dropdown">Professionals  <i aria-label="dropdown button" className="bi bi-caret-down-fill"></i></Link>
-                            <div className="dropdown-content">
-                                <Link to="/professionals">All Professionals</Link>
-                                {
-                                    categories.map((category) => (
-                                        <Link to={`/professionals/${category.category}`} key={category._id}>
-                                            {capitalizeFirstLetter(category.category)}
-                                        </Link>
-                                    ))
-                                }
-                            </div>
+                    <li className="nav-item dropdown">
+                        <Link className="btn-dropdown">Professionals <i aria-label="dropdown button" className="bi bi-caret-down-fill"></i></Link>
+                        <div className="dropdown-content">
+                            <Link to="/professionals">All Professionals</Link>
+                            {
+                                categories.map((category) => (
+                                    <Link to={`/professionals/${category.category}`} key={category._id}>
+                                        {capitalizeFirstLetter(category.category)}
+                                    </Link>
+                                ))
+                            }
                         </div>
                     </li>
                     <li className="nav-item">
-                        <Link to="/#contact">Contact</Link>
+                        <Link smooth to="/#contact">Contact</Link>
                     </li>
 
                     {user && user.role === "client" && (
                         <>
                             <li className="nav-item">
-                                <Link to="/appointments" className="">Appointments</Link>
+                                <Link to={`/profile/${user._id}`} className="">My Favorites</Link>
                             </li>
-                            <li className="nav-item">
-                                    <Link to="/profile" className="">Profile</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Logout/>
-                            </li>
+                            {/* <li className="nav-item logout-small-menu">
+                                
+                            </li> */}
+                            <Logout/>
                         </>
                         
                     )}
                     {user && user.role === "provider" && (
-                        <ul className="nav-list">
+                        <>
                             <li className="nav-item provider-access-link">
-                                <Link to="/login" state={{ fromProvider: true }} >Are You a Provider?</Link>
+                                <Link to="/login" state={{ fromProvider: true }} >Already a Provider?</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to="/login" className="btn-light">Login</Link>
                             </li>
-                            
-                        </ul>
+                        </>
                         
                     )}
                     {user && user.role === "admin" && (
-                        <ul className="nav-list">
+                        <>
                             <li className="nav-item provider-access-link">
-                                <Link to="/login" state={{ fromProvider: true }}>Are You a Provider?</Link>
+                                <Link to="/login" state={{ fromProvider: true }}>Already a Provider?</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to="/login" className="btn-light">Login</Link>
                             </li>
-                        </ul>
+                        </>
                         
                     )}
 
                     {!user && (
-                        <ul className="nav-list">
-                            <li className="nav-item provider-access-link">
-                                <Link to="/login" state={{ fromProvider: true }}>Are You a Provider?</Link>
+                        <>
+                        <li className="nav-item provider-access-link">
+                                <Link to="/login" state={{ fromProvider: true }}>Already a Provider?</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to="/login" className="btn-light">Login</Link>
                             </li>
-                        </ul>
+                        </>
                         
                     )}
                     
@@ -111,5 +116,4 @@ export default function Header(){
             </nav>
         </header>
     )
-
 }

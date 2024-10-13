@@ -12,8 +12,13 @@
     height: 250px;
     object-fit: cover;
     border-radius: 10px;
+    transition: 0.5s;
 }
 
+#profile-pic img:hover{
+    transform: scale(1.03);
+    box-shadow: 0px 6px 10.1px 0px rgba(0, 0, 0, 0.16);
+}
 .personal-info{
     display: flex;
     gap: 50px;

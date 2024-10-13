@@ -2,26 +2,23 @@ const express = require("express");
 const router = express.Router();
 const publicController = require("./publicController");
 
-// Routes to display users on /admin page
 router.get("/", async (req, res) => {
     try {
-        // Fetch users using the controller
         const categories = await publicController.getCategories();
         //console.log(categories);
         res.json(categories);
 
     } catch (error) {
         console.error(error);
-        res.json({ message: "Server Error" });
+        res.json({ message: "Error" });
     }
 });
 
 
 router.get("/professionals", async (req, res) => {
     try {
-        // Fetch users using the controller
         const professionals = await publicController.getAllProfessionals();
-        console.log(professionals);
+        //console.log(professionals);
         if(!professionals){
             res.json({ message: "No professionals found"});
         }
@@ -29,7 +26,7 @@ router.get("/professionals", async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.json({ message: "Server Error" });
+        res.json({ message: "Error" });
     }
 });
 
@@ -47,7 +44,7 @@ router.get("/professionals/:category", async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.json({ message: "Server Error" });
+        res.json({ message: "Error" });
     }
 });
 
@@ -57,7 +54,7 @@ router.get("/professionals/:category/:id", async (req, res) => {
         const { category, id } = req.params;
         
         const professional = await publicController.getProfessionalByCatAndId(category, id);
-        console.log(professional);
+        //console.log(professional);
         
         if(!professional){
             return res.json({ message: "No professional found"});
@@ -76,17 +73,17 @@ router.get("/professionals/:category/:id", async (req, res) => {
 
 
 router.post("/contact-us-form/submit", async (req, res) => {
-    console.log("Contact us form route has been called");
+    //console.log("Contact us form route has been called");
     const { formData } = req.body;
 
-    console.log("Received form data ", formData); 
+    //console.log("Received form data ", formData); 
     try {
         const response = await publicController.contactUs(formData);
         if (!response) {
             return res.json({ message: "Failed to submit a message" });
         }
         const submittedMessage = response.newMessage;
-        console.log("Submitted message", submittedMessage);
+        //console.log("Submitted message", submittedMessage);
         res.json({ message: "Submitted message successfully", submittedMessage });
     } catch (error) {
         console.error(error.message);

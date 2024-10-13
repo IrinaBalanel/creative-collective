@@ -27,7 +27,7 @@ export const UserProvider = ({ children }) => {
                 if (response.data.user) {
                     setUser(response.data.user);
                     setLoading(false);
-                    console.log("User verified with context: ", response.data.user);
+                    //console.log("User verified with context: ", response.data.user);
                 } else{
                     console.log(response.data.message);
                     setUser(null);

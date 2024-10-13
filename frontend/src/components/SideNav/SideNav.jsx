@@ -27,10 +27,10 @@ export default function SideNav(){
                                 <Link to="/admin/management-providers"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Provider Management</Link>
                             </div>
                             <div className="side-nav-item">
-                                <Link to="/admin/form-messages"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Messages & Inquiries</Link>
+                                <Link to="/admin/form-messages"><i aria-hidden="true" className="bi bi-envelope-arrow-down"></i>Messages & Inquiries</Link>
                             </div>
                             <div className="side-nav-item">
-                                <Link to="/admin/provider-verification"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Provider Verification</Link>
+                                <Link to="/admin/provider-verification"><i aria-hidden="true" className="bi bi-shield-check"></i>Provider Verification</Link>
                             </div>
                         </>
                     )}
@@ -45,13 +45,13 @@ export default function SideNav(){
                                 <Link to={`/profile-customization/${user._id}`}><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Profile Customization</Link>
                             </div>
                             <div className="side-nav-item">
-                                <Link to="/appointments"><i aria-hidden="true" className="bi bi-card-list"></i>Appointments</Link>
+                                <Link to={`/appointments/${user._id}`}><i aria-hidden="true" className="bi bi-card-list"></i>Appointments</Link>
                             </div>
                             <div className="side-nav-item">
-                                <Link to={`/verification/${user._id}`}><i aria-hidden="true" className="bi bi-card-list"></i>Credentials Verification</Link>
+                                <Link to={`/verification/${user._id}`}><i aria-hidden="true" className="bi bi-shield-check"></i>Credentials Verification</Link>
                             </div>
                             <div className="side-nav-item">
-                                <Link to="/settings"><i aria-hidden="true" className="bi bi-gear-wide-connected"></i>Settings</Link>
+                                <Link to={`/settings/${user._id}`}><i aria-hidden="true" className="bi bi-gear-wide-connected"></i>Settings</Link>
                             </div>
                         </>
                     )}
@@ -67,35 +67,3 @@ export default function SideNav(){
         
 
 }
-
-
-{/* {user && user.role==="admin" ? (
-    <>
-        <Link to="/admin/dashboard"><LogoWhite/></Link>
-        <div className="side-nav-item">
-            <Link to="/admin/dashboard"><i aria-hidden="true" className="bi bi-clipboard-data"></i>Dashboard</Link>
-        </div>
-        <div className="side-nav-item">
-            <Link to="/admin/management-clients"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Client Management</Link>
-        </div>
-        <div className="side-nav-item">
-            <Link to="/admin/management-providers"><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Provider Management</Link>
-        </div>
-    </>
-) : (
-    <>
-        <Link to="/dashboard"><LogoWhite/></Link>
-        <div className="side-nav-item">
-            <Link to="/dashboard"><i aria-hidden="true" className="bi bi-clipboard-data"></i>Dashboard</Link>
-        </div>
-        <div className="side-nav-item">
-            <Link to={`/profile-customization/${user._id}`}><i aria-hidden="true" className="bi bi-person-lines-fill"></i>Profile Customization</Link>
-        </div>
-        <div className="side-nav-item">
-            <Link to="/appointments"><i aria-hidden="true" className="bi bi-card-list"></i>Appointments</Link>
-        </div>
-        <div className="side-nav-item">
-            <Link to="/settings"><i aria-hidden="true" className="bi bi-gear-wide-connected"></i>Settings</Link>
-        </div>
-    </>
-)} */}

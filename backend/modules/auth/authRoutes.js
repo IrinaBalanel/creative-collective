@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
-    console.log("Req body from login route ", req.body);
+    //console.log("Req body from login route ", req.body);
 
     try {
         const result = await authController.login(email, password);
@@ -16,7 +16,7 @@ router.post("/login", async (req, res) => {
         const token = result.token;
         console.log("this is my token", token);
         const user = result.user;
-        // Check if token or user is undefined before proceeding
+        // Checks if token or user is undefined before proceeding
         if (!token || !user) {
             return res.json({ message: "Login failed. Please try again." });
         }

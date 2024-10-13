@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import SideNav from "../../components/SideNav/SideNav";
 import "./UserManagement.css"
 import AdminProfileButton from "../../components/AdminProfileButton";
+import { capitalizeFirstLetter } from "../../functions";
 
 export default function Clients(){
     const [clients, setClients] = useState([]);
@@ -19,7 +20,7 @@ export default function Clients(){
                 console.log("Response from fetching clients", data)
             } catch (error) {
                 console.log(error);
-                setError("Error");
+                setError("Error fetching clients");
             }
         }
         getClients();
@@ -30,7 +31,7 @@ export default function Clients(){
         try {
             console.log("client id", clientId);
             const response = await axios.post(`http://localhost:8000/admin/unblock-user/${clientId}/submit`, {}, { withCredentials: true });
-            alert(response.data.message);
+            // alert(response.data.message);
             console.log("updatedUser ", response)
             const updatedUser = response.data.user;
             // console.log("Response from front handle block", response.data.user)
@@ -79,9 +80,7 @@ export default function Clients(){
                 <table className="table">
                     <thead className="head">
                         <tr>
-                            {/* <th>Client ID</th> */}
                             <th>Name</th>
-                            {/* <th>Last name</th> */}
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Status</th>
@@ -93,29 +92,31 @@ export default function Clients(){
                         {
                             clients.map((client) => (
                                 <tr key={client._id}>
-                                    {/* <td className="id-col">{formatId(client._id)}</td> */}
                                     <td>{client.first_name} {client.last_name}</td>
-                                    {/* <td></td> */}
                                     <td>{client.user_id.email}</td>
                                     <td>{client.phone_number}</td>
-                                    <td>{client.user_id.status}</td>
+                                    {client.user_id.status === "blocked" ? (
+                                        <td style={{color: "red", fontWeight: 500}}>{capitalizeFirstLetter(client.user_id.status)}</td>
+                                    ) : (
+                                        <td style={{color: "green", fontWeight: 500}}>{capitalizeFirstLetter(client.user_id.status)}</td>
+                                    )}
                                     {client.user_id.blockReason === null ? (
                                     <td>N/A</td>
                                         ) : (
                                         <td className="block-reason-col">{client.user_id.blockReason}</td>
                                     )}
-                                    <td>
+                                    <td id="actions-col">
                                         <div className="actions-col">
-                                            <Link to={`/admin/management-clients/update-client/${client._id}`}><button>Update</button></Link>
+                                            <Link to={`/admin/management-clients/update-client/${client._id}`}><button aria-label="Edit" title="Edit"><i className="bi bi-pencil-fill"></i></button></Link>
                                             {/* Conditional button rendering if the user is blocked */}
                                             {client.user_id.status === "active" ? (
                                                 <Link to={`/admin/management-clients/block-user/${client.user_id._id}`}>
-                                                    <button>Block</button>
+                                                    <button aria-label="Block" title="Block"><i className="bi bi-ban"></i></button>
                                                 </Link>
                                             ) : (
-                                                <button onClick={() => handleUnblock(client.user_id._id)}>Unblock</button>
+                                                <button onClick={() => handleUnblock(client.user_id._id)} aria-label="Unblock" title="Unblock"><i className="bi bi-check-circle-fill"></i></button>
                                             )}
-                                            <Link to={`/admin/management-clients/delete-user/${client.user_id._id}`}><button>Delete</button></Link>
+                                            <Link to={`/admin/management-clients/delete-user/${client.user_id._id}`}><button aria-label="Delete" title="Delete"><i className="bi bi-trash3-fill"></i></button></Link>
                                         </div>
                                     </td>
                                 </tr>

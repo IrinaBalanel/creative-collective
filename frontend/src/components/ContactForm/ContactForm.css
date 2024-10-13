@@ -8,13 +8,14 @@
 }
 
 
-.contact-from-section input[type="email"], input[type="text"]{
+.contact-form-section input[type="email"], input[type="text"]{
     min-width: 180px;
     max-width: 300px;
     padding: 15px 20px;
     border: 1px solid #16182A;
     border-radius: 5px;
     margin: 10px 0;
+    font-family: inherit;
 }
 
 #message{
@@ -31,19 +32,25 @@
 #contact-form{
     display: flex;
     flex-direction: column;
-    margin: 0 130px 0 0;
+    /* margin: 0 130px 0 0; */
+    /* padding: 100px; */
+    border-radius: 10px;
+    /* background: linear-gradient(to right, #24c6dc, #514a9d); */
 }
 
 .contact-form-section{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
     gap: 20px;
-    margin: 150px 0;
+    margin-bottom: 100px;
+    
 }
 .contact-form-text{
     max-width: 400px;
+    /* margin-left: 50px; */
 }
 /* .contact-form-section p{
     max-width: 60%;
@@ -57,9 +64,30 @@
     display: flex;
     align-items: center;
     text-decoration: none;
+    color:#16182A;
 }
 
 #btn-submit-msg{
     width: 100%;
     padding: 13px 20px;
 }
+
+/* #contact{
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 10px 10px 0;
+    
+}
+
+#gradient{
+    position: absolute;
+    width: 800px;
+    top: 8%;
+    right: 0%;
+    z-index: -1;
+    border-radius: 0 10px 10px 0;
+} */
+
+/* #gradient img{
+    box-shadow: 0px 6px 10.1px 0px rgba(0, 0, 0, 0.16);
+} */

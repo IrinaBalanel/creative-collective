@@ -23,10 +23,10 @@ async function getProviderByUserId (userId) {
             return { message: 'Provider not found' };
         }
 
-        console.log('Provider info:', provider);
+        //console.log('Provider info:', provider);
         return provider;
     } catch (error) {
-        console.error('Error fetching provider:', error);
+        console.error(error);
         throw error;
     }
 };
@@ -34,9 +34,11 @@ async function getProviderByUserId (userId) {
 
 async function getCategories() {
     try {
-        // Fetch all users from the database
         const categories = await ProviderCategory.find()
         //console.log(categories);
+        if (!categories) {
+            return { message: 'Categories not found' };
+        }
         return categories; 
         
     } catch (error) {
@@ -45,6 +47,7 @@ async function getCategories() {
     }
 }
 
+///////////////////////// PROVIDER PAGE CUSTOMIZATION /////////////////////////
 //UPDATE PROVIDER PERSONAL INFO AND PORTFOLIO
 async function updateProvider(user_id, providerData) {
     try{
@@ -106,25 +109,24 @@ async function updateProvider(user_id, providerData) {
         ).populate("creative_category_id");
 
         if (!updatedProvider) {
-            return { message: 'Provider not found' };
+            return { message: 'Provider not found or failed to update' };
         }
         // console.log("Updated category id ", updatedProvider.creative_category_id);
-        console.log("Updated provider pers info ", updatedProvider);
+        //console.log("Updated provider pers info ", updatedProvider);
         return { updatedProvider };
 
     } catch (error) {
-        console.error('Error updating provider:', error);
+        console.error(error);
         throw error;
     }
 }
 
-
-
+///////////////////////// SERVICES /////////////////////////
 //ADD NEW SERVICE
 async function addNewService(provider_id, serviceData) {
     try{
-        console.log("Service Data from function ", serviceData);
-        console.log("Provider ID ", provider_id);
+        //console.log("Service Data from function ", serviceData);
+        //console.log("Provider ID ", provider_id);
         
         if (!mongoose.Types.ObjectId.isValid(provider_id)) {
             throw new Error('Invalid provider_id format');
@@ -134,10 +136,10 @@ async function addNewService(provider_id, serviceData) {
         const price = serviceData.service_price;
         const duration = serviceData.service_duration;
 
-        console.log("service_price (before conversion):", price, "typeof:", typeof price);
-        console.log("service_duration (before conversion):", duration, "typeof:", typeof duration);
+        //console.log("service_price (before conversion):", price, "typeof:", typeof price);
+        //console.log("service_duration (before conversion):", duration, "typeof:", typeof duration);
 
-        // Validate that the service_price and service_duration are valid numbers
+        // checks if the service_price and service_duration are valid numbers
         if (!price || isNaN(price)) {
             throw new Error('Invalid service_price value');
         }
@@ -146,12 +148,11 @@ async function addNewService(provider_id, serviceData) {
             throw new Error('Invalid service_duration value');
         }
         
-        // Validate if fields are missing or undefined
+        // validation against missing fields or undefined
         if (!serviceData.service_name || !serviceData.service_description || !serviceData.service_thumbnail_url || !serviceData.service_location || !serviceData.calendly_event_url) {
             throw new Error("Missing required fields");
         }
-        console.log("My submitted new service: ", serviceData.service_description);
-
+        //console.log("My submitted new service: ", serviceData.service_description);
 
         const newService = await Service.create(
             {
@@ -165,10 +166,10 @@ async function addNewService(provider_id, serviceData) {
                 calendly_event_url: serviceData.calendly_event_url
             }
         );
-        console.log(newService);
+        //console.log(newService);
         return { newService };
     } catch(error) {
-        console.error('Error addin service ', error);
+        console.error(error);
         throw error;
 
     }
@@ -176,9 +177,9 @@ async function addNewService(provider_id, serviceData) {
 // UPDATE SERVICE
 async function updateService(provider_id, service_id, serviceData) {
     try{
-        console.log("Provider ID ", provider_id);
-        console.log("Service ID ", service_id);
-        console.log("Service data ", serviceData);
+        // console.log("Provider ID ", provider_id);
+        // console.log("Service ID ", service_id);
+        // console.log("Service data ", serviceData);
         
         // converts the user_id string to ObjectId
         const providerId = new mongoose.Types.ObjectId(provider_id);
@@ -187,10 +188,10 @@ async function updateService(provider_id, service_id, serviceData) {
         const price = serviceData.service_price;
         const duration = serviceData.service_duration;
 
-        console.log("service_price (before conversion):", price, "typeof:", typeof price);
-        console.log("service_duration (before conversion):", duration, "typeof:", typeof duration);
+        // console.log("service_price (before conversion):", price, "typeof:", typeof price);
+        // console.log("service_duration (before conversion):", duration, "typeof:", typeof duration);
 
-        // check if they're valid numbers
+        // checks if valid numbers
         if (!price || isNaN(price)) {
             throw new Error('Invalid service_price value');
         }
@@ -216,10 +217,10 @@ async function updateService(provider_id, service_id, serviceData) {
             throw new Error('Service not found or failed to update');
         }
 
-        console.log(updatedService);
+        //console.log(updatedService);
         return { updatedService };
     } catch(error) {
-        console.error('Error addin service ', error);
+        console.error(error);
         throw error;
 
     }
@@ -238,16 +239,17 @@ async function deleteService(service_id) {
         //console.log(deletedService);
         return { deletedService };
     } catch(error) {
-        console.error('Error addin service ', error);
+        console.error(error);
         throw error;
 
     }
 }
 
+
 // UPDATE PROVIDER SOCIALS
 async function updateProviderSocials(user_id, socials) {
 
-    console.log(socials);
+    //console.log(socials);
     try {
         if (!mongoose.Types.ObjectId.isValid(user_id)) {
             throw new Error('Invalid provider_id format');
@@ -255,7 +257,6 @@ async function updateProviderSocials(user_id, socials) {
         
         const objectId = new mongoose.Types.ObjectId(user_id);
 
-        // Use the socials object directly for updating
         const updateFields = {
             'socials.instagram': socials.instagram || '',
             'socials.linkedin': socials.linkedin || '',
@@ -270,21 +271,22 @@ async function updateProviderSocials(user_id, socials) {
         );
 
         if (!updatedProvider) {
-            return { message: 'Provider not found' };
+            return { message: 'Provider not found or failed to update' };
         }
 
-        console.log("Updated provider socials ", updatedProvider);
+        //console.log("Updated provider socials ", updatedProvider);
         return { updatedProvider };
 
     } catch (error) {
-        console.error('Error updating provider socials:', error);
+        console.error(error);
         throw error;
     }
 }
 
+///////////////////////// PROVIDER VERIFICATION /////////////////////////
 async function submitCredentialVerification(credentialData) {
     try{
-        console.log("credentialData from function ", credentialData);
+        //console.log("credentialData from function ", credentialData);
 
         const providerId = new mongoose.Types.ObjectId(credentialData.provider_id);
         const categoryId = new mongoose.Types.ObjectId(credentialData.category_id);
@@ -300,18 +302,19 @@ async function submitCredentialVerification(credentialData) {
         .populate('provider_id')  // Populate provider details
         .populate('category_id');  // Populate category details
 
-        console.log(populatedVerification);
+        //console.log(populatedVerification);
         return { newVerification: populatedVerification };
     } catch(error) {
-        console.error('Error submiting verification', error);
+        console.error(error);
         throw error;
 
     }
 }
 
-async function getCredentialsByProviderId (id) {
+async function getCredentialsByProviderId (providerId) {
+    console.log("Provider id from function credemrials", providerId);
     try {
-        const credentials = await Credential.find({provider_id : id})
+        const credentials = await Credential.find({provider_id : providerId})
         .populate({
             path: 'provider_id',
             select: 'first_name last_name verified'
@@ -328,20 +331,59 @@ async function getCredentialsByProviderId (id) {
         //console.log('credentials info:', credentials);
         return credentials;
     } catch (error) {
-        console.error('Error fetching credentials:', error);
+        console.error(error);
         throw error;
     }
 };
+
+////// CALENDLY API ////////
+async function getProviderTokenByUserId (userId) {
+    try {
+        const provider = await Provider.findOne(
+            { user_id: userId } , "calendly_token"
+        )
+        if (!provider || provider.user_id === null) {
+            return { message: 'Provider not found' };
+        }
+        //console.log('Provider info:', provider);
+        return provider;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+async function submitToken(userId, token) {
+    try{
+        const newToken = await Provider.findOneAndUpdate(
+
+            {user_id: userId},
+            {calendly_token: token},
+            { new: true }
+        );
+        return { newToken };
+    } catch(error) {
+        console.error(error);
+        throw error;
+
+    }
+}
 
 
 module.exports = {
     getProviderByUserId,
     updateProvider,
     getCategories,
+
     addNewService,
     updateService,
     deleteService,
+
     updateProviderSocials,
+
     submitCredentialVerification,
-    getCredentialsByProviderId
+    getCredentialsByProviderId,
+
+    getProviderTokenByUserId,
+    submitToken
 }

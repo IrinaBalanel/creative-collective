@@ -11,7 +11,6 @@ const Credential = require("../../models/Credential");
 //////////CLIENT/////////
 async function getClients() {
     try {
-        // Fetch all users from the database
         const clients = await Client.find()
         .populate({
             path: 'user_id',  // foreign key
@@ -31,7 +30,6 @@ async function getClients() {
 
 async function getClientsByStatus(statuses) {
     try {
-        // Fetch all users from the database
         const clients = await Client.find()
         .populate({
             path: 'user_id',  // foreign key
@@ -52,14 +50,13 @@ async function getClientsByStatus(statuses) {
 
 async function getClientById(id) {
     try {
-        // Fetch all users from the database
         const client = await Client.findById(id)
         .populate({
           path: 'user_id',  // foreign key
           select: 'email'  // specific fields
         })
         .exec();
-        console.log(client);
+        //console.log(client);
         return client; 
         
     } catch (error) {
@@ -67,7 +64,6 @@ async function getClientById(id) {
         throw error;
     }
 }
-
 
 
 // UPDATE CLIENT
@@ -79,7 +75,7 @@ async function updateClient(id, clientData, userData) {
             phone_number: clientData.phone_number
         }, { new: true });
 
-        // Update the User information using the user_id from Client
+        // updates user info using the user_id from client
         const updatedUser = await User.findByIdAndUpdate(updatedClient.user_id, {
             email: userData.email
         }, { new: true });
@@ -95,7 +91,6 @@ async function updateClient(id, clientData, userData) {
 //////////PROVIDER/////////
 async function getProviders() {
     try {
-        // Fetch all users from the database
         const providers = await Provider.find()
         .populate({
             path: 'user_id',  // foreign key
@@ -106,7 +101,6 @@ async function getProviders() {
         const filteredClients = providers.filter(provider => provider.user_id !== null);
         // console.log(filteredClients);
         return filteredClients; 
-        
     } catch (error) {
         console.error(error);
         throw error;
@@ -115,7 +109,6 @@ async function getProviders() {
 
 async function getProvidersByStatus(statuses) {
     try {
-        // Fetch all users from the database
         const providers = await Provider.find()
         .populate({
             path: 'user_id',  // foreign key
@@ -127,7 +120,6 @@ async function getProvidersByStatus(statuses) {
         const filteredClients = providers.filter(provider => provider.user_id !== null);
         // console.log(filteredClients);
         return filteredClients; 
-        
     } catch (error) {
         console.error(error);
         throw error;
@@ -136,16 +128,14 @@ async function getProvidersByStatus(statuses) {
 
 async function getProviderById(id) {
     try {
-        // Fetch all users from the database
         const provider = await Provider.findById(id)
         .populate({
           path: 'user_id',  // foreign key
           select: 'email'  // specific fields
         })
         .exec();
-        console.log(provider);
+        //console.log(provider);
         return provider; 
-        
     } catch (error) {
         console.error(error);
         throw error;
@@ -161,15 +151,14 @@ async function updateProvider(id, providerData, userData) {
             phone_number: providerData.phone_number
         }, { new: true });
 
-        // Update the User information using the user_id from Client
+        // updates user info using the user_id from provider
         const updatedUser = await User.findByIdAndUpdate(updatedProvider.user_id, {
             email: userData.email
         }, { new: true });
-
         return { updatedProvider, updatedUser };
 
     } catch (error) {
-        console.error('Error updating client and user:', error);
+        console.error(error);
         throw error;
     }
 }
@@ -217,9 +206,7 @@ async function createNewUser(firstName, lastName, email, phone, password, role){
             });
             await newProvider.save();
         }
-
-        console.log(user); 
-
+        //console.log(user); 
         return user;
    
     } catch (error){
@@ -231,9 +218,8 @@ async function createNewUser(firstName, lastName, email, phone, password, role){
 // SOFT DELETE
 async function getUserById(id) {
     try {
-        // Fetch all users from the database
         const user = await User.findById(id)
-        console.log("User: ", user);
+        //console.log("User: ", user);
         return user; 
         
     } catch (error) {
@@ -250,11 +236,11 @@ async function deleteUser(id) {
             },
             { new: true }
         )
-        console.log("Deleted user: ", deletedUser)
+        //console.log("Deleted user: ", deletedUser)
         return deletedUser; 
 
     } catch (error) {
-        console.error('Error: ', error);
+        console.error(error);
         throw error;
     }
 }
@@ -271,11 +257,11 @@ async function blockUser(id, blockReason) {
             },
             { new: true }
         )
-        console.log(blockedUser);
+        //console.log(blockedUser);
         return blockedUser; 
 
     } catch (error) {
-        console.error('Error: ', error);
+        console.error(error);
         throw error;
     }
 }
@@ -290,18 +276,18 @@ async function unblockUser(id) {
             },
             { new: true }
         )
-        console.log("Unblocked user from function", unblockedUser)
+        //console.log("Unblocked user from function", unblockedUser)
         return unblockedUser; 
 
     } catch (error) {
-        console.error('Error: ', error);
+        console.error(error);
         throw error;
     }
 }
 
+///////////////////////// FORM MESSAGES MANAGEMENT/////////////////////////
 async function getFormMessages() {
     try {
-        // Fetch all users from the database
         const messages = await FormMessage.find()
         // console.log(messages);
         const filteredMessages = messages.filter(message => message.isRead === false);
@@ -316,7 +302,6 @@ async function getFormMessages() {
 
 async function setMsgRead(id) {
     try {
-        // Fetch all users from the database
         const message = await FormMessage.findByIdAndUpdate(
             id, 
             {
@@ -324,7 +309,7 @@ async function setMsgRead(id) {
             },
             { new: true }
         )
-        console.log(message);
+        //console.log(message);
         return message; 
         
     } catch (error) {
@@ -333,10 +318,9 @@ async function setMsgRead(id) {
     }
 }
 
-
+///////////////////////// PROVIDER VERIFICATION /////////////////////////
 async function getVerificationRequests() {
     try {
-        // Fetch all users from the database
         const requests = await Credential.find()
         .populate({
             path: 'provider_id',  // foreign key
@@ -373,7 +357,7 @@ async function approveVerifRequest(provider_id, credential_id) {
             },
             { new: true }
         )
-        console.log(request, verifiedProvider);
+        //console.log(request, verifiedProvider);
         return {request, verifiedProvider}; 
         
     } catch (error) {
@@ -395,24 +379,16 @@ async function getCredentialById (credential_id) {
         })
         .exec();
 
-        // const provider = await Provider.find(
-        //     {_id : provider_id}
-        // )
-
         if (!credential || credential.provider_id === null || credential.creative_category_id === null) {
             return { message: 'Credentials not found' };
         }
-
         //console.log('credentials info:', credentials);
         return credential;
     } catch (error) {
-        console.error('Error fetching credentials:', error);
+        console.error(error);
         throw error;
     }
 };
-
-
-
 
 async function rejectVerifRequest(provider_id, credential_id, feedback) {
     try {
@@ -431,7 +407,7 @@ async function rejectVerifRequest(provider_id, credential_id, feedback) {
             },
             { new: true }
         )
-        console.log(request, verifiedProvider);
+        //console.log(request, verifiedProvider);
         return {request, verifiedProvider}; 
         
     } catch (error) {
@@ -459,6 +435,7 @@ module.exports = {
 
     getFormMessages,
     setMsgRead,
+
     getVerificationRequests,
     approveVerifRequest,
     getCredentialById,

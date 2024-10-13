@@ -10,7 +10,7 @@ export default function RejectProviderVerification(){
     const [credential, setCredential] = useState({});
     const [feedback, setFeedback] = useState("");
     const navigate = useNavigate();
-    // const [message, setMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState();
     
     useEffect(() => {
         const getUser = async () => {
@@ -22,7 +22,6 @@ export default function RejectProviderVerification(){
                 
             } catch (error) {
                 console.log(error);
-                // setError("Error fetching data");
             }
         }
         getUser();
@@ -34,23 +33,10 @@ export default function RejectProviderVerification(){
             
             console.log(response)
             navigate("/admin/provider-verification");
-            // setMessage(response.data.message); 
-            // alert("User blocked successfully");
 
-            // //redirect back depeding on the role of the blocked user
-            // if(user.role==="client"){
-            //     navigate("/admin/management-clients");
-            // }
-            // if(user.role==="provider"){
-            //     navigate("/admin/management-providers");
-            // }
         } catch (error) {
             console.error("Error ", error);
-            // if (error.response && error.response.data) {
-            //     setMessage(error.response.data.message);
-            // } else {
-            //     setMessage("An error occurred while blocking the user");
-            // }
+            setErrorMessage("Error submitting rejection")
         }
     };
 
@@ -65,11 +51,10 @@ export default function RejectProviderVerification(){
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                         <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
                     </svg>
-                    {/* <h1>Do you want to reject credentials of {credential.provider_id.first_name} {credential.provider_id.last_name}?</h1> */}
-                    {credential.provider_id ? ( // Check if provider_id exists
+                    {credential.provider_id ? (
                         <h1>Do you want to reject credentials of {credential.provider_id.first_name} {credential.provider_id.last_name}?</h1>
                     ) : (
-                        <h1>Loading...</h1> // Optional loading state
+                        <h1>Loading...</h1>
                     )}
                     <p>Please provide feedback for rejection:</p>
                     <textarea className="txt-block-reason"
@@ -79,11 +64,13 @@ export default function RejectProviderVerification(){
                         maxLength={255}
                         required
                     />
+                    {errorMessage ? (
+                        <p>{errorMessage}</p>
+                    ) : null}
                     <div className="btns block">
                         <Link to="/admin/provider-verification" className="btn-link">Cancel</Link>
                         <button onClick={() => handleReject(credential.provider_id._id, credential._id)}>Reject</button>
                     </div>
-                    {/* <p style={{ color: "red" }}>{message}</p> */}
                 </div>
                 
             </main>

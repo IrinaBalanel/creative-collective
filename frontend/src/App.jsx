@@ -25,7 +25,7 @@ import ProviderDetails from "./pages/public/ProviderDetails"
 
 
 // Client pages
-// import LoggedInHome from "./pages/client/LoggedInHome"
+import ClientProfile from "./pages/client/ClientProfile"
 
 // Provider pages
 import ProviderDashboard from "./pages/provider/ProviderDashboard"
@@ -76,14 +76,14 @@ function App() {
               
 
               {/* Client Routes */}
-              {/* <Route path="/home" element={<LoggedInHome />} /> */}
+              <Route path="/profile/:user_id" element={<Protected clientRoute={true}><ClientProfile /></Protected>} />
 
               {/* Provider Routes */}
               <Route path="/dashboard" element={<Protected providerRoute={true}><ProviderDashboard/></Protected> }/>
               <Route path="/profile-customization/:user_id" element={<Protected providerRoute={true}><ProviderPageCustom /></Protected>} />
-              <Route path="/settings" element={<Protected providerRoute={true}><ProviderSettings/> </Protected>}/>
-              <Route path="/appointments" element={<Protected providerRoute={true}><ProviderAppointments/> </Protected>}/>
-              <Route path="/verification/:id" element={<Protected providerRoute={true}><ProviderCredentialsVerification /></Protected>} />
+              <Route path="/settings/:user_id" element={<Protected providerRoute={true}><ProviderSettings/> </Protected>}/>
+              <Route path="/appointments/:user_id" element={<Protected providerRoute={true}><ProviderAppointments/> </Protected>}/>
+              <Route path="/verification/:user_id" element={<Protected providerRoute={true}><ProviderCredentialsVerification /></Protected>} />
 
               <Route path="*" element={<NotFoundPage />} />
           </Routes>

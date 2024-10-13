@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import SideNav from "../../components/SideNav/SideNav";
 import AdminProfileButton from "../../components/AdminProfileButton";
 import "./UserManagement.css"
+import { capitalizeFirstLetter } from "../../functions";
 
 export default function Providers(){
     const [providers, setProviders] = useState([]);
@@ -18,7 +19,7 @@ export default function Providers(){
                 setProviders(data);
             } catch (error) {
                 console.log(error);
-                setError("Error");
+                setError("Error fetching providers")
             }
         }
         getProviders();
@@ -28,7 +29,7 @@ export default function Providers(){
         try {
             const response = await axios.post(`http://localhost:8000/admin/unblock-user/${providerId}/submit`, {}, { withCredentials: true });
             console.log("Response from front handle block", response.data)
-            alert(response.data.message);
+            // alert(response.data.message);
             
             const updatedUser = response.data.user;
             setProviders((prevProviders) =>
@@ -63,7 +64,6 @@ export default function Providers(){
         <div>
             <SideNav/>
             <main className="main">
-
                 <AdminProfileButton/>
                 <div className="inline">
                     <h1>Provider Management</h1>
@@ -73,9 +73,7 @@ export default function Providers(){
                 <table className="table">
                     <thead className="head">
                         <tr>
-                            {/* <th>Provider ID</th> */}
                             <th>Name</th>
-                            {/* <th>Last name</th> */}
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Status</th>
@@ -87,29 +85,31 @@ export default function Providers(){
                         {
                             providers.map((provider) => (
                                 <tr key={provider._id}>
-                                    {/* <td className="id-col">{formatId(provider._id)}</td> */}
-                                    {/* <td className="id-col">{provider._id}</td> */}
                                     <td>{provider.first_name} {provider.last_name}</td>
-                                    {/* <td></td> */}
                                     <td>{provider.user_id.email}</td>
                                     <td>{provider.phone_number}</td>
-                                    <td>{provider.user_id.status}</td>
+                                    {provider.user_id.status === "blocked" ? (
+                                        <td style={{color: "red", fontWeight: 500}}>{capitalizeFirstLetter(provider.user_id.status)}</td>
+                                    ) : (
+                                        <td style={{color: "green", fontWeight: 500}}>{capitalizeFirstLetter(provider.user_id.status)}</td>
+                                    )}
+
                                     {provider.user_id.blockReason === null ? (
                                     <td>N/A</td>
                                         ) : (
                                         <td className="block-reason-col">{provider.user_id.blockReason}</td>
                                     )}
                                     <td className="actions-col">
-                                        <Link to={`/admin/management-providers/update-provider/${provider._id}`}><button>Update</button></Link>
+                                        <Link to={`/admin/management-providers/update-provider/${provider._id}`}><button aria-label="Edit" title="Edit"><i className="bi bi-pencil-fill"></i></button></Link>
                                         {/* Conditional button rendering if the user is blocked */}
                                         {provider.user_id.status === "active" ? (
                                             <Link to={`/admin/management-providers/block-user/${provider.user_id._id}`}>
-                                                <button>Block</button>
+                                                <button aria-label="Block" title="Block"><i className="bi bi-ban"></i></button>
                                             </Link>
                                         ) : (
-                                            <button onClick={() => handleUnblock(provider.user_id._id)}>Unblock</button>
+                                            <button onClick={() => handleUnblock(provider.user_id._id)} aria-label="Unblock" title="Unblock"><i className="bi bi-check-circle-fill"></i></button>
                                         )}
-                                        <Link to={`/admin/management-providers/delete-user/${provider.user_id._id}`}><button>Delete</button></Link>
+                                        <Link to={`/admin/management-providers/delete-user/${provider.user_id._id}`}><button aria-label="Delete" title="Delete"><i className="bi bi-trash3-fill"></i></button></Link>
                                     </td>
                                 </tr>
                             ))

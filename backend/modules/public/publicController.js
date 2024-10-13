@@ -6,7 +6,6 @@ const FormMessage = require("../../models/FormMessage");
 
 async function getCategories() {
     try {
-        // Fetch all users from the database
         const categories = await ProviderCategory.find()
         //console.log(categories);
         return categories; 
@@ -19,9 +18,8 @@ async function getCategories() {
 
 async function getAllProfessionals() {
     try {
-        // Fetches all users from the database
         const professionals = await Provider.find()
-        .populate('creative_category_id', 'category') // Populate creative_category_id with its category field
+        .populate('creative_category_id', 'category') // populates creative_category_id with its category field
         .populate('services')
         .populate({
             path: "user_id",
@@ -54,7 +52,6 @@ async function getProfessionalsByCat(category) {
             select: 'status'
         })
         .exec();
-        // Filters providers without a valid category or an active user
         const filteredProfessionals = professionals.filter(prof => prof.creative_category_id !== null && prof.services.length > 0 && prof.user_id !== null);
         //console.log(filteredProfessionals);
         return filteredProfessionals; 
@@ -81,7 +78,6 @@ async function getProfessionalByCatAndId(category, id) {
         .populate("services")
         .exec();
         
-        // Filters providers without a valid category or an active user
         if (!professional || professional.creative_category_id === null || professional.user_id === null) {
             return null; // Return null if no valid category or active user
         }
@@ -105,20 +101,22 @@ async function contactUs(formData) {
             }
         );
         
-        console.log("Message added:", newMessage);
+        //console.log("Message added:", newMessage);
         return { newMessage };
         
         
     } catch (error) {
-        console.error("Error saving message:", error);
+        console.error("Error sending message:", error);
         throw error;
     }
 }
 
 module.exports = {
     getCategories,
+    
     getAllProfessionals,
     getProfessionalsByCat,
     getProfessionalByCatAndId,
+
     contactUs
 }

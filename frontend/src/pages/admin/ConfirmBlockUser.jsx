@@ -34,7 +34,7 @@ export default function ConfirmBlockUser(){
                 blockReason: blockReason,
             },  { withCredentials: true });
             setMessage(response.data.message); 
-            alert("User blocked successfully");
+            // alert("User blocked successfully");
 
             //redirect back depeding on the role of the blocked user
             if(user.role==="client"){
@@ -58,7 +58,6 @@ export default function ConfirmBlockUser(){
             <SideNav/>
             <main className="main">
                 <AdminProfileButton/>
-                
                 <div className="block-reason-area">
                     <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" className="bi bi-exclamation-circle" viewBox="0 0 16 16" color="red">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -83,10 +82,7 @@ export default function ConfirmBlockUser(){
                     </div>
                     <p style={{ color: "red" }}>{message}</p>
                 </div>
-                
             </main>
-            
-
         </>
     )
 }

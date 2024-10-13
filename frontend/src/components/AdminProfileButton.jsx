@@ -27,7 +27,7 @@ export default function AdminProfileButton(){
     if (!user) {
         return <div>Loading...</div>;
     }
-    console.log("This is my user context ", user);
+    //console.log("This is my user context ", user);
     const userId = user._id;
     const [admin, setAdmin] = useState({});
 
@@ -39,7 +39,7 @@ export default function AdminProfileButton(){
                 });
                 if (response.data.admin) {
                     setAdmin(response.data.admin);
-                    console.log("User with provider info: ", response.data.admin);
+                    //console.log("User with provider info: ", response.data.admin);
                 }
             } catch (error) {
                 console.error("Token verification failed:", error);

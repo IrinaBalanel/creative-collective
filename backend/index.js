@@ -44,7 +44,7 @@ const providerRoutes = require("./modules/provider/providerRoutes");
 // Routes to define the beginning of the path
 app.use("/admin", authJWT, authorize(['admin']), adminRoutes);
 app.use("/auth", authRoutes);
-app.use("/client", authJWT, authorize(['client']), clientRoutes);
+app.use("/client", clientRoutes);
 app.use("/provider", providerRoutes);
 app.use("/", publicRoutes);
 

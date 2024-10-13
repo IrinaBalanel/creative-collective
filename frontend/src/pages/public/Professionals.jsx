@@ -2,16 +2,19 @@ import Header from "../../components/Header/Header"
 import Footer from "../../components/Footer/Footer"
 import "./Professionals.css"
 import ProviderCard from "../../components/ProviderCard/ProviderCard"
-import { useParams } from 'react-router-dom';
-import {useState, useEffect} from "react";
+import { useParams, useLocation } from 'react-router-dom';
+import {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../../functions";
+import { UserContext } from "../../context/UserContext";
 
 export default function Professionals({ title }){
     const { category } = useParams();
     const [professionals, setProfessionals] = useState([]);
     const [error, setError] = useState(null); 
-
+    const [favoriteIds, setFavoriteIds] = useState([]); // Store favorite provider IDs
+	const { user } = useContext(UserContext);
+    const location = useLocation();
 
     useEffect(() => {
         const getProfessionals = async () => {
@@ -25,7 +28,7 @@ export default function Professionals({ title }){
                 }
                 
                 const data = response.data;
-                console.log(data);
+                //console.log(data);
                 setProfessionals(data);
                 if(!professionals){
                     setError("No professionals found")
@@ -47,6 +50,27 @@ export default function Professionals({ title }){
         }
     };
 
+    // Fetch user's favorite provider IDs
+    useEffect(() => {
+        const getFavoriteIds = async () => {
+            // if (!user || !user._id) {
+            //     console.error("User ID is undefined.");
+            //     return;
+            // }
+            try {
+                const response = await axios.get(`http://localhost:8000/client/my-favorite-professionals/${user._id}`, { withCredentials: true });
+                console.log("user's favorite provider IDs", response.data.favorite_professionals);
+                setFavoriteIds(response.data.favorite_professionals.map(fav => fav._id));
+            } catch (error) {
+                console.log(error);
+                //setError("Error fetching favorite professionals");
+            }
+        };
+        if (user && user._id) {
+            getFavoriteIds();
+        }
+    }, [user, location]);
+
     if (error) return <div>{error}</div>;
     return(
         <>
@@ -57,7 +81,12 @@ export default function Professionals({ title }){
                     <div className="prof-list">
                         {professionals.length > 0 ? (
                             professionals.map((professional) => (
-                                <ProviderCard key={professional._id} professional={professional} />
+                                <ProviderCard 
+                                key={professional._id} 
+                                professional={professional} 
+                                providerId={professional._id}
+                                isFavorite={favoriteIds.includes(professional._id)}
+                                />
                             ))
                         ) : (
                             <p>No professionals found</p>

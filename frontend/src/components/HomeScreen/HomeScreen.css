@@ -38,6 +38,7 @@
     font-weight: 600;
     margin-bottom: 60px;
     padding: 0 20px;
+    padding: 0px 150px 0 150px;
 }
 
   
@@ -85,6 +86,11 @@
 
 #btn-unmute:focus {
     outline: none; /* Remove the default outline on focus */
+}
+
+#btn-unmute:focus-visible {
+    outline: none;
+    border: 2px solid #646cff;
 }
 
 /* #home-screen .bi:hover{

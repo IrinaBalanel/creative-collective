@@ -27,6 +27,7 @@ export default function FindByCat(){
     return (
         <div id="categories">
             <h2>Find the perfect talent by category</h2>
+            <p>Explore a variety of creative professionals by category, all in one place</p>
             <div className="categories">
                 {
                     categories.map((category) => (

@@ -2,7 +2,6 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom"
 import SideNav from "../../components/SideNav/SideNav";
-// import "./FormMessages.css"
 import AdminProfileButton from "../../components/AdminProfileButton";
 
 export default function FormMessages(){
@@ -19,7 +18,7 @@ export default function FormMessages(){
                 console.log("Response from fetching messages", data)
             } catch (error) {
                 console.log(error);
-                setError("Error");
+                setError("Error fetching messages");
             }
         }
         getMessages();
@@ -30,7 +29,7 @@ export default function FormMessages(){
             console.log("msg id", id);
             const response = await axios.post(`http://localhost:8000/admin/form-messages/mark-read/${id}/submit`, {}, { withCredentials: true });
             // alert(response.data.message);
-            console.log("message response", response)
+            //console.log("message response", response)
             const updatedMessage = response.data.message;
             console.log("Response from front mark as read", updatedMessage)
 
@@ -45,11 +44,9 @@ export default function FormMessages(){
         }
     };
 
-
-
-    // if (error) {
-    //     return <div>{error}</div>;
-    // }
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return (
         <div>
@@ -66,19 +63,18 @@ export default function FormMessages(){
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Message</th>
-                                <th>Actions</th>
+                                <th style={{width: "30px"}}>Actions</th>
                             </tr>
                         </thead>
                         <tbody className="list">
                             {
                                 messages.map((message) => (
                                     <tr key={message._id}>
-                                        {/* <td className="id-col">{formatId(client._id)}</td> */}
                                         <td>{message.full_name}</td>
                                         <td>{message.email}</td>
                                         <td>{message.message}</td>
                                         <td className="actions-col">
-                                            <button onClick={() => handleRead(message._id)}>Mark as Read</button>
+                                            <button onClick={() => handleRead(message._id)} aria-label="Mark as read" title="Mark as read"><i className="bi bi-check2-circle"></i></button>
                                         </td>
                                     </tr>
                                 ))

@@ -1,8 +1,20 @@
 import "./ProviderServices.css"
-import {Link} from "react-router-dom"
+import {Link, Navigate, useNavigate} from "react-router-dom"
 import { PopupButton } from "react-calendly";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 
 export default function ProviderServices({ services }){
+
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const handleBookAppointment = (calendlyUrl) => {
+        if (!user || user.role !== "client") {
+            navigate("/login");
+        }
+    };
+
     return(
         <div className="services"> 
             <h2>Services</h2>
@@ -38,10 +50,27 @@ export default function ProviderServices({ services }){
                             </div>
                             {/* <div className="btn-container"><Link className="btn" to={service.calendly_event_url}>Book appointment</Link></div> */}
                             <div className="btn-container">
-                                <PopupButton className="btn"
+                                {/* <PopupButton className="btn"
                                     url={service.calendly_event_url} 
                                     rootElement={document.getElementById("root")} text="Book appointment"
-                                />
+                                /> */}
+                                
+                                {!user || user.role !== "client" ? (
+                                    <button
+                                        className="btn"
+                                        onClick={() => handleBookAppointment(service.calendly_event_url)}
+                                    >
+                                        Book appointment
+                                    </button>
+                                ) : (
+                                    <PopupButton
+                                        className="btn"
+                                        url={service.calendly_event_url}
+                                        rootElement={document.getElementById("root")}
+                                        text="Book appointment"
+                                    />
+                                )}
+                                
                             </div>
                         </div>
                         

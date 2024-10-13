@@ -1,4 +1,3 @@
-import { useParams, useNavigate } from 'react-router-dom';
 import {useState, useEffect} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom"
@@ -12,33 +11,82 @@ import { UserContext } from "../../context/UserContext";
 export default function ProviderCredentialsVerification(){
     const [isEditing, setIsEditing] = useState(false);  // edit/view mode
     const { user } = useContext(UserContext);
-    console.log(user._id);
+    //console.log("User id from context", user._id);
     const [errorMessage, setErrorMessage] = useState(); 
-    const [providerId, setProviderId] = useState();
+    const [providerId, setProviderId] = useState(null);
     const [categoryId, setCategoryId] = useState();
     const [credentialsAttempts, setCredentialsAttempts] = useState([]);
    
     const [file, setFile] = useState("");
 
 
+    // useEffect(() => {
+    //     const getProviderData = async () => {
+    //         //console.log("User id from context for fetching provider with credentials", user._id);
+    //         if (!user || !user._id) {
+    //             console.error("User ID is undefined.");
+    //             return;
+    //         }
+    //         try {
+    //             const response = await axios.get(`http://localhost:8000/provider/fetch-provider/${user._id}`,  { withCredentials: true });
+    //             const data = response.data;
+    //             //console.log(data);
+    //             setProviderId(data._id);
+    //             setCategoryId(data.creative_category_id._id);
+    //             console.log("provider: ", data._id);
+    //             // console.log("category: ", data.creative_category_id._id);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     getProviderData();
+    // }, [user._id]);
+
+    // useEffect(() => {
+    //     const getCredentialAttempts = async () => {
+    //         //console.log("Provider id for fetching credentials list", providerId);
+    //         if (!providerId) {
+    //             //console.log("Provider ID is not defined, skipping API call.");
+    //             return;
+    //         }
+    //         try {
+    //             const response = await axios.get(`http://localhost:8000/provider/credentials-verification/attempts-list/${providerId}`,  { withCredentials: true });
+    //             const data = response.data;
+    //             setCredentialsAttempts(data);
+    //             //console.log("credentials list: ", data);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     getCredentialAttempts();
+    // }, [providerId]);
+
     useEffect(() => {
-        const getProviderData = async () => {
-            
+        const getProviderAndCredentials = async () => {
+            console.log("User id from context for fetching provider with credentials", user._id);
+            if (!user || !user._id) {
+                //console.error("User ID is undefined.");
+                return;
+            }
             try {
-                const response = await axios.get(`http://localhost:8000/provider/fetch-provider/${user._id}`,  { withCredentials: true });
-                const data = response.data;
-                //console.log(data);
-                setProviderId(data._id);
-                setCategoryId(data.creative_category_id._id);
-                console.log("provider: ", data._id);
-                console.log("category: ", data.creative_category_id._id);
+                // Fetch provider data
+                const providerResponse = await axios.get(`http://localhost:8000/provider/fetch-provider/${user._id}`, { withCredentials: true });
+                const providerData = providerResponse.data;
+                setProviderId(providerData._id);
+                //console.log("provider: ", providerData._id);
+                setCategoryId(providerData.creative_category_id._id);
+    
+                // Fetch credentials attempts
+                const credentialsResponse = await axios.get(`http://localhost:8000/provider/credentials-verification/attempts-list/${providerData._id}`, { withCredentials: true });
+                const credentialsData = credentialsResponse.data;
+                setCredentialsAttempts(credentialsData);
+    
             } catch (error) {
                 console.log(error);
             }
-        }
-        getProviderData();
+        };
+        getProviderAndCredentials();
     }, [user._id]);
-
 
     const handleCancel = () => {
         setIsEditing(false);  // back to view mode
@@ -56,12 +104,6 @@ export default function ProviderCredentialsVerification(){
             file: file
         }
         console.log("before sending request for verififcation", credentialData);
-        // if any fields have error messages with actual values
-        
-        // const hasErrors = Object.values(errorMessages).some((msg) => msg);
-        // if (hasErrors) {
-        //     return;
-        // }
 
         try {
             const response = await axios.post(`http://localhost:8000/provider/credentials-verification/submit`, {credentialData},  { withCredentials: true });
@@ -70,11 +112,10 @@ export default function ProviderCredentialsVerification(){
                 const newCredential = response.data.newVerification;
                 console.log("New Credential from backend:", newCredential);
                 // updates the displayed credentials after adding the new one
-                // setCredentialsAttempts((prevAttempts) => [...prevAttempts, newCredential]);
                 setCredentialsAttempts((prevAttempts) => [
                     ...prevAttempts,
                     {
-                        _id: newCredential._id, // Ensure you pass all the necessary fields
+                        _id: newCredential._id,
                         provider_id: newCredential.provider_id,
                         category_id: newCredential.category_id,
                         file: newCredential.file,
@@ -84,7 +125,6 @@ export default function ProviderCredentialsVerification(){
                     }
                 ]);
 
-                // Clear the file input
                 setFile("");
                 setIsEditing(false);
             } else {
@@ -97,20 +137,7 @@ export default function ProviderCredentialsVerification(){
         }
     };
 
-    useEffect(() => {
-        const getCredentialAttempts = async () => {
-            
-            try {
-                const response = await axios.get(`http://localhost:8000/provider/credentials-verification/attempts-list/${providerId}`,  { withCredentials: true });
-                const data = response.data;
-                setCredentialsAttempts(data);
-                console.log("credentials list: ", data);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getCredentialAttempts();
-    }, [providerId]);
+
 
     const handleChange = (e) => {
         const { value } = e.target;
@@ -130,8 +157,8 @@ export default function ProviderCredentialsVerification(){
             
             <ProfileButton/>
             <h1 className="dashboard-header-one" style={{textAlign:"center"}}>Credentials Verification</h1>
-            <div className="pers-info">
-                <div className="pers-info customization-head">
+            <div id="credentials-verification-section">
+                <div className="customization-head">
                     <div className="pers-info customization-text">
                         <h2>How to get Verified?</h2>
                         <p>To become a verified service provider, send your professional credentials proving your credibility and competency. 
@@ -167,16 +194,16 @@ export default function ProviderCredentialsVerification(){
                                         <tr key={attempt._id}>
                                             <td>{attempt.provider_id.first_name} {attempt.provider_id.last_name}</td>
                                             <td>{capitalizeFirstLetter(cutS(attempt.category_id.category))}</td>
-                                            <td><a href={attempt.file} target="_blank">Click to view file</a></td>
+                                            <td><a href={attempt.file} target="_blank"><i className="bi bi-paperclip"></i>View file</a></td>
                                             <td>{formatDate(attempt.submitted_at)}</td>
                                             {attempt.status === "approved" && (
-                                                <td style={{color: "green"}}>{capitalizeFirstLetter(attempt.status)}</td>
+                                                <td style={{color: "green", fontWeight: 500}}>{capitalizeFirstLetter(attempt.status)}</td>
                                             )}
                                             {attempt.status === "rejected" && (
-                                                <td style={{color: "red"}}>{capitalizeFirstLetter(attempt.status)}</td>
+                                                <td style={{color: "red", fontWeight: 500}}>{capitalizeFirstLetter(attempt.status)}</td>
                                             )}
                                             {attempt.status === "pending" && (
-                                                <td style={{color: "blue"}}>{capitalizeFirstLetter(attempt.status)}</td>
+                                                <td style={{color: "blue", fontWeight: 500}}>{capitalizeFirstLetter(attempt.status)}</td>
                                             )}
                                             
                                             
@@ -200,13 +227,12 @@ export default function ProviderCredentialsVerification(){
                     // Edit Mode
                     <form onSubmit={handleSubmit}>
                         <p style={{ color: 'red' }}>{errorMessage}</p>
-                        <div id="preview-pic-container">
+                        <div id="preview-pic-container" className="credentials-container">
                             <img className="preview-pic" src={file} alt="File Preview" required/>
                             <div className="input image-url-container">
                                 <input type="text" id="file" placeholder="File URL" name="file" onChange={handleChange} required/>
                             </div>
                         </div>
-                        
                         <div className="btns-update">
                             <button type="button" onClick={handleCancel}>Cancel</button>
                             <button type="submit">Save</button>

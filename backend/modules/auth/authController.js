@@ -41,22 +41,22 @@ async function login(email, password){
 
         if (user.status === "blocked") {
             errors.push("This account is blocked");
-            return {errors}; // Return errors if user is blocked
+            return {errors};
         }
 
         if (user.role === "admin") {
             errors.push("Unauthorized");
-            return {errors};  // Return errors if the user is unauthorized
+            return {errors};
         }
 
         // Verify password if user is active
-        const isMatch = await bcrypt.compare(password, user.password); // Compare password value with hash
+        const isMatch = await bcrypt.compare(password, user.password); // Compares password value with hash
         if (!isMatch) {
             errors.push("Invalid password");
-            return {errors};  // Return errors if password is incorrect
+            return {errors};
         }
 
-        // Generate token if everything is correct
+        // Generates token if everything is correct
         token = jwt.sign(
             { id: user._id, email: user.email, role: user.role }, 
             process.env.JWT_SECRET_KEY, 
@@ -166,7 +166,6 @@ async function adminLogin(email, password){
 
 async function logout(id){
     return await User.findById(id);
-    
 }
 
 async function verifyToken(token){

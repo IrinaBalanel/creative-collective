@@ -7,11 +7,16 @@
     justify-content: space-between;
     gap: 10px;
     flex-flow: row;
-    margin: 50px 0;
+    margin: 60px 0;
 }
 
+#categories p{
+    font-weight: 600;
+}
 
-
+#categories h2{
+    margin-bottom: 0;
+}
 .category h3{
     text-align: center;
 }

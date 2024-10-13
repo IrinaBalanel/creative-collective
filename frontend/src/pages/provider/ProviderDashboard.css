@@ -1,0 +1,75 @@
+.dashboard-items{
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: center;
+    gap: 30px;
+    margin: 50px 0;
+    flex-flow: row wrap;
+}
+
+.dashboard-item{
+    background-color: #e7eaff;
+    border-radius: 5px;
+    padding: 20px;
+    max-width: 330px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
+}
+
+.dashboard-item:hover{
+    transform: scale(1.03);
+    box-shadow: 0px 6px 10.1px 0px rgba(0, 0, 0, 0.16);
+
+}
+
+.provider-dashboard h2{
+    font-size: 1.3em;
+}
+
+.provider-dashboard .btn-link{
+    text-align: center;
+    padding: 15px 0;
+    margin: 20px 0 10px;
+}
+
+.provider-dashboard .dashboard-header-one{
+    margin: 40px 0;
+}
+
+
+
+/* TOKEN */
+
+.hover-text-token{
+    cursor: pointer;
+}
+
+.token{
+    display: none;
+    max-width: 100%; /* Ensures it doesn't exceed the width of its container */
+    word-wrap: break-word; /* Forces long words to break */
+    white-space: normal; /* Ensures the text will wrap */
+}
+.token-container{
+    max-width: 1000px;
+}
+.token-container:hover .token {
+    display: block;
+}
+
+/* CREDENTIALS */
+.list a{
+    text-decoration: none;
+    color:black
+}
+
+.list{
+    text-align: center;
+}
+
+.credentials-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

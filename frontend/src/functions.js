@@ -34,6 +34,21 @@ export function isPhoneNumberValid(phoneNumber){
 }
 
 export function formatDate(date){
-    const formattedDate = date.split("T")[0];
-    return formattedDate;
+    // const formattedDate = date.split("T")[0];
+    // return formattedDate;
+    const formattedDate = new Date(date).toLocaleDateString('en-US', {
+        day: '2-digit',
+        month: 'long',  // full month name
+        year: 'numeric',
+    });
+    return formattedDate;  // returns format like 11 October 2024
+}
+
+export function formatTime(time) {
+    const formattedTime = new Date(time).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false // display time in 24-hour format. if true, 12-hour format
+    });
+    return formattedTime;
 }

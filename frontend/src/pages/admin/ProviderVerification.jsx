@@ -9,7 +9,6 @@ export default function ProviderVerification(){
     const [requests, setRequests] = useState([]);
     const [error, setError] = useState(null); 
 
-
     useEffect(() => {
         const getVerificationRequests = async () => {
             
@@ -18,12 +17,9 @@ export default function ProviderVerification(){
                 const data = response.data;
                 setRequests(data);
                 console.log(data);
-                // if(!providerData){
-                //     setError("No professional found")
-                // }
             } catch (error) {
                 console.log(error);
-                // setError("Error");
+                setError("Error fetching data");
             }
         }
         getVerificationRequests();
@@ -41,16 +37,18 @@ export default function ProviderVerification(){
             setRequests((prevRequests) => prevRequests.filter(request => request._id !== credential_id));
         } catch (error) {
             console.error('Error updating credential info:', error);
-            setError("Something went wrong.")
+            alert("Failed to approve credentials");
         }
     };
 
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return(
         <>
         <SideNav/>
         <main className='main'>
-            
             <ProfileButton/>
             <h1>Providers Verification</h1>
             <p style={{color: "red"}}>{error}</p>
@@ -71,12 +69,12 @@ export default function ProviderVerification(){
                                     <tr key={request._id}>
                                         <td>{request.provider_id.first_name} {request.provider_id.last_name}</td>
                                         <td>{capitalizeFirstLetter(cutS(request.category_id.category))}</td>
-                                        <td><a href={request.file} target="_blank">Click to view file</a></td>
+                                        <td><a href={request.file} target="_blank"><i className="bi bi-paperclip"></i>View file</a></td>
                                         <td>{formatDate(request.submitted_at)}</td>
                                         <td className="actions-col">
-                                            <button onClick={() => handleApprove(request.provider_id._id, request._id)}>Approve</button>
+                                            <button onClick={() => handleApprove(request.provider_id._id, request._id)} aria-label="Approve" title="Approve"><i className="bi bi-patch-check-fill"></i></button>
                                             <Link to={`/admin/provider-verification/reject-credential/${request._id}`}>
-                                                <button>Reject</button>
+                                                <button aria-label="Reject" title="Reject"><i className="bi bi-dash-circle-fill"></i></button>
                                             </Link>
                                             
                                         </td>

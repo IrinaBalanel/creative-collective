@@ -27,7 +27,7 @@ export default function ProfileButton(){
     if (!user) {
         return <div>Loading...</div>;
     }
-    console.log("This is my user context ", user);
+    //console.log("This is my user context ", user);
     const userId = user._id;
     const [provider, setProvider] = useState({});
 
@@ -39,7 +39,7 @@ export default function ProfileButton(){
                 });
                 if (response.data.provider) {
                     setProvider(response.data.provider);
-                    console.log("User with provider info: ", response.data.provider);
+                    //console.log("User with provider info: ", response.data.provider);
                 }
             } catch (error) {
                 console.error("Token verification failed:", error);
