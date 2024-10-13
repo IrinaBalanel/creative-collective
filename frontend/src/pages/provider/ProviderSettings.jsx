@@ -24,8 +24,7 @@ export default function ProviderSettings(){
 
                 
             } catch (error) {
-                console.error('Error fetching data:', error);
-                setError('Failed to fetch data');
+                console.log("Error fetching data:", error);
             }
         };
         if (user_id) {
@@ -54,7 +53,7 @@ export default function ProviderSettings(){
             setIsEditing(false);
             
         } catch (error) {
-            console.error('Error: ', error);
+            console.log("Error: ", error);
             setError("Something went wrong. Please try again.")
             
         }
@@ -84,7 +83,7 @@ export default function ProviderSettings(){
                     <>
                         {token ? (
                             <div className="token-container">
-                                <p className="hover-text-token"><i className="bi bi-search"></i><strong><i>Hover over here to see the token: </i></strong></p>
+                                <p className="hover-text-token" tabIndex={0}><i className="bi bi-search" aria-hidden="true"></i><strong><i>Hover over here to see the token: </i></strong></p>
                                 <p className="token">{token}</p>
                             </div>  
                         ) : (

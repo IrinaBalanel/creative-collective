@@ -11,38 +11,36 @@ export default function ProviderCard({ professional, providerId, isFavorite, onR
     // console.log(userId);
     const [isFavorited, setIsFavorited] = useState(isFavorite);
     useEffect(() => {
-        setIsFavorited(isFavorite);  // Set initial favorited state based on the prop
+        setIsFavorited(isFavorite);  // initial state based on the prop
     }, [isFavorite]);
 
     const toggleFavorite = async () => {
-        // Check if user is logged in
         if (!user || !user._id) {
             console.log("User not authenticated. Login is required.");
-            navigate("/login");  // Redirect to the login page if user is not logged in
+            navigate("/login");
             return;
         }
         try {
-            setIsFavorited(prevState => !prevState);  // Toggle favorite state
-            //console.log(`${providerId} is ${!isFavorited ? 'added to' : 'removed from'} favorites`);
-            console.log("Data before submitting favorite ", user._id, providerId);
+            setIsFavorited(prevState => !prevState);  // Toggles favorite state
+            //console.log("Data before submitting favorite ", user._id, providerId);
             if (isFavorited) {
-                // Unfavorite the provider - Remove from DB and UI
+                // remove from favorites
                 const response = await axios.post(`http://localhost:8000/client/my-favorite-professionals/${user._id}/${providerId}/remove`, { withCredentials: true });
                 console.log(response.data);
-                // onRemove(providerId);  // Remove the provider from the frontend list
-                // If onRemove is passed (from Favorites page), call it to update the UI
+                // onRemove(providerId);  // Removes the provider from the frontend
+                
                 if (onRemove) {
-                    onRemove(providerId);  // Only call onRemove if it's passed
+                    onRemove(providerId);  // calls onRemove if it's passed to update UI
                 }
             } else {
-                // Add to favorites
+                // add to favorites
                 const response = await axios.post(`http://localhost:8000/client/my-favorite-professionals/${user._id}/${providerId}/submit`, { withCredentials: true });
                 console.log(response.data);
             }
 
             
         } catch (error) {
-            console.error('Error updating provider info:', error);
+            console.error("Error updating provider info:", error);
             
         }
     };
@@ -56,11 +54,11 @@ export default function ProviderCard({ professional, providerId, isFavorite, onR
                 </div>
                 {professional.verified ? (
                     <div className="badge-provider-card">
-                        <span className="verified">
+                        <span className="verified" aria-describedby="tooltip" tabIndex={0}>
                             <svg role="presentation" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-patch-check-fill" viewBox="0 0 16 16">
                                 <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
                             </svg>Verified Provider
-                            <span className="tooltiptext">
+                            <span className="tooltiptext" role="tooltip">
                                 <svg role="presentation" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-info-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                     <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
@@ -69,7 +67,7 @@ export default function ProviderCard({ professional, providerId, isFavorite, onR
                             </span>
                         </span>
                     </div>
-                ) : null}
+                ) : null}   
                 <div className="info-container">
                     <h2>{professional.first_name} {professional.last_name}</h2>
                     <p id="special-height">{professional.creative_category_details}</p>
@@ -84,13 +82,13 @@ export default function ProviderCard({ professional, providerId, isFavorite, onR
                     </div>
                     
                 </div>
-                <button id="btn-fav" className="fav" onClick={() => toggleFavorite(providerId)}>
+                <button id="btn-fav" className="fav" onClick={() => toggleFavorite(providerId)} role="favoritebutton" aria-label="Toggle favorite providers">
                     {isFavorited ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
+                        <svg aria-label="Remove from favorites" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-heart-fill" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
                         </svg>
                     ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-heart" viewBox="0 0 16 16">
+                        <svg aria-label="Add to favorites" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-heart" viewBox="0 0 16 16">
                             <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
                         </svg>
                     )}

@@ -10,20 +10,20 @@ async function getProviderByUserId (userId) {
     try {
         const provider = await Provider.findOne({ user_id: userId })
         .populate({
-            path: 'user_id',
-            select: 'email password role status blockReason createdAt'
+            path: "user_id",
+            select: "email password role status blockReason createdAt"
         })
         .populate({
-            path: 'creative_category_id',
-            select: 'category'
+            path: "creative_category_id",
+            select: "category"
         })
         .populate("services")
         .exec();
         if (!provider || provider.user_id === null) {
-            return { message: 'Provider not found' };
+            return { message: "Provider not found" };
         }
 
-        //console.log('Provider info:', provider);
+        //console.log("Provider info:", provider);
         return provider;
     } catch (error) {
         console.error(error);
@@ -37,7 +37,7 @@ async function getCategories() {
         const categories = await ProviderCategory.find()
         //console.log(categories);
         if (!categories) {
-            return { message: 'Categories not found' };
+            return { message: "Categories not found" };
         }
         return categories; 
         
@@ -53,20 +53,20 @@ async function updateProvider(user_id, providerData) {
     try{
         // console.log(providerData);
         if (!mongoose.Types.ObjectId.isValid(user_id)) {
-            throw new Error('Invalid provider_id format');
+            throw new Error("Invalid provider_id format");
         }
         // converts the user_id string to ObjectId
         const objectId = new mongoose.Types.ObjectId(user_id);
 
-        // Convert the creative_category_id to ObjectId if it's provided as a string or object
+        // Convert the creative_category_id to ObjectId if it"s provided as a string or object
         if (providerData.creative_category_id && providerData.creative_category_id._id) {
             if (!mongoose.Types.ObjectId.isValid(providerData.creative_category_id._id)) {
-                throw new Error('Invalid creative_category_id format');
+                throw new Error("Invalid creative_category_id format");
             }
             providerData.creative_category_id = new mongoose.Types.ObjectId(providerData.creative_category_id._id);
-        } else if (typeof providerData.creative_category_id === 'string') {
+        } else if (typeof providerData.creative_category_id === "string") {
             if (!mongoose.Types.ObjectId.isValid(providerData.creative_category_id)) {
-                throw new Error('Invalid creative_category_id format');
+                throw new Error("Invalid creative_category_id format");
             }
             providerData.creative_category_id = new mongoose.Types.ObjectId(providerData.creative_category_id);
         }
@@ -109,7 +109,7 @@ async function updateProvider(user_id, providerData) {
         ).populate("creative_category_id");
 
         if (!updatedProvider) {
-            return { message: 'Provider not found or failed to update' };
+            return { message: "Provider not found or failed to update" };
         }
         // console.log("Updated category id ", updatedProvider.creative_category_id);
         //console.log("Updated provider pers info ", updatedProvider);
@@ -129,7 +129,7 @@ async function addNewService(provider_id, serviceData) {
         //console.log("Provider ID ", provider_id);
         
         if (!mongoose.Types.ObjectId.isValid(provider_id)) {
-            throw new Error('Invalid provider_id format');
+            throw new Error("Invalid provider_id format");
         }
         const providerId = new mongoose.Types.ObjectId(provider_id);
         
@@ -141,11 +141,11 @@ async function addNewService(provider_id, serviceData) {
 
         // checks if the service_price and service_duration are valid numbers
         if (!price || isNaN(price)) {
-            throw new Error('Invalid service_price value');
+            throw new Error("Invalid service_price value");
         }
 
         if (!duration || isNaN(duration)) {
-            throw new Error('Invalid service_duration value');
+            throw new Error("Invalid service_duration value");
         }
         
         // validation against missing fields or undefined
@@ -193,10 +193,10 @@ async function updateService(provider_id, service_id, serviceData) {
 
         // checks if valid numbers
         if (!price || isNaN(price)) {
-            throw new Error('Invalid service_price value');
+            throw new Error("Invalid service_price value");
         }
         if (!duration || isNaN(duration)) {
-            throw new Error('Invalid service_duration value');
+            throw new Error("Invalid service_duration value");
         }
 
         const updatedService = await Service.findByIdAndUpdate(
@@ -214,7 +214,7 @@ async function updateService(provider_id, service_id, serviceData) {
             { new: true }
         );
         if (!updatedService) {
-            throw new Error('Service not found or failed to update');
+            throw new Error("Service not found or failed to update");
         }
 
         //console.log(updatedService);
@@ -234,7 +234,7 @@ async function deleteService(service_id) {
 
         const deletedService = await Service.findByIdAndDelete(service_id);
         if (!deletedService) {
-            throw new Error('Service not found or failed to delete');
+            throw new Error("Service not found or failed to delete");
         }
         //console.log(deletedService);
         return { deletedService };
@@ -252,16 +252,16 @@ async function updateProviderSocials(user_id, socials) {
     //console.log(socials);
     try {
         if (!mongoose.Types.ObjectId.isValid(user_id)) {
-            throw new Error('Invalid provider_id format');
+            throw new Error("Invalid provider_id format");
         }
         
         const objectId = new mongoose.Types.ObjectId(user_id);
 
         const updateFields = {
-            'socials.instagram': socials.instagram || '',
-            'socials.linkedin': socials.linkedin || '',
-            'socials.facebook': socials.facebook || '',
-            'socials.tiktok': socials.tiktok || ''
+            "socials.instagram": socials.instagram || "",
+            "socials.linkedin": socials.linkedin || "",
+            "socials.facebook": socials.facebook || "",
+            "socials.tiktok": socials.tiktok || ""
         };
 
         const updatedProvider = await Provider.findOneAndUpdate(
@@ -271,7 +271,7 @@ async function updateProviderSocials(user_id, socials) {
         );
 
         if (!updatedProvider) {
-            return { message: 'Provider not found or failed to update' };
+            return { message: "Provider not found or failed to update" };
         }
 
         //console.log("Updated provider socials ", updatedProvider);
@@ -299,8 +299,8 @@ async function submitCredentialVerification(credentialData) {
             }
         );
         const populatedVerification = await Credential.findById(newVerification._id)
-        .populate('provider_id')  // Populate provider details
-        .populate('category_id');  // Populate category details
+        .populate("provider_id")  // Populate provider details
+        .populate("category_id");  // Populate category details
 
         //console.log(populatedVerification);
         return { newVerification: populatedVerification };
@@ -316,19 +316,19 @@ async function getCredentialsByProviderId (providerId) {
     try {
         const credentials = await Credential.find({provider_id : providerId})
         .populate({
-            path: 'provider_id',
-            select: 'first_name last_name verified'
+            path: "provider_id",
+            select: "first_name last_name verified"
         })
         .populate({
-            path: 'category_id',
-            select: 'category'
+            path: "category_id",
+            select: "category"
         })
         .exec();
         if (!credentials || credentials.provider_id === null || credentials.creative_category_id === null) {
-            return { message: 'Credentials not found' };
+            return { message: "Credentials not found" };
         }
 
-        //console.log('credentials info:', credentials);
+        //console.log("credentials info:", credentials);
         return credentials;
     } catch (error) {
         console.error(error);
@@ -343,9 +343,9 @@ async function getProviderTokenByUserId (userId) {
             { user_id: userId } , "calendly_token"
         )
         if (!provider || provider.user_id === null) {
-            return { message: 'Provider not found' };
+            return { message: "Provider not found" };
         }
-        //console.log('Provider info:', provider);
+        //console.log("Provider info:", provider);
         return provider;
     } catch (error) {
         console.error(error);

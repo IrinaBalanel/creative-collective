@@ -22,7 +22,7 @@ export default function AdminDashboard(){
                     <p style={{textAlign:"center", margin: "0 130px 30px"}}>Thanks for joining Creative Collective! Here, you can manage all your appointments, profile page, services, portfolio and client interactions in one convenient place.</p>
                     <div className="dashboard-items">
                         <div className="dashboard-item">
-                            <h2><i className="bi bi-1-circle"></i>Manage Clients and Providers</h2>
+                            <h2><i aria-hidden="true" className="bi bi-1-circle"></i>Manage Clients and Providers</h2>
                             <p>Oversee client and provider accounts effortlessly. Create, update, delete, or block accounts as needed, ensuring efficient management and smooth platform operations directly from the dashboard.</p>
                             <div className="btns-manage">
                                 <Link to="/admin/management-clients" className="btn-link">Clients</Link>
@@ -31,12 +31,12 @@ export default function AdminDashboard(){
                             
                         </div>
                         <div className="dashboard-item">
-                            <h2><i className="bi bi-2-circle"></i>Respond to Messages and Inquiries</h2>
+                            <h2><i aria-hidden="true" className="bi bi-2-circle"></i>Respond to Messages and Inquiries</h2>
                             <p>Manage messages and inquiries from guests and users directly through the dashboard. <strong>Address questions and concerns efficiently</strong> to maintain clear and responsive communication with your users.</p>
                             <Link to="/admin/form-messages" className="btn-link">Start Responding</Link>
                         </div>
                         <div className="dashboard-item">
-                            <h2><i className="bi bi-3-circle"></i>Verify Providers' Credentials</h2>
+                            <h2><i aria-hidden="true" className="bi bi-3-circle"></i>Verify Providers' Credentials</h2>
                             <p>Carefully <strong>check the validity and completeness of the providers' documents</strong>. Approve or reject, providing a reason for rejection to maintain transparency and integrity on Creative Collective.</p>
                             <Link to="/admin/provider-verification" className="btn-link">Start Verifying</Link>
                         </div>

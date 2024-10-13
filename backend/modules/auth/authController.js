@@ -1,7 +1,7 @@
 const User = require("../../models/User");
 const Client = require("../../models/Client");
 const Provider = require("../../models/Provider");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 
@@ -11,7 +11,7 @@ async function login(email, password){
         const user = await User.findOne({email}); //checks if the user exists
         console.log("User from login", user);
         // if (!user || user.status == "deleted"){
-        //     errors.push("User with this email doesn't exist");
+        //     errors.push("User with this email doesn"t exist");
         // } else if (user && user.status == "blocked") {
         //         errors.push("This account is blocked");
         //     } else if (user && user.role == "admin") {
@@ -82,7 +82,7 @@ async function register(firstName, lastName, email, phone, password, role){
             throw new Error(errors.join(", "));
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10); // if there's no such user, hash the password to store in db
+        const hashedPassword = await bcrypt.hash(password, 10); // if there"s no such user, hash the password to store in db
 
         // creates a new user with hashed password
         const newUser = new User({
@@ -92,7 +92,7 @@ async function register(firstName, lastName, email, phone, password, role){
         });
         const user = await newUser.save();
 
-        // saves new user's info in the clients or providers table depending on the role
+        // saves new user"s info in the clients or providers table depending on the role
         if (role.toLowerCase() === "client") {
             const newClient = new Client({
                 user_id: user._id,
@@ -175,7 +175,7 @@ async function verifyToken(token){
         console.log("this is my user from verifyToken", user); 
         return user;
     } catch (error) {
-        throw new Error('Invalid token');
+        throw new Error("Invalid token");
     }
     
 }

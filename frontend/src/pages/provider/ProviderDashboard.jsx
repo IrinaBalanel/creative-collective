@@ -14,29 +14,6 @@ export default function ProviderDashboard(){
         return <div>Loading...</div>;
     }
     console.log("This is my user context ", user);
-    // const userId = user._id;
-    // const [provider, setProvider] = useState({});
-
-    // useEffect(() => {
-    //     const getUserwithProvider = async () => {
-    //         try {
-    //             const response = await axios.get(`http://localhost:8000/provider/dashboard/${userId}`, {
-    //                 withCredentials: true 
-    //             });
-    //             if (response.data.provider) {
-    //                 setProvider(response.data.provider);
-    //                 console.log("User with provider info: ", response.data.provider);
-    //             }
-    //         } catch (error) {
-    //             console.error("Token verification failed:", error);
-    //             // logout(); // if token verification fails, log out the user
-    //         }
-    //     };
-    //     if (userId) {
-    //         getUserwithProvider();
-    //     }
-        
-    // }, [userId]);
 
     return (
         <>
@@ -48,17 +25,17 @@ export default function ProviderDashboard(){
                     <p style={{textAlign:"center", margin: "0 130px 30px"}}>Thanks for joining Creative Collective! Here, you can manage all your appointments, profile page, services, portfolio and client interactions in one convenient place.</p>
                     <div className="dashboard-items">
                         <div className="dashboard-item">
-                            <h2><i className="bi bi-1-circle"></i>Link Calendly Account</h2>
+                            <h2><i aria-hidden="true" className="bi bi-1-circle"></i>Link Calendly Account</h2>
                             <p>Go to <strong>Calendly Account Settings - Integrations - API & Webhooks - Create Personal Access Token.</strong> Copy the token and enter it here. This lets us sync your booked appointments.</p>
                             <Link to={`/settings/${user._id}`} className="btn-link">Link Calendly</Link>
                         </div>
                         <div className="dashboard-item">
-                            <h2><i className="bi bi-2-circle"></i>Set Up Services</h2>
+                            <h2><i aria-hidden="true" className="bi bi-2-circle"></i>Set Up Services</h2>
                             <p>Set up your profile, portfolio, and services. <strong>Create the same services on Calendly and ensure they match</strong> for a seamless booking experience for your future clients.</p>
                             <Link to={`/profile-customization/${user._id}`} className="btn-link">Customize Profile</Link>
                         </div>
                         <div className="dashboard-item">
-                            <h2><i className="bi bi-3-circle"></i>View Appointments</h2>
+                            <h2><i aria-hidden="true" className="bi bi-3-circle"></i>View Appointments</h2>
                             <p>To help you stay on schedule, <strong>we'll automatically display Your Upcoming Appointments</strong>. You'll see booked services, locations, and times, all synced from Calendly.</p>
                             <Link to={`/appointments/${user._id}`} className="btn-link">View Appointments</Link>
                         </div>

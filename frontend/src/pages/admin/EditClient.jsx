@@ -10,11 +10,11 @@ import { isPhoneNumberValid} from '../../functions';
 export default function EditClient(){
     const { id } = useParams();
     const [user, setUser] = useState({
-        first_name: '',
-        last_name: '',
-        phone_number: '',
+        first_name: "",
+        last_name: "",
+        phone_number: "",
         user_id: {
-            email: ''
+            email: ""
         }
     });
 
@@ -28,16 +28,16 @@ export default function EditClient(){
                 const data = response.data;
                 console.log(data);
                 setUser({
-                    first_name: response.data.first_name || '',
-                    last_name: response.data.last_name || '',
-                    phone_number: response.data.phone_number || '',
+                    first_name: response.data.first_name || "",
+                    last_name: response.data.last_name || "",
+                    phone_number: response.data.phone_number || "",
                     user_id: {
-                        email: response.data.user_id.email || ''
+                        email: response.data.user_id.email || ""
                     },
                 });
             } catch (error) {
                 console.log(error);
-                setError('Error fetching user data');
+                setError("Error fetching user data");
             }
         }
         getUsers();

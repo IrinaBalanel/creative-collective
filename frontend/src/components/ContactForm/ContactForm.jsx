@@ -6,11 +6,11 @@ import {Link} from "react-router-dom"
 
 export default function ContactForm(){
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(''); 
+    const [errorMessage, setErrorMessage] = useState(""); 
      
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,13 +23,13 @@ export default function ContactForm(){
             console.log("Form Data:", formData);
             const response = await axios.post(`http://localhost:8000/contact-us-form/submit`, {formData});
             
-            console.log('Response from contact us endpoint:', response.data);
+            console.log("Response from contact us endpoint:", response.data);
 
             if(response.data.message==="Submitted message successfully"){
                 // clears the form fields after submission
-                setName('');
-                setEmail('');
-                setMessage('');
+                setName("");
+                setEmail("");
+                setMessage("");
                 
                 setIsSubmitted(true); // updates the button text to "Submitted"
             }
@@ -37,7 +37,7 @@ export default function ContactForm(){
                 setErrorMessage("Something went wrong. Try again.")
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error("Error:", error);
         }
     };
 
@@ -50,13 +50,12 @@ export default function ContactForm(){
         <div id="contact" >
             {/* <img id="gradient" src="../../public/gradient-background.svg"/> */}
             <div className="contact-form-section">
-                
                 <div className="contact-form-text">
-                    <img src="./logo-short.svg" style={{width: "2.2em"}}/>
+                    <img src="./logo-short.svg" alt="" style={{width: "2.2em"}}/>
                     <h2 className="contact-form-title">Contact us</h2>
                     <p className="contact-form-p">Use the contact form to send us your message or reach out directly via email</p>
                     <Link to="mailto:irina.cowork@gmail.com" className="contact-form-email">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-envelope-fill" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-envelope-fill" viewBox="0 0 16 16" aria-hidden="true">
                             <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
                         </svg>
                         creative.collective@gmail.com
@@ -86,10 +85,10 @@ export default function ContactForm(){
                     </div>
                     <div id="submit-btn-container">
                         <button id="btn-submit-msg" type="submit" 
-                            className={`btn-filled ${isSubmitted ? 'submitted' : ''}`}
+                            className={`btn-filled ${isSubmitted ? "submitted" : ""}`}
                             disabled={isSubmitted}
                         >
-                            {isSubmitted ? 'Submitted!' : 'Submit'}
+                            {isSubmitted ? "Submitted!" : "Submit"}
                         </button>
                     </div>
                     {errorMessage ? (

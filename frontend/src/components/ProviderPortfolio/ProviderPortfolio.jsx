@@ -16,7 +16,8 @@ export default function ProviderPortfolio({ images }){
 
     // calculates pages
     const totalPages = Math.ceil(images.length / imagesPerPage);
-    // Function to change the page
+    
+    // function to change the page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     // opens modal with the selected image
@@ -44,7 +45,7 @@ export default function ProviderPortfolio({ images }){
             {isModalOpen && (
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <img src={selectedImage} alt="Selected" />
+                        <img src={selectedImage} alt="Selected image" />
                         <button className="close-modal" onClick={closeModal}>X</button>
                     </div>
                 </div>
@@ -56,6 +57,7 @@ export default function ProviderPortfolio({ images }){
                         key={number}
                         onClick={() => paginate(number)}
                         className={currentPage === number ? "active" : ""}
+                        role="pagination"
                     >
                         {number}
                     </button>

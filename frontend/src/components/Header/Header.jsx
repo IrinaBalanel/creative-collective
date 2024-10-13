@@ -36,22 +36,22 @@ export default function Header(){
         <header id="header">
             <nav className="nav">
                 <Link to="/"><LogoWhite/></Link>
-                <button type="button" className={`menu-toggle ${menuVisible ? 'open' : ''}`} onClick={toggleMenu}>
+                <button type="button" className={`menu-toggle ${menuVisible ? "open" : ""}`} onClick={toggleMenu} aria-label="Toggle navigation">
                     <span className="bar"></span>
                     <span className="bar"></span>
                     <span className="bar"></span>
                 </button>
-                <ul className={`nav-list ${menuVisible ? 'show' : ''}`}>
+                <ul className={`nav-list ${menuVisible ? "show" : ""}`} role="menu">
                     <li className="nav-item">
-                        <Link to="/">Home</Link>
+                        <Link to="/" role="menulink">Home</Link>
                     </li>
                     <li className="nav-item dropdown">
-                        <Link className="btn-dropdown">Professionals <i aria-label="dropdown button" className="bi bi-caret-down-fill"></i></Link>
+                        <Link className="btn-dropdown">Professionals <i aria-label="dropdown button" className="bi bi-caret-down-fill" role="dropdown"></i></Link>
                         <div className="dropdown-content">
-                            <Link to="/professionals">All Professionals</Link>
+                            <Link to="/professionals" role="menulink">All Professionals</Link>
                             {
                                 categories.map((category) => (
-                                    <Link to={`/professionals/${category.category}`} key={category._id}>
+                                    <Link to={`/professionals/${category.category}`} key={category._id} role="menulink">
                                         {capitalizeFirstLetter(category.category)}
                                     </Link>
                                 ))
@@ -59,13 +59,13 @@ export default function Header(){
                         </div>
                     </li>
                     <li className="nav-item">
-                        <Link smooth to="/#contact">Contact</Link>
+                        <Link smooth to="/#contact" role="menulink">Contact</Link>
                     </li>
 
                     {user && user.role === "client" && (
                         <>
                             <li className="nav-item">
-                                <Link to={`/profile/${user._id}`} className="">My Favorites</Link>
+                                <Link to={`/profile/${user._id}`} role="menulink">My Favorites</Link>
                             </li>
                             {/* <li className="nav-item logout-small-menu">
                                 
@@ -77,10 +77,10 @@ export default function Header(){
                     {user && user.role === "provider" && (
                         <>
                             <li className="nav-item provider-access-link">
-                                <Link to="/login" state={{ fromProvider: true }} >Already a Provider?</Link>
+                                <Link to="/login" state={{ fromProvider: true }} role="menulink">Already a Provider?</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/login" className="btn-light">Login</Link>
+                                <Link to="/login" className="btn-light" role="menulink">Login</Link>
                             </li>
                         </>
                         
@@ -88,10 +88,10 @@ export default function Header(){
                     {user && user.role === "admin" && (
                         <>
                             <li className="nav-item provider-access-link">
-                                <Link to="/login" state={{ fromProvider: true }}>Already a Provider?</Link>
+                                <Link to="/login" state={{ fromProvider: true }} role="menulink">Already a Provider?</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/login" className="btn-light">Login</Link>
+                                <Link to="/login" className="btn-light" role="menulink">Login</Link>
                             </li>
                         </>
                         
@@ -100,10 +100,10 @@ export default function Header(){
                     {!user && (
                         <>
                         <li className="nav-item provider-access-link">
-                                <Link to="/login" state={{ fromProvider: true }}>Already a Provider?</Link>
+                                <Link to="/login" state={{ fromProvider: true }} role="menulink">Already a Provider?</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/login" className="btn-light">Login</Link>
+                                <Link to="/login" className="btn-light" role="menulink">Login</Link>
                             </li>
                         </>
                         

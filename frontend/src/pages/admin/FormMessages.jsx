@@ -38,7 +38,6 @@ export default function FormMessages(){
             );
 
         } catch (error) {
-            console.error('Error:', error);
             console.log(error);
             alert("Failed to mark message as read");
         }

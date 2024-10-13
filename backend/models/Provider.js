@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const ProviderSchema = new mongoose.Schema({
 	user_id: { 
 		type: mongoose.Schema.Types.ObjectId, 
-		ref: 'User', 
+		ref: "User", 
 		required: true 
 	},
 	first_name: { type: String, required: true },
@@ -13,7 +13,7 @@ const ProviderSchema = new mongoose.Schema({
 	bio: { type: String, maxlength: 255, default: null }, 
 	creative_category_id: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'ProviderCategory', 
+        ref: "ProviderCategory", 
         default: null
     },
 	creative_category_details: { type: String, default: null },
@@ -41,16 +41,16 @@ const ProviderSchema = new mongoose.Schema({
 	calendly_token: { type: String, default: null}
 });
 //virtual population should be used before the Provider model is compiled with mongoose.model().
-ProviderSchema.virtual('services', {
-    ref: 'Service',
-    localField: '_id',
-    foreignField: 'provider_id',
+ProviderSchema.virtual("services", {
+    ref: "Service",
+    localField: "_id",
+    foreignField: "provider_id",
 });
 
 // enables virtual fields when converting to JSON
-ProviderSchema.set('toObject', { virtuals: true });
-ProviderSchema.set('toJSON', { virtuals: true });
+ProviderSchema.set("toObject", { virtuals: true });
+ProviderSchema.set("toJSON", { virtuals: true });
 
-const Provider = mongoose.model('Provider', ProviderSchema, "providers");
+const Provider = mongoose.model("Provider", ProviderSchema, "providers");
 
 module.exports = Provider;

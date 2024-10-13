@@ -20,15 +20,15 @@ export default function Logout() {
                 navigate("/admin/login");
                 console.log("Admin logged out");
             } else if (loggedOutuser.role === "provider"){
-                navigate('/login', { state: { fromProvider: true } });
+                navigate("/login", { state: { fromProvider: true } });
                 console.log("Provider logged out");
             } else if(loggedOutuser.role === "client"){
-                navigate('/login');
+                navigate("/login");
                 console.log("Client logged out");
             }
         } catch (error) {
-            console.error('Error logging out:', error);
-            setError('Error logging out');
+            console.error("Error logging out:", error);
+            setError("Error logging out");
         }
     };  
 

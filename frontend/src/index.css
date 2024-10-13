@@ -221,6 +221,32 @@ button:focus, button:focus-visible {
 	z-index: 1;
 }
 
+@media (max-width: 1300px) {
+	.profile-img-container{
+		display: flex;
+		width: 400px;
+	}
+	.profile-img-container img{
+		/* width: auto; */
+		align-self: center;
+	}
+
+	.profile-info h1{
+		font-size: 1.5em;
+	}
+	.profile-info h2{
+		font-size: 1em;
+	}
+	.profile-info p{
+		font-size: 0.9em;
+	}
+	.profile-info a{
+		font-size: 0.9em;
+	}
+	
+
+}
+
 
 @media (max-width: 1100px) {
 	#main{
@@ -303,9 +329,12 @@ button:focus, button:focus-visible {
 		padding: 10px 12px;
 		font-size: 0.9em;
 	}
+
+	.profile-img-container{
+		display: flex;
+		width: 300px;
+	}
 }
-
-
 
 
 
@@ -459,6 +488,39 @@ button:focus, button:focus-visible {
 	.nav-list.show{
 		padding-bottom: 20px;
 	}
+
+	.profile{
+		flex-direction: column;
+		margin-top: 50px;
+	}
+
+	.profile-img-container{
+		width: 100%;
+	}
+
+	.profile-img-container img{
+		width: 100%;
+		border-radius: 10px 10px 0 0;
+	}
+
+	.profile-info{
+		width: auto;
+		border-radius: 0 0 10px 10px;
+	}
+
+	.contact-info{
+		justify-content: space-between ;
+		gap: 10px;
+	}
+
+	.service-cards{
+		justify-content: center;
+	}
+
+
+
+
+
 }
 
 
@@ -473,4 +535,28 @@ button:focus, button:focus-visible {
 		align-items: center;
 	}
 
+	.verified{
+		font-size: 1em;
+	}
+	.badge{
+		padding: 4px 8px;
+	}
+
+
+}
+
+@media (max-width: 550px) { 
+
+	.contact-info{
+		flex-direction: column;
+		margin: 20px 0 30px;
+	}
+
+	.profile-phone, .profile-email{
+		margin: 0px;
+	}
+
+	.verified{
+		font-size: 0.9em;
+	}
 }

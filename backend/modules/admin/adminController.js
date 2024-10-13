@@ -2,7 +2,7 @@
 const Client = require("../../models/Client");
 const User = require("../../models/User");
 const Provider = require("../../models/Provider");
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const FormMessage = require("../../models/FormMessage");
 const Credential = require("../../models/Credential");
 
@@ -13,8 +13,8 @@ async function getClients() {
     try {
         const clients = await Client.find()
         .populate({
-            path: 'user_id',  // foreign key
-            select: 'email password role status blockReason',  // specific fields
+            path: "user_id",  // foreign key
+            select: "email password role status blockReason",  // specific fields
         })
         .exec();
         // console.log(clients);
@@ -32,8 +32,8 @@ async function getClientsByStatus(statuses) {
     try {
         const clients = await Client.find()
         .populate({
-            path: 'user_id',  // foreign key
-            select: 'email password role status blockReason',  // specific fields
+            path: "user_id",  // foreign key
+            select: "email password role status blockReason",  // specific fields
             match: { status: { $in: statuses } }
         })
         .exec();
@@ -52,8 +52,8 @@ async function getClientById(id) {
     try {
         const client = await Client.findById(id)
         .populate({
-          path: 'user_id',  // foreign key
-          select: 'email'  // specific fields
+          path: "user_id",  // foreign key
+          select: "email"  // specific fields
         })
         .exec();
         //console.log(client);
@@ -83,7 +83,7 @@ async function updateClient(id, clientData, userData) {
         return { updatedClient, updatedUser };
 
     } catch (error) {
-        console.error('Error updating client and user:', error);
+        console.error("Error updating client and user:", error);
         throw error;
     }
 }
@@ -93,8 +93,8 @@ async function getProviders() {
     try {
         const providers = await Provider.find()
         .populate({
-            path: 'user_id',  // foreign key
-            select: 'email password role status blockReason',  // specific fields
+            path: "user_id",  // foreign key
+            select: "email password role status blockReason",  // specific fields
         })
         .exec();
         // console.log(providers);
@@ -111,8 +111,8 @@ async function getProvidersByStatus(statuses) {
     try {
         const providers = await Provider.find()
         .populate({
-            path: 'user_id',  // foreign key
-            select: 'email password role status blockReason',  // specific fields
+            path: "user_id",  // foreign key
+            select: "email password role status blockReason",  // specific fields
             match: { status: { $in: statuses } }
         })
         .exec();
@@ -130,8 +130,8 @@ async function getProviderById(id) {
     try {
         const provider = await Provider.findById(id)
         .populate({
-          path: 'user_id',  // foreign key
-          select: 'email'  // specific fields
+          path: "user_id",  // foreign key
+          select: "email"  // specific fields
         })
         .exec();
         //console.log(provider);
@@ -178,7 +178,7 @@ async function createNewUser(firstName, lastName, email, phone, password, role){
             throw new Error(errors.join(", "));
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10); // if there's no such user, hash the password to store in db
+        const hashedPassword = await bcrypt.hash(password, 10); // if there"s no such user, hash the password to store in db
 
         // creates a new user with hashed password
         const newUser = new User({
@@ -188,7 +188,7 @@ async function createNewUser(firstName, lastName, email, phone, password, role){
         });
         const user = await newUser.save();
 
-        // saves new user's info in the clients or providers table depending on the role
+        // saves new user"s info in the clients or providers table depending on the role
         if (role.toLowerCase() === "client") {
             const newClient = new Client({
                 user_id: user._id,
@@ -323,12 +323,12 @@ async function getVerificationRequests() {
     try {
         const requests = await Credential.find()
         .populate({
-            path: 'provider_id',  // foreign key
-            select: 'first_name last_name'  // specific fields
+            path: "provider_id",  // foreign key
+            select: "first_name last_name"  // specific fields
         })
         .populate({
-            path: 'category_id',  // foreign key
-            select: 'category'  // specific fields
+            path: "category_id",  // foreign key
+            select: "category"  // specific fields
         })
         // console.log(requests);
         const filteredRequests = requests.filter(request => request.status === "pending");
@@ -370,19 +370,19 @@ async function getCredentialById (credential_id) {
     try {
         const credential = await Credential.findById(credential_id)
         .populate({
-            path: 'provider_id',
-            select: 'first_name last_name verified'
+            path: "provider_id",
+            select: "first_name last_name verified"
         })
         .populate({
-            path: 'category_id',
-            select: 'category'
+            path: "category_id",
+            select: "category"
         })
         .exec();
 
         if (!credential || credential.provider_id === null || credential.creative_category_id === null) {
-            return { message: 'Credentials not found' };
+            return { message: "Credentials not found" };
         }
-        //console.log('credentials info:', credentials);
+        //console.log("credentials info:", credentials);
         return credential;
     } catch (error) {
         console.error(error);

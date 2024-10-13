@@ -128,11 +128,11 @@ export default function ProviderCredentialsVerification(){
                 setFile("");
                 setIsEditing(false);
             } else {
-                console.error('Failed to submit verification:', response.data.message);
+                console.log("Failed to submit verification:", response.data.message);
             }
             
         } catch (error) {
-            console.error('Error: ', error);
+            console.log("Error: ", error);
             
         }
     };
@@ -228,7 +228,7 @@ export default function ProviderCredentialsVerification(){
                     <form onSubmit={handleSubmit}>
                         <p style={{ color: 'red' }}>{errorMessage}</p>
                         <div id="preview-pic-container" className="credentials-container">
-                            <img className="preview-pic" src={file} alt="File Preview" required/>
+                            <img src={file} alt="File Preview" required/>
                             <div className="input image-url-container">
                                 <input type="text" id="file" placeholder="File URL" name="file" onChange={handleChange} required/>
                             </div>

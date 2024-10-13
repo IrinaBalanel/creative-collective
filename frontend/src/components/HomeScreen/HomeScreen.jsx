@@ -24,7 +24,7 @@ export default function HomeScreen() {
                 <p>Exceptional services from leading creatives in Photography, Styling, and More</p>
                 <Link to="/professionals" id="btn-main">Explore</Link>
             </div>
-            <button id="btn-unmute" onClick={handleUnmute}>
+            <button id="btn-unmute" onClick={handleUnmute} aria-label="Toggle sound of the video">
                 {!isMuted ? (
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-volume-up" viewBox="0 0 16 16">
                         <path d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z"/>

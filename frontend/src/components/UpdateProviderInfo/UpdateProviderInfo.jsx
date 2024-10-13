@@ -13,20 +13,20 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
     const [errorMessages, setErrorMessages] = useState({}); 
 
     const [providerData, setProviderData] = useState({
-        first_name: provider.first_name || '',
-        last_name: provider.last_name || '',
-        creative_category_id: provider.creative_category_id?._id || '',
-        creative_category_details: provider.creative_category_details || '',
-        profile_image: provider.profile_image || '',
-        bio: provider.bio || '',
-        phone_number: provider.phone_number || '',
-        location: provider.location || ''
+        first_name: provider.first_name || "",
+        last_name: provider.last_name || "",
+        creative_category_id: provider.creative_category_id?._id || "",
+        creative_category_details: provider.creative_category_details || "",
+        profile_image: provider.profile_image || "",
+        bio: provider.bio || "",
+        phone_number: provider.phone_number || "",
+        location: provider.location || ""
     });
     
 
     const [localUserId, setLocalUserId] = useState(user_id); // stores user_id separately to save it to make it always available
 
-    // so user_id is always set in case it's lost in the form
+    // user_id is always set in case it's lost in the form
     useEffect(() => {
         if (user_id && !localUserId) {
             setLocalUserId(user_id);
@@ -103,11 +103,11 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                 setIsEditing(false);
                 // window.location.reload();
             } else {
-                console.error('Failed to update provider:', response.data.message);
+                console.error("Failed to update provider:", response.data.message);
             }
             
         } catch (error) {
-            console.error('Error updating provider info:', error);
+            console.error("Error updating provider info:", error);
             
         }
     };
@@ -119,14 +119,14 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
         setErrorMessages({});
         // Resets form data to the original
         setProviderData({
-            first_name: provider.first_name || '',
-            last_name: provider.last_name || '',
-            creative_category_id: provider.creative_category_id?._id || '',
-            creative_category_details: provider.creative_category_details || '',
-            profile_image: provider.profile_image || '',
-            bio: provider.bio || '',
-            phone_number: provider.phone_number || '',
-            location: provider.location || ''
+            first_name: provider.first_name || "",
+            last_name: provider.last_name || "",
+            creative_category_id: provider.creative_category_id?._id || "",
+            creative_category_details: provider.creative_category_details || "",
+            profile_image: provider.profile_image || "",
+            bio: provider.bio || "",
+            phone_number: provider.phone_number || "",
+            location: provider.location || ""
         });
     };
 
@@ -155,7 +155,7 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                         
                             ) : (
                                 <div style={{textAlign: "center", margin: "50px"}}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="116" height="116" fill="currentColor" className="bi bi-card-image" viewBox="0 0 16 16">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="116" height="116" fill="currentColor" className="bi bi-card-image" viewBox="0 0 16 16">
                                         <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
                                         <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54L1 12.5v-9a.5.5 0 0 1 .5-.5z"/>
                                     </svg>
@@ -165,7 +165,7 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                         <div>
                             <p><strong>Name:</strong> {provider.first_name} {provider.last_name}</p>
                             {/* <p><strong>Profession:</strong> {capitalizeFirstLetter(cutS(provider.creative_category_id.category))}</p> */}
-                            <p><strong>Profession:</strong> {provider.creative_category_id ? capitalizeFirstLetter(cutS(provider.creative_category_id.category)) : 'N/A'}</p>
+                            <p><strong>Profession:</strong> {provider.creative_category_id ? capitalizeFirstLetter(cutS(provider.creative_category_id.category)) : "N/A"}</p>
                             <p><strong>Specialization:</strong> {provider.creative_category_details}</p>
                             <p><strong>Phone Number:</strong> {provider.phone_number}</p>
                             <p><strong>Location:</strong> {provider.location}</p>
@@ -187,11 +187,11 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                     </div>
                     
                     <div className="udpate-inputs">
-                        <p style={{color: "red"}}>* All fields are required.</p>
+                        <p style={{color: "#12009D", fontWeight: 500}}>* All fields are required.</p>
                         {/* error messages */}
                         <div className="error-list">
                             {Object.entries(errorMessages).map(([key, message]) => (
-                                message && <p key={key} style={{ color: 'red' }}>{message}</p>
+                                message && <p key={key} style={{ color: "red" }}>{message}</p>
                             ))}
                         </div>
                         <div className="input">
@@ -202,7 +202,7 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                             <select 
                                 id="creative_category" 
                                 name="creative_category_id" 
-                                value={providerData.creative_category_id?._id || providerData.creative_category_id || ''}  // Ensure correct value is set
+                                value={providerData.creative_category_id?._id || providerData.creative_category_id || ""}  // Ensure correct value is set
                                 onChange={handleCategoryChange} 
                                 required
                             >

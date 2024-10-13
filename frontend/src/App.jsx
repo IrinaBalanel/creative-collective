@@ -67,6 +67,7 @@ function App() {
               <Route path="/admin/provider-verification" element={<Protected adminRoute={true}><ProviderVerification /></Protected>} />
               <Route path="/admin/provider-verification/reject-credential/:credential_id" element={<Protected adminRoute={true}><RejectProviderVerification /></Protected>} />
 
+              {/* Public Routes */}
               <Route path="/" element={<GuestHome />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -81,8 +82,8 @@ function App() {
               {/* Provider Routes */}
               <Route path="/dashboard" element={<Protected providerRoute={true}><ProviderDashboard/></Protected> }/>
               <Route path="/profile-customization/:user_id" element={<Protected providerRoute={true}><ProviderPageCustom /></Protected>} />
-              <Route path="/settings/:user_id" element={<Protected providerRoute={true}><ProviderSettings/> </Protected>}/>
-              <Route path="/appointments/:user_id" element={<Protected providerRoute={true}><ProviderAppointments/> </Protected>}/>
+              <Route path="/settings/:user_id" element={<Protected providerRoute={true}><ProviderSettings/></Protected>}/>
+              <Route path="/appointments/:user_id" element={<Protected providerRoute={true}><ProviderAppointments/></Protected>}/>
               <Route path="/verification/:user_id" element={<Protected providerRoute={true}><ProviderCredentialsVerification /></Protected>} />
 
               <Route path="*" element={<NotFoundPage />} />

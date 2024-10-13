@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const ServiceSchema = new mongoose.Schema({
         service_name: { 
@@ -32,7 +32,7 @@ const ServiceSchema = new mongoose.Schema({
     },
     provider_id: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Provider',  // Reference to the providers table
+        ref: "Provider",  // Reference to the providers table
         required: true 
     }
 });

@@ -34,41 +34,6 @@ export default function UpdatePortfolio({ initialImages = [], user_id }){
         
     };
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     // console.log("Provider in UpdateProviderPage", providerData)
-
-    //     const validUrls = isValidUrl(imageUrls.filter((url) => url.trim() !== "")); // only non-empty URLs
-    //     if (!validUrls){
-    //         setErrorMessage("Url is invalid")
-    //         return;
-    //     }
-
-    //     const portfolioData = {
-    //         portfolio: validUrls  // Only send portfolio data from this component
-    //     };
-    //     try {
-
-    //         const response = await axios.post(`http://localhost:8000/provider/profile-customization/update-info-portfolio/${user_id}/submit`, portfolioData,  { withCredentials: true });
-    //         console.log(response.data.updatedProvider);
-    //         if (response.data.message === "Updated successfully") {
-    //             console.log('Provider info updated successfully');
-    //             setIsEditing(false);
-    //             // navigate(`/profile-customization/${user_id}`);
-    //             // window.location.reload();
-    //             setErrorMessage("")
-    //         } else {
-    //             console.error('Failed to update provider:', response.data.message);
-    //         }
-            
-    //     } catch (error) {
-    //         console.error('Error updating provider info:', error);
-    //     }
-
-    // };
-
-
-
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -100,10 +65,10 @@ export default function UpdatePortfolio({ initialImages = [], user_id }){
                 setIsEditing(false);
                 setErrorMessages([]);
             } else {
-                console.error('Failed to update provider:', response.data.message);
+                console.error("Failed to update provider:", response.data.message);
             }
         } catch (error) {
-            console.error('Error updating provider info:', error);
+            console.error("Error updating provider info:", error);
         }
     };
     const handleCancel = () => {
@@ -146,7 +111,7 @@ export default function UpdatePortfolio({ initialImages = [], user_id }){
                     <div className="portfolio-items">
                         {imageUrls.map((url, index) => (
         
-                            <div key={index} className='portfolio-item portfolio-item-margin'>
+                            <div key={index} className="portfolio-item portfolio-item-margin">
                                 <div className="portfolio-input-container">
                                     <label><strong>{`Image ${index + 1}`}</strong></label>
                                     <input
@@ -156,7 +121,7 @@ export default function UpdatePortfolio({ initialImages = [], user_id }){
                                         onChange={(e) => handleImageChange(index, e.target.value)}
                                     />
                                 </div>
-                                <img src={url} alt={`Portfolio ${index + 1}`} role="demonstration" style={{ width: '250px', height: 'auto' }} />
+                                <img src={url} alt={`Portfolio ${index + 1}`} role="demonstration" style={{ width: "250px", height: "auto" }} />
                             </div>
                                 
     
@@ -164,7 +129,7 @@ export default function UpdatePortfolio({ initialImages = [], user_id }){
                         ))}
 
                         {/* Always show one extra empty input field */}
-                        <div className='portfolio-item portfolio-item-margin'>
+                        <div className="portfolio-item portfolio-item-margin">
                             <div className="portfolio-input-container">
                                 <label><strong>{`Image ${imageUrls.length + 1}`}</strong></label>
                                 <input

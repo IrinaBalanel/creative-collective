@@ -17,7 +17,7 @@ export default function ProviderPageCustom(){
     const [categories, setCategories] = useState([]); 
     const [portfolioImages, setPortfolioImages] = useState([]);
     const [services, setServices] = useState([]);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchProviderData = async () => {
@@ -44,8 +44,7 @@ export default function ProviderPageCustom(){
 
                 
             } catch (error) {
-                console.error('Error fetching provider data:', error);
-                setError('Failed to fetch provider data');
+                console.log("Error fetching provider data:", error);
             }
         };
         if (user_id) {
@@ -55,7 +54,7 @@ export default function ProviderPageCustom(){
     if (!providerData) {
         return <div>Loading...</div>;
     }
-    if (error) return <p>{error}</p>;
+    // if (error) return <p>{error}</p>;
 
     const handleProviderUpdate = (updatedProvider) => {
         setProviderData(updatedProvider);  // updates the parent state with the new provider data

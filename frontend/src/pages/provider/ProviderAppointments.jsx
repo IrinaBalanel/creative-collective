@@ -24,8 +24,8 @@ export default function ProviderSettings() {
                 const providerToken = response.data.provider.calendly_token;
                 setToken(providerToken);
             } catch (error) {
-                console.error('Error fetching token:', error);
-                setError('Failed to fetch token');
+                console.log("Error fetching token:", error);
+                setError("Failed to fetch token");
             }
         };
 
@@ -49,8 +49,8 @@ export default function ProviderSettings() {
                 const userUri = response.data.resource.uri;
                 setUserUri(userUri);
             } catch (error) {
-                console.error('Error fetching Calendly user info:', error);
-                setError('Failed to fetch Calendly user info');
+                console.log("Error fetching Calendly user info:", error);
+                setError("Failed to fetch Calendly user info");
             }
         };
 
@@ -80,8 +80,8 @@ export default function ProviderSettings() {
                 setAppointments(sortedAppointments);
                 console.log(sortedAppointments)
             } catch (error) {
-                console.error('Error fetching Calendly events:', error);
-                setError('Failed to fetch appointments');
+                console.log("Error fetching Calendly events:", error);
+                setError("Failed to fetch appointments");
             }
         };
 
@@ -96,7 +96,7 @@ export default function ProviderSettings() {
             <main className="main">
                 <ProfileButton/>
                 <h1 className="dashboard-header-one" style={{textAlign:"center"}}>Upcoming Appointments</h1>
-                {/* <h2> Appointments</h2> */}
+                <p>{error}</p>
                 <div className="appointments">
                     {appointments && appointments.map((appointment) => (
                         <div key={appointment.uri} className="appointment">
@@ -107,7 +107,7 @@ export default function ProviderSettings() {
                             <div className="app-text-container">
                                 <h3>{appointment.name}</h3>
                                 <p>
-                                    <svg role="presentation" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-geo-alt-fill" viewBox="0 0 16 16">
                                         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
                                     </svg>
                                     {appointment.location.location}

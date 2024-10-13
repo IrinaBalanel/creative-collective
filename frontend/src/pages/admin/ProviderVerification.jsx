@@ -36,7 +36,7 @@ export default function ProviderVerification(){
             }
             setRequests((prevRequests) => prevRequests.filter(request => request._id !== credential_id));
         } catch (error) {
-            console.error('Error updating credential info:', error);
+            console.log("Error updating credential info:", error);
             alert("Failed to approve credentials");
         }
     };
@@ -69,7 +69,7 @@ export default function ProviderVerification(){
                                     <tr key={request._id}>
                                         <td>{request.provider_id.first_name} {request.provider_id.last_name}</td>
                                         <td>{capitalizeFirstLetter(cutS(request.category_id.category))}</td>
-                                        <td><a href={request.file} target="_blank"><i className="bi bi-paperclip"></i>View file</a></td>
+                                        <td><a href={request.file} target="_blank"><i aria-hidden="true" className="bi bi-paperclip"></i>View file</a></td>
                                         <td>{formatDate(request.submitted_at)}</td>
                                         <td className="actions-col">
                                             <button onClick={() => handleApprove(request.provider_id._id, request._id)} aria-label="Approve" title="Approve"><i className="bi bi-patch-check-fill"></i></button>

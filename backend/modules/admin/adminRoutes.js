@@ -149,7 +149,7 @@ router.get("/delete-user/:id", async (req, res) => {
         const user = await adminController.getUserById(id);
         //console.log("User:", user);
         if (!user) {
-            return { message: 'User not found' };
+            return { message: "User not found" };
         }
         res.json(user);
 
@@ -184,7 +184,7 @@ router.get("/block-user/:id", async (req, res) => {
         const user = await adminController.getUserById(id);
         //console.log("User:", user);
         if (!user) {
-            return { message: 'User not found' };
+            return { message: "User not found" };
         }
         res.json(user);
 

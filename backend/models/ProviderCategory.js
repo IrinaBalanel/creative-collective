@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const ProviderCategorySchema = new mongoose.Schema({
     category: { 
         type: String, 
-        enum: ['photographer', 'stylist', 'makeup artist', 'hair stylist', 'decorator'], 
+        enum: ["photographer", "stylist", "makeup artist", "hair stylist", "decorator"], 
         required: true 
     },
     image_url: { type: String, required: true }
 });
 
-const ProviderCategory = mongoose.model('ProviderCategory', ProviderCategorySchema, "provider_categories");
+const ProviderCategory = mongoose.model("ProviderCategory", ProviderCategorySchema, "provider_categories");
 
 
 //SEED TABLE
@@ -45,7 +45,7 @@ const startSeeding = async () => {
         await seedCategories();
 
     } catch (error) {
-        console.error('Error connecting to database:', error);
+        console.error("Error connecting to database:", error);
     }
 };
   

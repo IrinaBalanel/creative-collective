@@ -54,7 +54,6 @@ export default function Clients(){
             console.log("After handle block", updatedUser)
 
         } catch (error) {
-            console.error('Error unblocking client:', error);
             console.log(error);
             alert("Failed to unblock the client");
         }

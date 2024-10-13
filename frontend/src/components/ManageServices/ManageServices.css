@@ -11,10 +11,22 @@
     align-items: flex-start;
     gap: 60px;
 }
-/* #service-update-form .input{
+#service-update-form .input{
     width: 100%;
-} */
-#service-update-form input {
+}
+
+.inline-inputs{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+#service-update-form.input{
+    display: flex;
+    flex-direction: column;
+}
+
+#service-update-form input[type="text"] {
     width: 100%;
     /* min-width: 180px;
     max-width: 350px; */

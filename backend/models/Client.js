@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const ClientSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',  // references the User collection
+        ref: "User",  // references the User collection
         required: true
     },
     first_name: { type: String, required: true },
@@ -12,7 +12,7 @@ const ClientSchema = new mongoose.Schema({
     favorite_professionals: [
     {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Provider', // references the Provider collection
+        ref: "Provider", // references the Provider collection
         default: []
     }]
 });

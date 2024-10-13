@@ -10,19 +10,19 @@ async function getFavProfByUserId (userId) {
     try {
         const client = await Client.findOne({ user_id: userId }, "favorite_professionals")
         .populate({
-            path: 'favorite_professionals',
+            path: "favorite_professionals",
             populate: {
-                path: 'creative_category_id',
-                select: 'category',
-                model: 'ProviderCategory'
+                path: "creative_category_id",
+                select: "category",
+                model: "ProviderCategory"
             }
         })
-        // .populate('favorite_professionals')
+        // .populate("favorite_professionals")
         .exec();
         if (!client || client.user_id === null) {
-            return { message: 'Client not found' };
+            return { message: "Client not found" };
         }
-        //console.log('Client info:', client);
+        //console.log("Client info:", client);
         return client;
     } catch (error) {
         console.error(error);
@@ -36,16 +36,16 @@ async function addFavoriteProvider (userId, providerId) {
         const providerObjectId = new mongoose.Types.ObjectId(providerId);
         const updatedClient = await Client.findOneAndUpdate(
             { user_id: userId },
-            { $addToSet: { favorite_professionals: providerObjectId } }, //$addToSet operator doesn't replace prev value, it adds a new one to the array only if the value is not already present.
+            { $addToSet: { favorite_professionals: providerObjectId } }, //$addToSet operator doesn"t replace prev value, it adds a new one to the array only if the value is not already present.
             { new: true }
-        ).populate('favorite_professionals');
+        ).populate("favorite_professionals");
 
         if (!updatedClient) {
-            console.log('Client not found:', updatedClient); 
+            console.log("Client not found:", updatedClient); 
         }
         return updatedClient;
     } catch (error) {
-        console.error('Error adding favorite provider:', error);
+        console.error("Error adding favorite provider:", error);
         throw error;
     }
 };
@@ -57,14 +57,14 @@ async function removeFavoriteProvider (userId, providerId) {
             { user_id: userId },
             { $pull: { favorite_professionals: providerId } },  // $pull removes the provider from the array
             { new: true }
-        ).populate('favorite_professionals');
+        ).populate("favorite_professionals");
 
         if (!updatedClient) {
-            console.log('Client not found:', updatedClient); 
+            console.log("Client not found:", updatedClient); 
         }
         return updatedClient;
     } catch (error) {
-        console.error('Error adding favorite provider:', error);
+        console.error("Error adding favorite provider:", error);
         throw error;
     }
 };
