@@ -5,6 +5,7 @@ import SideNav from "../../components/SideNav/SideNav";
 import AdminProfileButton from "../../components/AdminProfileButton";
 import "./UserManagement.css"
 import { capitalizeFirstLetter } from "../../functions";
+import { baseUrl } from "../../config";
 
 export default function Providers(){
     const [providers, setProviders] = useState([]);
@@ -13,7 +14,7 @@ export default function Providers(){
     useEffect(() => {
         const getProviders = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/admin/management-providers',  { withCredentials: true });
+                const response = await axios.get(`${baseUrl}/admin/management-providers`,  { withCredentials: true });
                 const data = response.data;
                 console.log(data);
                 setProviders(data);
@@ -27,7 +28,7 @@ export default function Providers(){
 
     const handleUnblock = async (providerId) => {
         try {
-            const response = await axios.post(`http://localhost:8000/admin/unblock-user/${providerId}/submit`, {}, { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/admin/unblock-user/${providerId}/submit`, {}, { withCredentials: true });
             console.log("Response from front handle block", response.data)
             // alert(response.data.message);
             

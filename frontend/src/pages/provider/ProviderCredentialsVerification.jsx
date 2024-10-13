@@ -6,7 +6,7 @@ import ProfileButton from "../../components/ProfileButton"
 import { isValidUrl, formatDate, cutS, capitalizeFirstLetter} from '../../functions';
 import {useContext} from "react";
 import { UserContext } from "../../context/UserContext";
-
+import { baseUrl } from "../../config";
 
 export default function ProviderCredentialsVerification(){
     const [isEditing, setIsEditing] = useState(false);  // edit/view mode
@@ -70,14 +70,14 @@ export default function ProviderCredentialsVerification(){
             }
             try {
                 // Fetch provider data
-                const providerResponse = await axios.get(`http://localhost:8000/provider/fetch-provider/${user._id}`, { withCredentials: true });
+                const providerResponse = await axios.get(`${baseUrl}/provider/fetch-provider/${user._id}`, { withCredentials: true });
                 const providerData = providerResponse.data;
                 setProviderId(providerData._id);
                 //console.log("provider: ", providerData._id);
                 setCategoryId(providerData.creative_category_id._id);
     
                 // Fetch credentials attempts
-                const credentialsResponse = await axios.get(`http://localhost:8000/provider/credentials-verification/attempts-list/${providerData._id}`, { withCredentials: true });
+                const credentialsResponse = await axios.get(`${baseUrl}/provider/credentials-verification/attempts-list/${providerData._id}`, { withCredentials: true });
                 const credentialsData = credentialsResponse.data;
                 setCredentialsAttempts(credentialsData);
     
@@ -106,7 +106,7 @@ export default function ProviderCredentialsVerification(){
         console.log("before sending request for verififcation", credentialData);
 
         try {
-            const response = await axios.post(`http://localhost:8000/provider/credentials-verification/submit`, {credentialData},  { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/provider/credentials-verification/submit`, {credentialData},  { withCredentials: true });
             console.log(response.data);
             if (response.data.message === "Verification was added successfully") {
                 const newCredential = response.data.newVerification;

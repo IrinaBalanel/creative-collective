@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import {useState, useContext} from "react";
 import { UserContext } from "../context/UserContext";
+import { baseUrl } from '../config';
 
 export default function Logout() {
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ export default function Logout() {
     const { logout } = useContext(UserContext);
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/auth/logout', {}, { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/auth/logout`, {}, { withCredentials: true });
             const loggedOutuser = response.data.user;
             
             logout();

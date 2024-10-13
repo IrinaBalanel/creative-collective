@@ -2,7 +2,7 @@ import axios from "axios";
 import "./ContactForm.css";
 import {useState} from "react";
 import {Link} from "react-router-dom"
-
+import { baseUrl } from "../../config";
 
 export default function ContactForm(){
 
@@ -21,7 +21,7 @@ export default function ContactForm(){
         };
         try {
             console.log("Form Data:", formData);
-            const response = await axios.post(`http://localhost:8000/contact-us-form/submit`, {formData});
+            const response = await axios.post(`${baseUrl}/contact-us-form/submit`, {formData});
             
             console.log("Response from contact us endpoint:", response.data);
 

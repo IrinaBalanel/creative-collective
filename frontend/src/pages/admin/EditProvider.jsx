@@ -6,6 +6,7 @@ import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import AdminProfileButton from "../../components/AdminProfileButton";
 import { isPhoneNumberValid} from '../../functions';
+import { baseUrl } from "../../config";
 
 export default function EditProvider(){
     const { id } = useParams();
@@ -24,7 +25,7 @@ export default function EditProvider(){
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/admin/update-provider/${id}`,  { withCredentials: true });
+                const response = await axios.get(`${baseUrl}/admin/update-provider/${id}`,  { withCredentials: true });
                 const data = response.data;
                 console.log(data);
                 setUser({
@@ -103,7 +104,7 @@ export default function EditProvider(){
         };
 
         try {
-            const response = await axios.post(`http://localhost:8000/admin/update-provider/${id}/submit`, { providerData, userData },  { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/admin/update-provider/${id}/submit`, { providerData, userData },  { withCredentials: true });
             console.log(response.data);
 
             navigate("/admin/management-providers");

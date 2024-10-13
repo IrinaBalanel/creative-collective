@@ -3,6 +3,7 @@ import axios from "axios";
 import "./FindByCat.css";
 import {Link} from "react-router-dom"
 import {capitalizeFirstLetter} from "../../functions"
+import { baseUrl } from "../../config";
 
 export default function FindByCat(){
     const [categories, setCategories] = useState([]);
@@ -12,7 +13,7 @@ export default function FindByCat(){
     useEffect(() => {
         const getCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/');
+                const response = await axios.get(`${baseUrl}`);
                 const data = response.data;
                 console.log(data);
                 setCategories(data);

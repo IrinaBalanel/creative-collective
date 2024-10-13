@@ -7,6 +7,7 @@ import {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../../functions";
 import { UserContext } from "../../context/UserContext";
+import { baseUrl } from "../../config";
 
 export default function Professionals({ title }){
     const { category } = useParams();
@@ -22,9 +23,9 @@ export default function Professionals({ title }){
             try {
                 let response;
                 if(category){
-                    response = await axios.get(`http://localhost:8000/professionals/${category}`);
+                    response = await axios.get(`${baseUrl}/professionals/${category}`);
                 } else{
-                    response = await axios.get('http://localhost:8000/professionals');
+                    response = await axios.get(`${baseUrl}/professionals`);
                 }
                 
                 const data = response.data;
@@ -58,7 +59,7 @@ export default function Professionals({ title }){
             //     return;
             // }
             try {
-                const response = await axios.get(`http://localhost:8000/client/my-favorite-professionals/${user._id}`, { withCredentials: true });
+                const response = await axios.get(`${baseUrl}/client/my-favorite-professionals/${user._id}`, { withCredentials: true });
                 console.log("user's favorite provider IDs", response.data.favorite_professionals);
                 setFavoriteIds(response.data.favorite_professionals.map(fav => fav._id));
             } catch (error) {

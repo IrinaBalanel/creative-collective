@@ -3,7 +3,7 @@ import ProfileButton from "../../components/ProfileButton"
 import { useParams } from 'react-router-dom';
 import {useState, useEffect} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom"
+import { baseUrl } from "../../config";
 
 export default function ProviderSettings(){
     const { user_id } = useParams(); 
@@ -17,7 +17,7 @@ export default function ProviderSettings(){
         const fetchToken = async () => {
             try {
                 console.log("Provider user_id: ", user_id);
-                const response = await axios.get(`http://localhost:8000/provider/settings/${user_id}/token`, {withCredentials: true});
+                const response = await axios.get(`${baseUrl}/provider/settings/${user_id}/token`, {withCredentials: true});
                 setToken(response.data.provider.calendly_token);
                 //console.log("Provider data: ", response.data);
                 //console.log("Token: ", response.data.provider.calendly_token);
@@ -47,7 +47,7 @@ export default function ProviderSettings(){
         //console.log("before sending", token);
 
         try {
-            const response = await axios.post(`http://localhost:8000/provider/settings/${user_id}/token/submit`, {token},  { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/provider/settings/${user_id}/token/submit`, {token},  { withCredentials: true });
             //console.log(response.data.newToken.calendly_token);
             setToken(response.data.newToken.calendly_token);
             setIsEditing(false);

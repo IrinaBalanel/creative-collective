@@ -5,6 +5,7 @@ import SideNav from "../../components/SideNav/SideNav";
 import "./UserManagement.css"
 import AdminProfileButton from "../../components/AdminProfileButton";
 import { capitalizeFirstLetter } from "../../functions";
+import { baseUrl } from "../../config";
 
 export default function Clients(){
     const [clients, setClients] = useState([]);
@@ -13,7 +14,7 @@ export default function Clients(){
     useEffect(() => {
         const getClients = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/admin/management-clients',  { withCredentials: true });
+                const response = await axios.get(`${baseUrl}/admin/management-clients`,  { withCredentials: true });
                 const data = response.data;
                 setClients(data);
                 // console.log(data)
@@ -30,7 +31,7 @@ export default function Clients(){
     const handleUnblock = async (clientId) => {
         try {
             console.log("client id", clientId);
-            const response = await axios.post(`http://localhost:8000/admin/unblock-user/${clientId}/submit`, {}, { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/admin/unblock-user/${clientId}/submit`, {}, { withCredentials: true });
             // alert(response.data.message);
             console.log("updatedUser ", response)
             const updatedUser = response.data.user;

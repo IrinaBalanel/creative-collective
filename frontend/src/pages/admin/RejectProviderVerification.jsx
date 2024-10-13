@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams, Link, UNSAFE_DataRouterStateContext } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 import AdminProfileButton from "../../components/AdminProfileButton";
+import { baseUrl } from "../../config";
 
 export default function RejectProviderVerification(){
 
@@ -15,7 +16,7 @@ export default function RejectProviderVerification(){
     useEffect(() => {
         const getUser = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/admin/provider-verification/reject-credential/${credential_id}`, { withCredentials: true });
+                const response = await axios.get(`${baseUrl}/admin/provider-verification/reject-credential/${credential_id}`, { withCredentials: true });
                 const data = response.data;
                 setCredential(data);
                 console.log("Credential to reject", data);
@@ -29,7 +30,7 @@ export default function RejectProviderVerification(){
     
     const handleReject = async (provider_id, credential_id) => {
         try {
-            const response = await axios.post(`http://localhost:8000/admin/provider-verification/${provider_id}/reject-credential/${credential_id}/submit`, {feedback},  { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/admin/provider-verification/${provider_id}/reject-credential/${credential_id}/submit`, {feedback},  { withCredentials: true });
             
             console.log(response)
             navigate("/admin/provider-verification");

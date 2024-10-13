@@ -7,6 +7,7 @@ import PhoneInput from 'react-phone-number-input';
 import AdminProfileButton from "../../components/AdminProfileButton";
 import "../public/Register.css" 
 import { isPhoneNumberValid} from '../../functions';
+import { baseUrl } from "../../config";
 
 export default function NewUser(){
     const [fName, setFName] = useState("");
@@ -48,7 +49,7 @@ export default function NewUser(){
         console.log(fName, lName, email, phone, password, role);
 
         try {
-            const response = await axios.post('http://localhost:8000/admin/new-user/submit', {
+            const response = await axios.post(`${baseUrl}/admin/new-user/submit`, {
                 firstName: fName,
                 lastName: lName, 
                 email, 

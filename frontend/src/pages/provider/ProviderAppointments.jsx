@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { formatDate, formatTime, capitalizeFirstLetter } from "../../functions";
 import "./ProviderAppointments.css"
-
+import { baseUrl } from "../../config";
 
 export default function ProviderSettings() {
     const { user_id } = useParams();
@@ -18,7 +18,7 @@ export default function ProviderSettings() {
     useEffect(() => {
         const fetchToken = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/provider/settings/${user_id}/token`, {
+                const response = await axios.get(`${baseUrl}/provider/settings/${user_id}/token`, {
                     withCredentials: true
                 });
                 const providerToken = response.data.provider.calendly_token;

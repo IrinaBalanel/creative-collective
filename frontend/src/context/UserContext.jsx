@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 export const UserContext = createContext();
+import { baseUrl } from '../config';
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(undefined);
@@ -21,7 +22,7 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         const verifyUserToken = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/auth/verify-token', {
+                const response = await axios.get(`${baseUrl}/auth/verify-token`, {
                     withCredentials: true 
                 });
                 if (response.data.user) {

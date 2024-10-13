@@ -7,7 +7,7 @@ import axios from "axios";
 import {Link, Navigate} from "react-router-dom"
 import ProviderPortfolio from "../../components/ProviderPortfolio/ProviderPortfolio";
 import ProviderServices from "../../components/ProviderServices/ProviderServices";
-
+import { baseUrl } from "../../config";
 
 export default function ProviderDetails(){
 
@@ -19,7 +19,7 @@ export default function ProviderDetails(){
         const getProviderData = async () => {
             
             try {
-                const response = await axios.get(`http://localhost:8000/professionals/${category}/${id}`);
+                const response = await axios.get(`${baseUrl}/professionals/${category}/${id}`);
                 const data = response.data;
                 // console.log(data);
                 console.log(data.socials);

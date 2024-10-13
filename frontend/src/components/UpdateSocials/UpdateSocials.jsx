@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { isValidUrl, capitalizeFirstLetter } from '../../functions';
 import "./UpdateSocials.css"
+import { baseUrl } from "../../config";
 
 export default function UpdateSocials({ socials, user_id }) {
     const [isEditing, setIsEditing] = useState(false);
@@ -49,7 +50,7 @@ export default function UpdateSocials({ socials, user_id }) {
 
         try {
             const response = await axios.post(
-                `http://localhost:8000/provider/profile-customization/update-socials/${user_id}/submit`,
+                `${baseUrl}/provider/profile-customization/update-socials/${user_id}/submit`,
                 socials,
                 { withCredentials: true }
             );

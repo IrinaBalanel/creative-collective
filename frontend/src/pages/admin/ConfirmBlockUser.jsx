@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 import AdminProfileButton from "../../components/AdminProfileButton";
+import { baseUrl } from "../../config";
 
 export default function ConfirmBlockUser(){
 
@@ -16,7 +17,7 @@ export default function ConfirmBlockUser(){
     useEffect(() => {
         const getUser = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/admin/block-user/${id}`,  { withCredentials: true });
+                const response = await axios.get(`${baseUrl}/admin/block-user/${id}`,  { withCredentials: true });
                 const data = response.data;
                 console.log(data);
                 setUser(data);
@@ -30,7 +31,7 @@ export default function ConfirmBlockUser(){
 
     const handleBlock = async () => {
         try {
-            const response = await axios.post(`http://localhost:8000/admin/block-user/${id}/submit`, {
+            const response = await axios.post(`${baseUrl}/admin/block-user/${id}/submit`, {
                 blockReason: blockReason,
             },  { withCredentials: true });
             setMessage(response.data.message); 

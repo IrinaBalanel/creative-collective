@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom"
 import { isValidUrl, isValidCalendlyUrl, isValidDecimal} from '../../functions';
-// import "./ManageServices.css"
+import { baseUrl } from '../../config';
 
 export default function UpdateService({ provider_id, service, index, onServiceUpdated, onServiceDeleted, isEditing, setIsEditing, onCancel }) {
     const [serviceData, setServiceData] = useState({
@@ -85,7 +85,7 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
         };
         
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/update-service/${service._id}/submit`, {serviceData: updatedServiceData, provider_id}, { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/provider/profile-customization/update-service/${service._id}/submit`, {serviceData: updatedServiceData, provider_id}, { withCredentials: true });
             if (response.data.message === "Service updated successfully") {
                 onServiceUpdated(response.data.updatedService, index);  // triggers update in ManageServices
                 console.log("Response mess: ", response.data.message)
@@ -112,7 +112,7 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
         e.preventDefault();
 
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/delete-service/${service._id}/submit`,  { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/provider/profile-customization/delete-service/${service._id}/submit`,  { withCredentials: true });
             if (response.data.message === "Service deleted successfully") {
                 onServiceDeleted(index);  // triggers update in ManageServices
             }

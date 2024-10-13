@@ -7,7 +7,7 @@ import LogoBlack from "../../components/LogoBlack";
 import "./Register.css" 
 import { UserContext } from "../../context/UserContext";
 import { isPhoneNumberValid} from '../../functions';
-
+import { baseUrl } from "../../config";
 
 export default function Register(){
     const [fName, setFName] = useState("");
@@ -49,7 +49,7 @@ export default function Register(){
         console.log(fName, lName, email, phone, password, role);
 
         try {
-            const response = await axios.post('http://localhost:8000/auth/register', {
+            const response = await axios.post(`${baseUrl}/auth/register`, {
                 firstName: fName,
                 lastName: lName, 
                 email, 

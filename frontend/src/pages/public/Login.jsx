@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import "./Login.css"
 import LogoBlack from "../../components/LogoBlack";
-
+import { baseUrl } from "../../config";
 
 export default function Login(){
     const [email, setEmail] = useState("");
@@ -15,14 +15,14 @@ export default function Login(){
     const { login } = useContext(UserContext); 
     const location = useLocation(); // gets the current route location
     const isProvider = location.state?.fromProvider || false;
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         setErrorMessages([]); //resets the errors array on submit
-        
+        console.log(baseUrl);
         try {
-            const response = await axios.post('http://localhost:8000/auth/login', {email, password}, { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/auth/login`, {email, password}, { withCredentials: true });
             
             if (response.data.errors) {
                 setErrorMessages(response.data.errors);

@@ -1,6 +1,7 @@
 import { UserContext } from '../context/UserContext';
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import { baseUrl } from '../config';
 
 // export default function ProfileButton({providerFName, providerLName, providerEmail}){
 
@@ -34,7 +35,7 @@ export default function ProfileButton(){
     useEffect(() => {
         const getUserwithProvider = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/provider/dashboard/${userId}`, {
+                const response = await axios.get(`${baseUrl}/provider/dashboard/${userId}`, {
                     withCredentials: true 
                 });
                 if (response.data.provider) {

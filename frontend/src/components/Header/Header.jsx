@@ -7,6 +7,7 @@ import axios from "axios";
 import {capitalizeFirstLetter} from "../../functions"
 import { UserContext } from "../../context/UserContext";
 import Logout from "../Logout";
+import { baseUrl } from "../../config";
 
 export default function Header(){
     const [categories, setCategories] = useState([]);
@@ -20,7 +21,7 @@ export default function Header(){
     useEffect(() => {
         const getCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/');
+                const response = await axios.get(`${baseUrl}`);
                 const data = response.data;
                 console.log(data);
                 setCategories(data);

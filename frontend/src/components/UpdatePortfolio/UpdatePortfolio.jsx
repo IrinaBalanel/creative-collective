@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import "./UpdatePortfolio.css"
 import { isValidUrl } from '../../functions';
+import { baseUrl } from "../../config";
 
 export default function UpdatePortfolio({ initialImages = [], user_id }){
     const [isEditing, setIsEditing] = useState(false);
@@ -58,7 +59,7 @@ export default function UpdatePortfolio({ initialImages = [], user_id }){
         };
 
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/update-info-portfolio/${user_id}/submit`, portfolioData, { withCredentials: true }
+            const response = await axios.post(`${baseUrl}/provider/profile-customization/update-info-portfolio/${user_id}/submit`, portfolioData, { withCredentials: true }
             );
             console.log(response.data.updatedProvider);
             if (response.data.message === "Updated successfully") {

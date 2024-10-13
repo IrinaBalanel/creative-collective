@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import SideNav from "../../components/SideNav/SideNav";
 import ProfileButton from "../../components/ProfileButton"
 import { formatDate, cutS, capitalizeFirstLetter} from '../../functions';
+import { baseUrl } from "../../config";
 
 export default function ProviderVerification(){
     const [requests, setRequests] = useState([]);
@@ -13,7 +14,7 @@ export default function ProviderVerification(){
         const getVerificationRequests = async () => {
             
             try {
-                const response = await axios.get(`http://localhost:8000/admin/provider-verification`,  { withCredentials: true });
+                const response = await axios.get(`${baseUrl}/admin/provider-verification`,  { withCredentials: true });
                 const data = response.data;
                 setRequests(data);
                 console.log(data);
@@ -29,7 +30,7 @@ export default function ProviderVerification(){
     const handleApprove = async (provider_id, credential_id) => {
 
         try {
-            const response = await axios.post(`http://localhost:8000/admin/provider-verification/${provider_id}/approve-credential/${credential_id}/submit`, {},  { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/admin/provider-verification/${provider_id}/approve-credential/${credential_id}/submit`, {},  { withCredentials: true });
             console.log(response.data);
             if(!response.data){
                 setError("Something went wrong.")

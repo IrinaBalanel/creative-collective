@@ -7,6 +7,7 @@ import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import {capitalizeFirstLetter, cutS} from "../../functions"
 import { isValidUrl, isPhoneNumberValid} from '../../functions';
+import { baseUrl } from "../../config";
 
 export default function UpdateProviderInfo({ provider, user_id, categories, onProviderUpdated}){
     const [isEditing, setIsEditing] = useState(false);  // edit/view mode
@@ -92,19 +93,14 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
         }
 
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/update-info-portfolio/${localUserId}/submit`, providerData,  { withCredentials: true });
-            if (response.data.message === "Updated successfully") {
-                console.log(response.data.updatedProvider);
-                const updatedProviderData = response.data.updatedProvider;  // New updated data from the response
-                setProviderData(updatedProviderData); 
-                
-                onProviderUpdated(updatedProviderData);
-                console.log("Provider in UpdateProviderPage after receiving response", updatedProviderData.creative_category_id)
-                setIsEditing(false);
-                // window.location.reload();
-            } else {
-                console.error("Failed to update provider:", response.data.message);
-            }
+            const response = await axios.post(`${baseUrl}/provider/profile-customization/update-info-portfolio/${localUserId}/submit`, providerData,  { withCredentials: true });
+            console.log(response.data.updatedProvider);
+            const updatedProviderData = response.data.updatedProvider;  // New updated data from the response
+            setProviderData(updatedProviderData); 
+            
+            onProviderUpdated(updatedProviderData);
+            console.log("Provider in UpdateProviderPage after receiving response", updatedProviderData.creative_category_id)
+            setIsEditing(false);
             
         } catch (error) {
             console.error("Error updating provider info:", error);

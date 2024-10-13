@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { isValidUrl, isValidCalendlyUrl, isValidDecimal} from '../../functions';
+import { baseUrl } from '../../config';
 
 export default function AddNewService({ provider_id, onServiceAdded, isEditing, setIsEditing, onCancel }) {
     const [errorMessages, setErrorMessages] = useState({}); 
@@ -90,7 +91,7 @@ export default function AddNewService({ provider_id, onServiceAdded, isEditing, 
         console.log("Service Data with converted decimals:", serviceData);
 
         try {
-            const response = await axios.post(`http://localhost:8000/provider/profile-customization/add-service/submit`, {serviceData, provider_id},  { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/provider/profile-customization/add-service/submit`, {serviceData, provider_id},  { withCredentials: true });
             onServiceAdded(response.data.newService);  // triggers update in ManageServices
             console.log(response.data.newService)
             setNewService({  // resets form

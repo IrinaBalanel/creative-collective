@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import SideNav from "../../components/SideNav/SideNav";
 import AdminProfileButton from "../../components/AdminProfileButton";
+import { baseUrl } from "../../config";
 
 export default function ConfirmDeleteUser(){
 
@@ -15,7 +16,7 @@ export default function ConfirmDeleteUser(){
     useEffect(() => {
         const getUser = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/admin/delete-user/${id}`,  { withCredentials: true });
+                const response = await axios.get(`${baseUrl}/admin/delete-user/${id}`,  { withCredentials: true });
                 const data = response.data;
                 console.log("Fetched user: ", data);
                 setUser(data);
@@ -29,7 +30,7 @@ export default function ConfirmDeleteUser(){
 
     const handleDelete = async () => {
         try {
-            const response = await axios.post(`http://localhost:8000/admin/delete-user/${id}/submit`,  { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/admin/delete-user/${id}/submit`,  { withCredentials: true });
             setMessage(response.data.message); 
             console.log("Deleted user: ", response.data.user);
             alert("User deleted successfully");

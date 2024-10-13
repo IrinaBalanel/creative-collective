@@ -8,6 +8,7 @@ import UpdatePortfolio from "../../components/UpdatePortfolio/UpdatePortfolio";
 import ManageServices from "../../components/ManageServices/ManageServices";
 import ProfileButton from "../../components/ProfileButton"
 import UpdateSocials from "../../components/UpdateSocials/UpdateSocials";
+import { baseUrl } from "../../config";
 
 export default function ProviderPageCustom(){
 
@@ -22,14 +23,14 @@ export default function ProviderPageCustom(){
     useEffect(() => {
         const fetchProviderData = async () => {
             try {
-                const providerResponse = await axios.get(`http://localhost:8000/provider/profile-customization/${user_id}`, {
+                const providerResponse = await axios.get(`${baseUrl}/provider/profile-customization/${user_id}`, {
                     withCredentials: true,
                     headers: {
                         'Cache-Control': 'no-cache'
                     }
                 });
                 // Fetch categories data
-                const categoriesResponse = await axios.get('http://localhost:8000/provider/categories',  { withCredentials: true });
+                const categoriesResponse = await axios.get(`${baseUrl}/provider/categories`,  { withCredentials: true });
 
                 setProviderData(providerResponse.data);
                 setCategories(categoriesResponse.data);

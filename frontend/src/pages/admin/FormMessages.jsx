@@ -3,6 +3,7 @@ import axios from "axios";
 import {Link} from "react-router-dom"
 import SideNav from "../../components/SideNav/SideNav";
 import AdminProfileButton from "../../components/AdminProfileButton";
+import { baseUrl } from "../../config";
 
 export default function FormMessages(){
     const [messages, setMessages] = useState([]);
@@ -11,7 +12,7 @@ export default function FormMessages(){
     useEffect(() => {
         const getMessages = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/admin/form-messages',  { withCredentials: true });
+                const response = await axios.get(`${baseUrl}/admin/form-messages`,  { withCredentials: true });
                 const data = response.data;
                 setMessages(data);
                 // console.log(data)
@@ -27,7 +28,7 @@ export default function FormMessages(){
     const handleRead = async (id) => {
         try {
             console.log("msg id", id);
-            const response = await axios.post(`http://localhost:8000/admin/form-messages/mark-read/${id}/submit`, {}, { withCredentials: true });
+            const response = await axios.post(`${baseUrl}/admin/form-messages/mark-read/${id}/submit`, {}, { withCredentials: true });
             // alert(response.data.message);
             //console.log("message response", response)
             const updatedMessage = response.data.message;

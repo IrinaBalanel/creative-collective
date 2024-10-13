@@ -1,7 +1,7 @@
 import { UserContext } from '../context/UserContext';
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
-
+import { baseUrl } from '../config';
 // export default function ProfileButton({providerFName, providerLName, providerEmail}){
 
 //     return (
@@ -34,7 +34,7 @@ export default function AdminProfileButton(){
     useEffect(() => {
         const getUserAdmin = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/admin/profile/${userId}`, {
+                const response = await axios.get(`${baseUrl}/admin/profile/${userId}`, {
                     withCredentials: true 
                 });
                 if (response.data.admin) {

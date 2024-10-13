@@ -3,6 +3,7 @@ import "./ProviderCard.css"
 import {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
+import { baseUrl } from "../../config";
 
 export default function ProviderCard({ professional, providerId, isFavorite, onRemove}){
 	const { user } = useContext(UserContext);
@@ -25,7 +26,7 @@ export default function ProviderCard({ professional, providerId, isFavorite, onR
             //console.log("Data before submitting favorite ", user._id, providerId);
             if (isFavorited) {
                 // remove from favorites
-                const response = await axios.post(`http://localhost:8000/client/my-favorite-professionals/${user._id}/${providerId}/remove`, { withCredentials: true });
+                const response = await axios.post(`${baseUrl}/client/my-favorite-professionals/${user._id}/${providerId}/remove`, { withCredentials: true });
                 console.log(response.data);
                 // onRemove(providerId);  // Removes the provider from the frontend
                 
@@ -34,7 +35,7 @@ export default function ProviderCard({ professional, providerId, isFavorite, onR
                 }
             } else {
                 // add to favorites
-                const response = await axios.post(`http://localhost:8000/client/my-favorite-professionals/${user._id}/${providerId}/submit`, { withCredentials: true });
+                const response = await axios.post(`${baseUrl}/client/my-favorite-professionals/${user._id}/${providerId}/submit`, { withCredentials: true });
                 console.log(response.data);
             }
 

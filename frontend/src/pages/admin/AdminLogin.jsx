@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import LogoBlack from "../../components/LogoBlack";
 import { UserContext } from "../../context/UserContext";
+import { baseUrl } from "../../config";
 
 export default function AdminLogin(){
     const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ export default function AdminLogin(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/auth/admin-login', {email, password}, { withCredentials: true }); //withCredentials ensures the cookie is sent with the request to catch it on backend
+            const response = await axios.post(`${baseUrl}/auth/admin-login`, {email, password}, { withCredentials: true }); //withCredentials ensures the cookie is sent with the request to catch it on backend
             
             const data = response.data;  // the whole data object
             const user = data.user;      // the user object from the data object

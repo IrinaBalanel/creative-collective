@@ -5,7 +5,7 @@ import Header from "../../components/Header/Header";
 import ProviderCard from "../../components/ProviderCard/ProviderCard";
 import { useParams } from 'react-router-dom';
 import {useState, useEffect, useContext} from "react";
-
+import { baseUrl } from "../../config";
 
 export default function Favorites() {
 	const [favoriteProfs, setFavoriteProfs] = useState([]);
@@ -21,7 +21,7 @@ export default function Favorites() {
 		const getFavorites = async () => {
 			console.log("User id before sending request: ", user_id);
 			try {
-				const response = await axios.get(`http://localhost:8000/client/my-favorite-professionals/${user_id}`, {withCredentials: true});
+				const response = await axios.get(`${baseUrl}/client/my-favorite-professionals/${user_id}`, {withCredentials: true});
 				console.log(response.data);
 				setFavoriteProfs(response.data.favorite_professionals);
 			} catch (error) {
