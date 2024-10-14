@@ -7,6 +7,7 @@ import { baseUrl } from '../config';
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(undefined);
     const [loading, setLoading] = useState(true); // explicitly track loading state
+    const navigate = useNavigate();
     const login = (userData) => {
         setUser(userData);
         setLoading(false);
