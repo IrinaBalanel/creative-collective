@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const authController = require("./authController");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
 
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
@@ -23,6 +25,8 @@ router.post("/login", async (req, res) => {
         const cookie = await res.cookie("token", token, {
             httpOnly: true, // prevents client-side from accessing the cookie
             maxAge: 24 * 60 * 60 * 1000, // cookie will expire in 1 day and be deleted from browser
+            secure: true, // only true in production
+            sameSite: "None",
         });
         //console.log("this is my cookie", cookie);
         res.json({ message: "Login successful", user: result.user });
@@ -43,6 +47,8 @@ router.post("/register", async (req, res) => {
         const cookie = await res.cookie("token", token, {
             httpOnly: true, // prevents client-side from accessing the cookie
             maxAge: 24 * 60 * 60 * 1000, // cookie will expire in 1 day and be deleted from browser
+            secure: true, // only true in production
+            sameSite: "None",
         });
         console.log("Token", cookie);
         console.log(result)
@@ -63,6 +69,8 @@ router.post("/admin-login", async (req, res) => {
         const cookie = await res.cookie("token", token, {
             httpOnly: true, // prevents client-side from accessing the cookie
             maxAge: 24 * 60 * 60 * 1000, // cookie will expire in 1 day and be deleted from browser
+            secure: true, // only true in production
+            sameSite: "None",
         });
         //console.log("this is my cookie", cookie);
         res.json({ message: "Admin login successful", user: result.user });
