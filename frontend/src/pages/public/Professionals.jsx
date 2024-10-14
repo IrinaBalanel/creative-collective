@@ -90,7 +90,7 @@ export default function Professionals({ title }){
                                 />
                             ))
                         ) : (
-                            <p>No professionals found</p>
+                            <p><i>No professionals found.</i></p>
                         )}
                     </div>
                     

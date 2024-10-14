@@ -63,27 +63,27 @@ export default function Favorites() {
 			<main id="main">
 				<h1>My Favorite Professionals</h1>
 				{!isLoading ? (
-				<div className="prof-list">
-					{error ? (
-						<p><i>Error fetching favorite professionals.</i></p>
-					) : (
-						<></>
-					)}
-					{favoriteProfs.length > 0 ? (
-						favoriteProfs.map((professional) => (
-							<ProviderCard 
-							key={professional._id} 
-							professional={professional} 
-							providerId={professional._id}
-							category={professional.creative_category_id.category} 
-							onRemove={removeFromFavorites}
-							isFavorite={true}  // Pass as a favorite
-							/>
-						))
-					) : (
-						<p><i>No favorite professionals found.</i></p>
-					)}
-				</div>
+					<div className="prof-list">
+						{error ? (
+							<p><i>Error fetching favorite professionals.</i></p>
+						) : (
+							<></>
+						)}
+						{favoriteProfs.length > 0 ? (
+							favoriteProfs.map((professional) => (
+								<ProviderCard 
+								key={professional._id} 
+								professional={professional} 
+								providerId={professional._id}
+								category={professional.creative_category_id.category} 
+								onRemove={removeFromFavorites}
+								isFavorite={true}  // Pass as a favorite
+								/>
+							))
+						) : (
+							<p><i>No favorite professionals found.</i></p>
+						)}
+					</div>
 				) : (
 					<p><i>Loading favorite professionals...</i></p>
 				)}

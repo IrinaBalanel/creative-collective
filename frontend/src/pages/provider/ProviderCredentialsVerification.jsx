@@ -224,7 +224,11 @@ export default function ProviderCredentialsVerification(){
                     <form onSubmit={handleSubmit}>
                         <p style={{ color: 'red' }}>{errorMessage}</p>
                         <div id="preview-pic-container" className="credentials-container">
-                            <img src={file} alt="File Preview" required/>
+                            {file ? (
+                                <img src={file} alt="File Preview" required/>
+                            ) : (
+                                null
+                            )}
                             <div className="image-url-container">
                                 <input type="text" id="file" placeholder="File URL" name="file" onChange={handleChange} required/>
                             </div>

@@ -13,8 +13,6 @@ export default function Logout() {
         try {
             const response = await axios.post(`${baseUrl}/auth/logout`, {}, { withCredentials: true });
             const loggedOutuser = response.data.user;
-            
-            logout();
             console.log("User Context after log in:", user);
             
             if (loggedOutuser.role === "admin") {
@@ -27,6 +25,7 @@ export default function Logout() {
                 navigate("/login");
                 console.log("Client logged out");
             }
+            logout();
         } catch (error) {
             console.error("Error logging out:", error);
             setError("Error logging out");

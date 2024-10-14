@@ -34,8 +34,8 @@ export default function ProviderPageCustom(){
 
                 setProviderData(providerResponse.data);
                 setCategories(categoriesResponse.data);
-                setPortfolioImages(providerResponse.data.portfolio)
-                setServices(providerResponse.data.services)
+                setPortfolioImages(providerResponse.data.portfolio);
+                setServices(providerResponse.data.services);
 
                 console.log("Personal info: ", providerResponse.data);
                 console.log("Categories: ", categoriesResponse.data);
@@ -52,9 +52,9 @@ export default function ProviderPageCustom(){
             fetchProviderData();
         }
     }, [user_id]);
-    if (!providerData) {
-        return <div>Loading...</div>;
-    }
+    // if (!providerData) {
+    //     return <div>Loading...</div>;
+    // }
     // if (error) return <p>{error}</p>;
 
     const handleProviderUpdate = (updatedProvider) => {
@@ -68,30 +68,35 @@ export default function ProviderPageCustom(){
                 <ProfileButton/>
                 <div id="page-custom">
                     <h1 className="dashboard-header-one">Profile Page Customization</h1>
-                    <UpdateProviderInfo
-                        provider={providerData}
-                        user_id={providerData.user_id._id}
-                        categories={categories}
-                        onProviderUpdated={handleProviderUpdate}
-                    />
+                    {providerData ? (
+                        <>
+                            <UpdateProviderInfo
+                                provider={providerData}
+                                user_id={providerData.user_id._id}
+                                categories={categories}
+                                onProviderUpdated={handleProviderUpdate}
+                            />
 
-                    <UpdateSocials
-                        user_id={providerData.user_id._id}
-                        socials={providerData.socials}
-                    />
+                            <UpdateSocials
+                                user_id={providerData.user_id._id}
+                                socials={providerData.socials}
+                            />
 
-                    <ManageServices
-                        user_id={providerData.user_id._id}
-                        provider_id={providerData._id}
-                        initialServices={services}
-                        
-                    />
-                    
-                    <UpdatePortfolio
-                        user_id={providerData.user_id._id}
-                        initialImages={portfolioImages}
-                    />
-
+                            <ManageServices
+                                user_id={providerData.user_id._id}
+                                provider_id={providerData._id}
+                                initialServices={services}
+                                
+                            />
+                            
+                            <UpdatePortfolio
+                                user_id={providerData.user_id._id}
+                                initialImages={portfolioImages}
+                            />
+                        </>
+                    ) : (
+                        <p><i>Loading profile page...</i></p>
+                    )}
                 </div>
                 
 
