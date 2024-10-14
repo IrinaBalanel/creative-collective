@@ -13,6 +13,16 @@ export const UserProvider = ({ children }) => {
         console.log("User Context has been set after log in: ", user);
     };
     const logout = () => {
+        if (user.role === "admin") {
+            navigate("/admin/login");
+            console.log("Admin logged out");
+        } else if (user.role === "provider"){
+            navigate("/login", { state: { fromProvider: true } });
+            console.log("Provider logged out");
+        } else if(user.role === "client"){
+            navigate("/login");
+            console.log("Client logged out");
+        }
         setUser(null);
         setLoading(false);
         console.log("User Context has been set after log out: ", user);

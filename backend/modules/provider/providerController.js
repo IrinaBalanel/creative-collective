@@ -345,7 +345,7 @@ async function getProviderTokenByUserId (userId) {
         if (!provider || provider.user_id === null) {
             return { message: "Provider not found" };
         }
-        console.log("Provider info:", provider);
+        //console.log("Provider info:", provider);
         return provider;
     } catch (error) {
         console.error(error);

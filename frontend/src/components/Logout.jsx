@@ -13,19 +13,19 @@ export default function Logout() {
         try {
             const response = await axios.post(`${baseUrl}/auth/logout`, {}, { withCredentials: true });
             const loggedOutuser = response.data.user;
-            console.log("User Context after log in:", user);
-            
-            if (loggedOutuser.role === "admin") {
-                navigate("/admin/login");
-                console.log("Admin logged out");
-            } else if (loggedOutuser.role === "provider"){
-                navigate("/login", { state: { fromProvider: true } });
-                console.log("Provider logged out");
-            } else if(loggedOutuser.role === "client"){
-                navigate("/login");
-                console.log("Client logged out");
-            }
+            console.log("User Context after log out:", loggedOutuser);
             logout();
+            // if (loggedOutuser.role === "admin") {
+            //     navigate("/admin/login");
+            //     console.log("Admin logged out");
+            // } else if (loggedOutuser.role === "provider"){
+            //     navigate("/login", { state: { fromProvider: true } });
+            //     console.log("Provider logged out");
+            // } else if(loggedOutuser.role === "client"){
+            //     navigate("/login");
+            //     console.log("Client logged out");
+            // }
+            
         } catch (error) {
             console.error("Error logging out:", error);
             setError("Error logging out");
