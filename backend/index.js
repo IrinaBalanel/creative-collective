@@ -26,7 +26,7 @@ app.use(cors({
 
 // app.options('*', cors());
 
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
 
 // Database connection
 const dbUrl= `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}/creative-collective?retryWrites=true&w=majority&appName=creative-collective`;
@@ -54,6 +54,8 @@ app.use("/auth", authRoutes);
 app.use("/client", clientRoutes);
 app.use("/provider", providerRoutes);
 app.use("/", publicRoutes);
+
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 // Catch-all route to serve React app
 app.get("*", (req, res) => {
