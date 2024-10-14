@@ -54,12 +54,8 @@ export default function UpdateSocials({ socials, user_id }) {
                 socials,
                 { withCredentials: true }
             );
-            if (response.data.message === "Updated successfully") {
-                setIsEditing(false);
-                console.log("Socials updated successfully");
-            } else {
-                console.error("Failed to update socials:", response.data.message);
-            }
+            setIsEditing(false);
+            console.log("Socials updated successfully");
         } catch (error) {
             console.error("Error updating socials:", error);
         }

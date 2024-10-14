@@ -79,6 +79,7 @@ button:focus, button:focus-visible {
 
 #main{
 	margin: 50px 100px;
+	min-height: 600px;
 }
 
 .btn-container {

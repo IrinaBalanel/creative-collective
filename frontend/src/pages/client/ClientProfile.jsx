@@ -10,6 +10,7 @@ import { baseUrl } from "../../config";
 export default function Favorites() {
 	const [favoriteProfs, setFavoriteProfs] = useState([]);
 	const [error, setError] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	const { user_id } = useParams();
 
     // removes provider from favorites array
@@ -21,16 +22,20 @@ export default function Favorites() {
 		const getFavorites = async () => {
 			console.log("User id before sending request: ", user_id);
 			try {
+				setIsLoading(true);
 				const response = await axios.get(`${baseUrl}/client/my-favorite-professionals/${user_id}`, {withCredentials: true});
 				console.log(response.data);
 				setFavoriteProfs(response.data.favorite_professionals);
+				setIsLoading(false);
 			} catch (error) {
 				console.log(error);
 				setError("Error");
+				setIsLoading(false);
 			}
 		}
 		getFavorites();
 	}, [user_id]);
+
 
 	// useEffect(() => {
 	// 	const getCategories = async () => {
@@ -57,7 +62,13 @@ export default function Favorites() {
 			<Header/>
 			<main id="main">
 				<h1>My Favorite Professionals</h1>
+				{!isLoading ? (
 				<div className="prof-list">
+					{error ? (
+						<p><i>Error fetching favorite professionals.</i></p>
+					) : (
+						<></>
+					)}
 					{favoriteProfs.length > 0 ? (
 						favoriteProfs.map((professional) => (
 							<ProviderCard 
@@ -73,6 +84,9 @@ export default function Favorites() {
 						<p><i>No favorite professionals found.</i></p>
 					)}
 				</div>
+				) : (
+					<p><i>Loading favorite professionals...</i></p>
+				)}
 			</main>
 		
 		</>

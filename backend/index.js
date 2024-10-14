@@ -17,11 +17,13 @@ app.use(cookieParser());
 app.use(cors({
   //origin: "*" //allow requests from all servers: to be changed for subdomain
   //for token auth
-  origin: ["https://creativecollective.irinabalanel.com", "http://localhost:5173", "creative-collective-frontend.onrender.com"],
+  origin: ["https://creativecollective.irinabalanel.com", "http://localhost:5173", "https://creative-collective-frontend.onrender.com"],
   // origin: "*",
   methods: ["GET", "POST"],
   credentials: true
 }));
+
+app.options('*', cors());
 
 // Database connection
 const dbUrl= `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}/creative-collective?retryWrites=true&w=majority&appName=creative-collective`;
@@ -43,7 +45,8 @@ const publicRoutes = require("./modules/public/publicRoutes");
 const providerRoutes = require("./modules/provider/providerRoutes");
 
 // Routes to define the beginning of the path
-app.use("/admin", authJWT, authorize(['admin']), adminRoutes);
+// app.use("/admin", authJWT, authorize(['admin']), adminRoutes);
+app.use("/admin", adminRoutes);
 app.use("/auth", authRoutes);
 app.use("/client", clientRoutes);
 app.use("/provider", providerRoutes);

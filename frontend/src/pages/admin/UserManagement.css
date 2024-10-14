@@ -53,3 +53,7 @@
 .btns-manage a{
     width: 100%;
 }
+
+.approve-btn .bi{
+    color: rgb(241, 241, 241);
+}

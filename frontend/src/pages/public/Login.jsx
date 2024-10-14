@@ -20,7 +20,6 @@ export default function Login(){
         e.preventDefault();
 
         setErrorMessages([]); //resets the errors array on submit
-        console.log(baseUrl);
         try {
             const response = await axios.post(`${baseUrl}/auth/login`, {email, password}, { withCredentials: true });
             

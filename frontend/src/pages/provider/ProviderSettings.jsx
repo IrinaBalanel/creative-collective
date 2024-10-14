@@ -95,7 +95,7 @@ export default function ProviderSettings(){
                     
                 ) : (
                     // Edit Mode
-                    <form onSubmit={handleSubmit}>
+                    <form id="token-form" onSubmit={handleSubmit}>
                         <p style={{ color: 'red' }}>{error}</p>
                         <div className="input image-url-container">
                             <input type="text" id="token" placeholder="Calendly Token" name="calendly_token" value={token || ""} onChange={handleChange} required/>

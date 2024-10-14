@@ -40,6 +40,15 @@
 
 
 /* TOKEN */
+#token-form input{
+
+    min-width: 180px;
+    max-width: 300px;
+    padding: 15px 20px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+    margin: 10px 0;
+}
 
 .hover-text-token{
     cursor: pointer;
@@ -72,4 +81,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+
+.credentials-container input{
+    min-width: 180px;
+    max-width: 300px;
+    padding: 15px 20px;
+    border: 1px solid #16182A;
+    border-radius: 5px;
+    margin: 10px 0;
 }

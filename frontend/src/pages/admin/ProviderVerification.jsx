@@ -73,7 +73,7 @@ export default function ProviderVerification(){
                                         <td><a href={request.file} target="_blank"><i aria-hidden="true" className="bi bi-paperclip"></i>View file</a></td>
                                         <td>{formatDate(request.submitted_at)}</td>
                                         <td className="actions-col">
-                                            <button onClick={() => handleApprove(request.provider_id._id, request._id)} aria-label="Approve" title="Approve"><i className="bi bi-patch-check-fill"></i></button>
+                                            <button className="approve-btn" onClick={() => handleApprove(request.provider_id._id, request._id)} aria-label="Approve" title="Approve"><i className="bi bi-patch-check-fill"></i></button>
                                             <Link to={`/admin/provider-verification/reject-credential/${request._id}`}>
                                                 <button aria-label="Reject" title="Reject"><i className="bi bi-dash-circle-fill"></i></button>
                                             </Link>

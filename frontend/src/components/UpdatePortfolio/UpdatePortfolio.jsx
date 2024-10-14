@@ -62,12 +62,8 @@ export default function UpdatePortfolio({ initialImages = [], user_id }){
             const response = await axios.post(`${baseUrl}/provider/profile-customization/update-info-portfolio/${user_id}/submit`, portfolioData, { withCredentials: true }
             );
             console.log(response.data.updatedProvider);
-            if (response.data.message === "Updated successfully") {
-                setIsEditing(false);
-                setErrorMessages([]);
-            } else {
-                console.error("Failed to update provider:", response.data.message);
-            }
+            setIsEditing(false);
+            setErrorMessages([]);
         } catch (error) {
             console.error("Error updating provider info:", error);
         }

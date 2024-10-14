@@ -66,10 +66,7 @@ export default function ProfileButton(){
                     </>
                     
                 ) : (
-                    <>
-                        <strong>Admin</strong>
-                        <p>{user.email}</p>
-                    </>
+                    <></>
                     
                 )}
             </div>    

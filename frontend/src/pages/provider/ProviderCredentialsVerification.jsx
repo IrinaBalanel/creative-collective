@@ -108,28 +108,24 @@ export default function ProviderCredentialsVerification(){
         try {
             const response = await axios.post(`${baseUrl}/provider/credentials-verification/submit`, {credentialData},  { withCredentials: true });
             console.log(response.data);
-            if (response.data.message === "Verification was added successfully") {
-                const newCredential = response.data.newVerification;
-                console.log("New Credential from backend:", newCredential);
-                // updates the displayed credentials after adding the new one
-                setCredentialsAttempts((prevAttempts) => [
-                    ...prevAttempts,
-                    {
-                        _id: newCredential._id,
-                        provider_id: newCredential.provider_id,
-                        category_id: newCredential.category_id,
-                        file: newCredential.file,
-                        submitted_at: newCredential.submitted_at,
-                        status: newCredential.status,
-                        review_feedback: newCredential.review_feedback,
-                    }
-                ]);
+            const newCredential = response.data.newVerification;
+            console.log("New Credential from backend:", newCredential);
+            // updates the displayed credentials after adding the new one
+            setCredentialsAttempts((prevAttempts) => [
+                ...prevAttempts,
+                {
+                    _id: newCredential._id,
+                    provider_id: newCredential.provider_id,
+                    category_id: newCredential.category_id,
+                    file: newCredential.file,
+                    submitted_at: newCredential.submitted_at,
+                    status: newCredential.status,
+                    review_feedback: newCredential.review_feedback,
+                }
+            ]);
 
-                setFile("");
-                setIsEditing(false);
-            } else {
-                console.log("Failed to submit verification:", response.data.message);
-            }
+            setFile("");
+            setIsEditing(false);
             
         } catch (error) {
             console.log("Error: ", error);
@@ -229,7 +225,7 @@ export default function ProviderCredentialsVerification(){
                         <p style={{ color: 'red' }}>{errorMessage}</p>
                         <div id="preview-pic-container" className="credentials-container">
                             <img src={file} alt="File Preview" required/>
-                            <div className="input image-url-container">
+                            <div className="image-url-container">
                                 <input type="text" id="file" placeholder="File URL" name="file" onChange={handleChange} required/>
                             </div>
                         </div>
