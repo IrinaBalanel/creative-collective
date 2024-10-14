@@ -1,6 +1,6 @@
 import Logout from "../Logout";
 import LogoWhite from "../LogoWhite";
-import {Link} from "react-router-dom"
+import {Link, Navigate} from "react-router-dom"
 import {useContext} from "react";
 import "./SideNav.css"
 import { UserContext } from "../../context/UserContext";
@@ -10,9 +10,9 @@ export default function SideNav(){
     //console.log(user._id);
     return(
         <header>
-            {!user || user.role === "client" ? (
+            {/* {!user || user.role === "client" ? (
                 <Navigate to="/"/>
-            ) : (
+            ) : ( */}
                 <nav id="side-nav">
                     {user && user.role==="admin" && (
                         <>
@@ -58,7 +58,7 @@ export default function SideNav(){
                     <Logout/>
                     <div style={{color: "white", fontWeight: 400, fontSize: "0.8em", textAlign: "center", alignSelf:"center"}}><p>version 1.0</p></div>
                 </nav>
-            )}
+            {/* )} */}
             
             
         </header>
