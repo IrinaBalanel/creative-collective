@@ -19,7 +19,7 @@ export default function Professionals({ title }){
 
     useEffect(() => {
         const getProfessionals = async () => {
-            
+            console.log("base url", baseUrl);
             try {
                 let response;
                 if(category){
