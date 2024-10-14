@@ -6,6 +6,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const cookieParser = require ("cookie-parser");
 const { authJWT, authorize } = require('./middleware/middleware');
+const path = require("path"); 
 
 const app = express ();
 const port = process.env.PORT || "8000";
@@ -23,7 +24,9 @@ app.use(cors({
   credentials: true
 }));
 
-app.options('*', cors());
+// app.options('*', cors());
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 // Database connection
 const dbUrl= `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}/creative-collective?retryWrites=true&w=majority&appName=creative-collective`;
@@ -52,6 +55,10 @@ app.use("/client", clientRoutes);
 app.use("/provider", providerRoutes);
 app.use("/", publicRoutes);
 
+// Catch-all route to serve React app
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html")); // Adjusted path
+});
 
 // Start server only after DB connection
 app.listen(port, () => { 
