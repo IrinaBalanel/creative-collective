@@ -45,7 +45,8 @@ router.post("/register", async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000, // cookie will expire in 1 day and be deleted from browser
         });
         console.log("Token", cookie);
-        res.json({ message: "Registration successful", user: result.user });
+        console.log(result)
+        res.json({ message: "Registration successful", user: result.user, token: result.token});
     } catch (error) {
         console.error(error.message);
         res.json({ errors: error.message.split(", ") }); //to show error on frontend with ,

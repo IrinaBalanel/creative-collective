@@ -46,7 +46,7 @@ export default function Register(){
             return;
         }
 
-        console.log(fName, lName, email, phone, password, role);
+        //console.log(fName, lName, email, phone, password, role);
 
         try {
             const response = await axios.post(`${baseUrl}/auth/register`, {
@@ -58,31 +58,35 @@ export default function Register(){
                 role
             }, { withCredentials: true });
             const user = response.data.user; // the user object from the data object
-            console.log("Registered user: ", user);
+            console.log(response.data.errors);
+            //console.log("Registered user: ", user);
             login(user); // updates context with user data
-            
+            if (response.data.errors) {
+                setErrorMessages(response.data.errors);
+            }
             // redirects to different home pages depending on the role
             if (user.role === "client") {
                 navigate("/");
-                console.log("Success:", user);
+                //console.log("Success:", user);
             } else if (user.role === "provider") {
                 navigate("/dashboard");
-                console.log("Success:", user);
+                //console.log("Success:", user);
             } 
 
         } catch (error) {
-            let backendErrors = [];
-            // console.log(backendErrors);
+            console.log(error);
+            // let backendErrors = [];
+            // // console.log(backendErrors);
 
-            // backend errors like user already exists
-            if (error.response && error.response.data && error.response.data.errors) {
-                backendErrors.push(error.response.data.errors);
-            } else {
-                backendErrors.push("Something went wrong. Please try again.");
-            }
+            // // backend errors like user already exists
+            // if (error.response && error.response.data && error.response.data.errors) {
+            //     backendErrors.push(error.response.data.errors);
+            // } else {
+            //     backendErrors.push("Something went wrong. Please try again.");
+            // }
 
-            // display all error messages
-            setErrorMessages([...errors, ...backendErrors]);
+            // // display all error messages
+            // setErrorMessages([...errors, ...backendErrors]);
         }
     };
 

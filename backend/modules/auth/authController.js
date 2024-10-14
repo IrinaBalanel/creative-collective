@@ -119,8 +119,9 @@ async function register(firstName, lastName, email, phone, password, role){
         );
         // console.log(token); 
         // console.log(user); 
+        console.log(errors);
 
-        return {user, token};
+        return {user, token, errors};
    
     } catch (error){
         throw new Error(error.message);

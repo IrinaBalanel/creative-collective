@@ -61,6 +61,9 @@ export default function NewUser(){
             const user = response.data.user; // the user object from the data object
 
             console.log("Registered user: ", user);
+            if (response.data.errors) {
+                setErrorMessages(response.data.errors);
+            }
 
             // redirects to different home pages depending on the role
             if (user.role === "client") {
@@ -72,18 +75,19 @@ export default function NewUser(){
             } 
 
         } catch (error) {
-            let backendErrors = [];
-            // console.log(backendErrors);
+            console.log(error);
+            // let backendErrors = [];
+            // // console.log(backendErrors);
 
-            // backend errors like user already exists
-            if (error.response && error.response.data && error.response.data.errors) {
-                backendErrors.push(error.response.data.errors);
-            } else {
-                backendErrors.push("Something went wrong. Please try again.");
-            }
+            // // backend errors like user already exists
+            // if (error.response && error.response.data && error.response.data.errors) {
+            //     backendErrors.push(error.response.data.errors);
+            // } else {
+            //     backendErrors.push("Something went wrong. Please try again.");
+            // }
 
-            // display all error messages
-            setErrorMessages([...errors, ...backendErrors]);
+            // // display all error messages
+            // setErrorMessages([...errors, ...backendErrors]);
         }
     };
 
