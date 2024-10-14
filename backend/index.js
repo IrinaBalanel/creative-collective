@@ -26,7 +26,7 @@ app.use(cors({
 
 // app.options('*', cors());
 
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 // Database connection
 const dbUrl= `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}/creative-collective?retryWrites=true&w=majority&appName=creative-collective`;
@@ -57,7 +57,7 @@ app.use("/", publicRoutes);
 
 // Catch-all route to serve React app
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build", "index.html")); // Adjusted path
+  res.sendFile(path.join(__dirname, "../frontend/dist", "index.html")); // Adjusted path
 });
 
 // Start server only after DB connection
