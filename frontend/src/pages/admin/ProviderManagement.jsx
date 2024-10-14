@@ -10,17 +10,21 @@ import { baseUrl } from "../../config";
 export default function Providers(){
     const [providers, setProviders] = useState([]);
     const [error, setError] = useState(null); 
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const getProviders = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get(`${baseUrl}/admin/management-providers`,  { withCredentials: true });
                 const data = response.data;
                 console.log(data);
                 setProviders(data);
+                setIsLoading(false);
             } catch (error) {
                 console.log(error);
                 setError("Error fetching providers")
+                setIsLoading(false);
             }
         }
         getProviders();
@@ -57,9 +61,9 @@ export default function Providers(){
     //     return id.length > 5 ? `${id.substring(0, 5)}...` : id;
     // };
 
-    if (error) {
-        return <div>{error}</div>;
-    }
+    // if (error) {
+    //     return <div>{error}</div>;
+    // }
 
     return (
         <div>
@@ -70,53 +74,61 @@ export default function Providers(){
                     <h1>Provider Management</h1>
                     <Link to="/admin/management-providers/new-user"><button>Create new</button></Link>
                 </div>
-                
-                <table className="table">
-                    <thead className="head">
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Status</th>
-                            <th>Block Reason</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="list">
-                        {
-                            providers.map((provider) => (
-                                <tr key={provider._id}>
-                                    <td>{provider.first_name} {provider.last_name}</td>
-                                    <td>{provider.user_id.email}</td>
-                                    <td>{provider.phone_number}</td>
-                                    {provider.user_id.status === "blocked" ? (
-                                        <td style={{color: "red", fontWeight: 500}}>{capitalizeFirstLetter(provider.user_id.status)}</td>
-                                    ) : (
-                                        <td style={{color: "green", fontWeight: 500}}>{capitalizeFirstLetter(provider.user_id.status)}</td>
-                                    )}
-
-                                    {provider.user_id.blockReason === null ? (
-                                    <td>N/A</td>
+                {!isLoading ? (
+                    <table className="table">
+                        {error ? (
+                            <p><i>Error fetching data.</i></p>
+                        ) : (
+                            <></>
+                        )}
+                        <thead className="head">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Block Reason</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="list">
+                            {
+                                providers.map((provider) => (
+                                    <tr key={provider._id}>
+                                        <td>{provider.first_name} {provider.last_name}</td>
+                                        <td>{provider.user_id.email}</td>
+                                        <td>{provider.phone_number}</td>
+                                        {provider.user_id.status === "blocked" ? (
+                                            <td style={{color: "red", fontWeight: 500}}>{capitalizeFirstLetter(provider.user_id.status)}</td>
                                         ) : (
-                                        <td className="block-reason-col">{provider.user_id.blockReason}</td>
-                                    )}
-                                    <td className="actions-col">
-                                        <Link to={`/admin/management-providers/update-provider/${provider._id}`}><button aria-label="Edit" title="Edit"><i className="bi bi-pencil-fill"></i></button></Link>
-                                        {/* Conditional button rendering if the user is blocked */}
-                                        {provider.user_id.status === "active" ? (
-                                            <Link to={`/admin/management-providers/block-user/${provider.user_id._id}`}>
-                                                <button aria-label="Block" title="Block"><i className="bi bi-ban"></i></button>
-                                            </Link>
-                                        ) : (
-                                            <button onClick={() => handleUnblock(provider.user_id._id)} aria-label="Unblock" title="Unblock"><i className="bi bi-check-circle-fill"></i></button>
+                                            <td style={{color: "green", fontWeight: 500}}>{capitalizeFirstLetter(provider.user_id.status)}</td>
                                         )}
-                                        <Link to={`/admin/management-providers/delete-user/${provider.user_id._id}`}><button aria-label="Delete" title="Delete"><i className="bi bi-trash3-fill"></i></button></Link>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+
+                                        {provider.user_id.blockReason === null ? (
+                                        <td>N/A</td>
+                                            ) : (
+                                            <td className="block-reason-col">{provider.user_id.blockReason}</td>
+                                        )}
+                                        <td className="actions-col">
+                                            <Link to={`/admin/management-providers/update-provider/${provider._id}`}><button aria-label="Edit" title="Edit"><i className="bi bi-pencil-fill"></i></button></Link>
+                                            {/* Conditional button rendering if the user is blocked */}
+                                            {provider.user_id.status === "active" ? (
+                                                <Link to={`/admin/management-providers/block-user/${provider.user_id._id}`}>
+                                                    <button aria-label="Block" title="Block"><i className="bi bi-ban"></i></button>
+                                                </Link>
+                                            ) : (
+                                                <button onClick={() => handleUnblock(provider.user_id._id)} aria-label="Unblock" title="Unblock"><i className="bi bi-check-circle-fill"></i></button>
+                                            )}
+                                            <Link to={`/admin/management-providers/delete-user/${provider.user_id._id}`}><button aria-label="Delete" title="Delete"><i className="bi bi-trash3-fill"></i></button></Link>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                ) : (
+					<p><i>Loading...</i></p>
+				)}
             </main>
             
         </div>

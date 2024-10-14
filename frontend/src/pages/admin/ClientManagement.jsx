@@ -10,18 +10,22 @@ import { baseUrl } from "../../config";
 export default function Clients(){
     const [clients, setClients] = useState([]);
     const [error, setError] = useState(null); 
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const getClients = async () => {
             try {
+                setIsLoading(true);
                 const response = await axios.get(`${baseUrl}/admin/management-clients`,  { withCredentials: true });
                 const data = response.data;
                 setClients(data);
+                setIsLoading(false);
                 // console.log(data)
                 console.log("Response from fetching clients", data)
             } catch (error) {
                 console.log(error);
                 setError("Error fetching clients");
+                setIsLoading(false);
             }
         }
         getClients();
@@ -64,9 +68,9 @@ export default function Clients(){
     //     return id.length > 5 ? `${id.substring(0, 5)}...` : id;
     // };
 
-    if (error) {
-        return <div>{error}</div>;
-    }
+    // if (error) {
+    //     return <div>{error}</div>;
+    // }
 
     return (
         <div>
@@ -77,53 +81,62 @@ export default function Clients(){
                     <h1>Client Management</h1>
                     <Link to="/admin/management-clients/new-user" className="side-button"><button>Create new</button></Link>
                 </div>
-                <table className="table">
-                    <thead className="head">
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Status</th>
-                            <th>Block Reason</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="list">
-                        {
-                            clients.map((client) => (
-                                <tr key={client._id}>
-                                    <td>{client.first_name} {client.last_name}</td>
-                                    <td>{client.user_id.email}</td>
-                                    <td>{client.phone_number}</td>
-                                    {client.user_id.status === "blocked" ? (
-                                        <td style={{color: "red", fontWeight: 500}}>{capitalizeFirstLetter(client.user_id.status)}</td>
-                                    ) : (
-                                        <td style={{color: "green", fontWeight: 500}}>{capitalizeFirstLetter(client.user_id.status)}</td>
-                                    )}
-                                    {client.user_id.blockReason === null ? (
-                                    <td>N/A</td>
+                {!isLoading ? (
+                    <table className="table">
+                        {error ? (
+                            <p><i>Error fetching data.</i></p>
+                        ) : (
+                            <></>
+                        )}
+                        <thead className="head">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Block Reason</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="list">
+                            {
+                                clients.map((client) => (
+                                    <tr key={client._id}>
+                                        <td>{client.first_name} {client.last_name}</td>
+                                        <td>{client.user_id.email}</td>
+                                        <td>{client.phone_number}</td>
+                                        {client.user_id.status === "blocked" ? (
+                                            <td style={{color: "red", fontWeight: 500}}>{capitalizeFirstLetter(client.user_id.status)}</td>
                                         ) : (
-                                        <td className="block-reason-col">{client.user_id.blockReason}</td>
-                                    )}
-                                    <td id="actions-col">
-                                        <div className="actions-col">
-                                            <Link to={`/admin/management-clients/update-client/${client._id}`}><button aria-label="Edit" title="Edit"><i className="bi bi-pencil-fill"></i></button></Link>
-                                            {/* Conditional button rendering if the user is blocked */}
-                                            {client.user_id.status === "active" ? (
-                                                <Link to={`/admin/management-clients/block-user/${client.user_id._id}`}>
-                                                    <button aria-label="Block" title="Block"><i className="bi bi-ban"></i></button>
-                                                </Link>
+                                            <td style={{color: "green", fontWeight: 500}}>{capitalizeFirstLetter(client.user_id.status)}</td>
+                                        )}
+                                        {client.user_id.blockReason === null ? (
+                                        <td>N/A</td>
                                             ) : (
-                                                <button onClick={() => handleUnblock(client.user_id._id)} aria-label="Unblock" title="Unblock"><i className="bi bi-check-circle-fill"></i></button>
-                                            )}
-                                            <Link to={`/admin/management-clients/delete-user/${client.user_id._id}`}><button aria-label="Delete" title="Delete"><i className="bi bi-trash3-fill"></i></button></Link>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+                                            <td className="block-reason-col">{client.user_id.blockReason}</td>
+                                        )}
+                                        <td id="actions-col">
+                                            <div className="actions-col">
+                                                <Link to={`/admin/management-clients/update-client/${client._id}`}><button aria-label="Edit" title="Edit"><i className="bi bi-pencil-fill"></i></button></Link>
+                                                {/* Conditional button rendering if the user is blocked */}
+                                                {client.user_id.status === "active" ? (
+                                                    <Link to={`/admin/management-clients/block-user/${client.user_id._id}`}>
+                                                        <button aria-label="Block" title="Block"><i className="bi bi-ban"></i></button>
+                                                    </Link>
+                                                ) : (
+                                                    <button onClick={() => handleUnblock(client.user_id._id)} aria-label="Unblock" title="Unblock"><i className="bi bi-check-circle-fill"></i></button>
+                                                )}
+                                                <Link to={`/admin/management-clients/delete-user/${client.user_id._id}`}><button aria-label="Delete" title="Delete"><i className="bi bi-trash3-fill"></i></button></Link>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                ) : (
+					<p><i>Loading...</i></p>
+				)}
             </main>
         </div>
         
