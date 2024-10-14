@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const providerController = require("./providerController");
 
+
 ///////////////////////// PROVIDER PAGE CUSTOMIZATION /////////////////////////
 router.get("/profile-customization/:user_id", async (req, res) => {
     const { user_id } = req.params;
@@ -228,32 +229,30 @@ router.get("/credentials-verification/attempts-list/:provider_id", async (req, r
 
 
 ////// CALENDLY API ////////
+////// CALENDLY API SET UP ////////
+// router.get("/settings/:user_id/token", async (req, res) => {
+//     console.log("token endpoint");
+//     const { user_id } = req.params;
+//     console.log("Received user id to get provider with token", user_id);
+//     try {
+//         const provider = await providerController.getProviderTokenByUserId(user_id);
+//         console.log(provider);
+//         if (!provider) {
+//             return res.json({ message: "Failed to fetch provider with token" });
+//         }
+//         res.json({provider});
 
-router.get("/settings/:user_id/token", async (req, res) => {
-    console.log("token endpoint");
-    const { user_id } = req.params;
-    console.log("Received user id to get provider with token", user_id);
-    try {
-        const provider = await providerController.getProviderTokenByUserId(user_id);
-        console.log(provider);
-        if (!provider) {
-            return res.json({ message: "Failed to fetch provider with token" });
-        }
-        res.json({provider});
-
-    } catch (error) {
-        console.error(error);
-        res.json({ message: "Error" });
-    }
-});
+//     } catch (error) {
+//         console.error(error);
+//         res.json({ message: "Error" });
+//     }
+// });
 
 router.post("/settings/:user_id/token/submit", async (req, res) => {
     //console.log("Submit calendly token route called");
     const {user_id} = req.params;
     const {token} = req.body;
-
     //console.log("Received calendly token:", user_id, token);
-
     try {
         const response = await providerController.submitToken(user_id, token);
         if (!response) {
@@ -267,5 +266,36 @@ router.post("/settings/:user_id/token/submit", async (req, res) => {
     }
 
 });
+
+////// Calendly data (token, user info, and appointments) ////////
+router.get("/calendly/:user_id/appointments", async (req, res) => {
+    const { user_id } = req.params;
+    //console.log("Received user id:", user_id);
+    try {
+        // provider's calendly token from db
+        const provider = await providerController.getProviderTokenByUserId(user_id);
+        if (!provider || !provider.calendly_token) {
+            return res.json({ message: "Provider or Calendly token not found" });
+        }
+        const token = provider.calendly_token;
+        // calendly user info
+        const userInfo = await providerController.fetchCalendlyUserInfo(token);
+        const userUri = userInfo.uri;
+        // calendly appointments for the current user based on token and uri
+        const appointments = await providerController.fetchCalendlyEvents(token, userUri);
+        res.json({ userInfo, appointments });
+    } catch (error) {
+        console.error("Error fetching Calendly data:", error);
+        res.json({ message: "Error fetching Calendly data", error });
+    }
+});
+
+
+
+
+
+
+
+
 
 module.exports = router;

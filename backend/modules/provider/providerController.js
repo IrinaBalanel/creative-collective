@@ -4,7 +4,7 @@ const User = require("../../models/User");
 const Service = require("../../models/Service");
 const Credential = require("../../models/Credential");
 const mongoose = require("mongoose");
-
+const axios = require("axios");
 
 async function getProviderByUserId (userId) {
     try {
@@ -345,7 +345,7 @@ async function getProviderTokenByUserId (userId) {
         if (!provider || provider.user_id === null) {
             return { message: "Provider not found" };
         }
-        //console.log("Provider info:", provider);
+        console.log("Provider info:", provider);
         return provider;
     } catch (error) {
         console.error(error);
@@ -370,6 +370,44 @@ async function submitToken(userId, token) {
 }
 
 
+// Calendly current user using the provider's token
+async function fetchCalendlyUserInfo(token) {
+    try {
+        const response = await axios.get("https://api.calendly.com/users/me", {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        const user = response.data.resource;
+        return user;
+    } catch (error) {
+      console.error("Error fetching Calendly user info:", error);
+      throw error;
+    }
+}
+  
+// Calendly scheduled events
+async function fetchCalendlyEvents(token, userUri) {
+    try {
+        const response = await axios.get("https://api.calendly.com/scheduled_events", {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            params: {
+                user: userUri,
+                sort: 'start_time:asc',
+            }
+        });
+        const events = response.data.collection;
+        return events;
+    } catch (error) {
+      console.error("Error fetching Calendly events:", error);
+      throw error;
+    }
+}
+
 module.exports = {
     getProviderByUserId,
     updateProvider,
@@ -385,5 +423,7 @@ module.exports = {
     getCredentialsByProviderId,
 
     getProviderTokenByUserId,
-    submitToken
+    submitToken,
+    fetchCalendlyUserInfo,
+    fetchCalendlyEvents
 }
