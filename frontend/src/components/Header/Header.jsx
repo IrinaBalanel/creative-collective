@@ -77,6 +77,9 @@ export default function Header(){
                     )}
                     {user && user.role === "provider" && (
                         <>
+                            <li className="nav-item">
+                                <Link to="/admin/login" role="menulink">Admin</Link>
+                            </li>
                             <li className="nav-item provider-access-link">
                                 <Link to="/login" state={{ fromProvider: true }} role="menulink">Already a Provider?</Link>
                             </li>
@@ -88,6 +91,9 @@ export default function Header(){
                     )}
                     {user && user.role === "admin" && (
                         <>
+                            <li className="nav-item">
+                                <Link to="/admin/login" role="menulink">Admin</Link>
+                            </li>
                             <li className="nav-item provider-access-link">
                                 <Link to="/login" state={{ fromProvider: true }} role="menulink">Already a Provider?</Link>
                             </li>
@@ -100,7 +106,10 @@ export default function Header(){
 
                     {!user && (
                         <>
-                        <li className="nav-item provider-access-link">
+                            <li className="nav-item">
+                                <Link to="/admin/login" role="menulink">Admin</Link>
+                            </li>
+                            <li className="nav-item provider-access-link">
                                 <Link to="/login" state={{ fromProvider: true }} role="menulink">Already a Provider?</Link>
                             </li>
                             <li className="nav-item">
