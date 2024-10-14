@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom"
 import SideNav from "../../components/SideNav/SideNav";
-import ProfileButton from "../../components/ProfileButton"
+import AdminProfileButton from "../../components/AdminProfileButton"
 import { formatDate, cutS, capitalizeFirstLetter} from '../../functions';
 import { baseUrl } from "../../config";
 
@@ -54,7 +54,7 @@ export default function ProviderVerification(){
         <>
         <SideNav/>
         <main className='main'>
-            <ProfileButton/>
+            <AdminProfileButton/>
             <h1>Providers Verification</h1>
             {!isLoading ? (
                 <>

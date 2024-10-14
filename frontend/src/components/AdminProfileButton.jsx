@@ -68,9 +68,6 @@ export default function AdminProfileButton(){
                     <></>
                     
                 )}
-                
-                
-
             </div>    
         </div>
         
