@@ -98,7 +98,7 @@ export default function ProviderSettings(){
                     <form id="token-form" onSubmit={handleSubmit}>
                         <p style={{ color: 'red' }}>{error}</p>
                         <div className="input image-url-container">
-                            <input type="text" id="token" placeholder="Calendly Token" name="calendly_token" value={token || ""} onChange={handleChange} required/>
+                            <input type="text" id="token" placeholder="Calendly Token" aria-label="Calendly Token" name="calendly_token" value={token || ""} onChange={handleChange} required/>
                         </div>
                         <div className="btns-update">
                             <button type="button" onClick={handleCancel}>Cancel</button>

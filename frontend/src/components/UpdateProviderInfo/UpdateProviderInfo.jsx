@@ -177,7 +177,7 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                     <div id="preview-pic-container">
                         <img className="preview-pic" src={providerData.profile_image} alt="Image Preview" required/>
                         <div className="input image-url-container">
-                            <input type="text" id="profileImage" placeholder="Profile Image URL" name="profile_image" value={providerData.profile_image} onChange={handleChange} required/>
+                            <input type="text" id="profileImage" placeholder="Profile Image URL" aria-label="Profile Image URL" name="profile_image" value={providerData.profile_image} onChange={handleChange} required/>
             
                         </div>
                     </div>
@@ -191,11 +191,12 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                             ))}
                         </div>
                         <div className="input">
-                            <input type="text" id="fName" placeholder="First Name" name="first_name" value={providerData.first_name} onChange={handleChange} required/>
-                            <input type="text" id="lName" placeholder="Last Name"  name="last_name" value={providerData.last_name} onChange={handleChange} required/>
+                            <input type="text" id="fName" placeholder="First Name" name="first_name" aria-label="First Name" value={providerData.first_name} onChange={handleChange} required/>
+                            <input type="text" id="lName" placeholder="Last Name"  name="last_name" aria-label="Last Name" value={providerData.last_name} onChange={handleChange} required/>
                         </div>
                         <div className="input">
                             <select 
+                                aria-label="Profession"
                                 id="creative_category" 
                                 name="creative_category_id" 
                                 value={providerData.creative_category_id?._id || providerData.creative_category_id || ""}  // Ensure correct value is set
@@ -209,20 +210,21 @@ export default function UpdateProviderInfo({ provider, user_id, categories, onPr
                                     </option>
                                 ))}
                             </select>
-                            <input type="text" id="specialization" placeholder="Specialization"  name="creative_category_details" value={providerData.creative_category_details} onChange={handleChange} required/>
+                            <input type="text" id="specialization" placeholder="Specialization"  aria-label="Specialization" name="creative_category_details" value={providerData.creative_category_details} onChange={handleChange} required/>
                         </div>
                         <div className="input">
                             <PhoneInput
                                 id="phone"
                                 placeholder="999-999-9999"
+                                aria-label="Phone"
                                 name="phone_number" value={providerData.phone_number} onChange={handlePhoneChange}
                                 defaultCountry="CA"
                                 required
                             />
-                            <input type="text" id="location" placeholder="e.g., Toronto, Canada" name="location" value={providerData.location} onChange={handleChange} required/>
+                            <input type="text" id="location" placeholder="e.g., Toronto, Canada" aria-label="City and country" name="location" value={providerData.location} onChange={handleChange} required/>
                         </div>
                         <div className="input">
-                            <textarea id="bio" placeholder="Tell the clients about yourself... (up to 255 characters)"  name="bio" maxLength={255} value={providerData.bio} onChange={handleChange} required/>
+                            <textarea id="bio" placeholder="Tell the clients about yourself... (up to 255 characters)" aria-label="Bio" name="bio" maxLength={255} value={providerData.bio} onChange={handleChange} required/>
                         </div>
                         <div className="btns-update">
                             <button type="button" onClick={handleCancel}>Cancel</button>

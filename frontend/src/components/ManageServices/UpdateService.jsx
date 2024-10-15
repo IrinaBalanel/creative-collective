@@ -94,7 +94,7 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
             }
             
         } catch (error) {
-            console.error('Error updating service:', error);
+            console.error("Error updating service:", error);
            
         }
     };
@@ -172,7 +172,7 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
                     <form id="service-update-form" onSubmit={handleSubmit}>
                         <div id="preview-pic-container">
                             <img className="preview-pic" src={serviceData.service_thumbnail_url} alt="Image Preview" />
-                            <div className="image-url-container"><input type="text" name="service_thumbnail_url" value={serviceData.service_thumbnail_url || ''} placeholder="Thumbnail URL" onChange={handleChange} required/></div>
+                            <div className="image-url-container"><input type="text" name="service_thumbnail_url" value={serviceData.service_thumbnail_url || ''} placeholder="Thumbnail URL" aria-label="Thumbnail URL" onChange={handleChange} required/></div>
                         </div>
                         <div className="udpate-inputs">
                             <p style={{color: "#12009D", fontWeight: 500}}>* All fields are required.</p>
@@ -181,17 +181,17 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
                                     message && <p key={key} style={{ color: 'red' }}>{message}</p>
                                 ))}
                             </div>
-                            <div className="input"><input type="text" name="service_name" value={serviceData.service_name || ''} placeholder="Service Name" onChange={handleChange} required /></div>
+                            <div className="input"><input type="text" name="service_name" value={serviceData.service_name || ''} placeholder="Service Name" aria-label="Service Name" onChange={handleChange} required /></div>
                             <div className="inline-inputs">
-                                <input type="text" name="service_price" value={serviceData.service_price} placeholder="Price, e.g. 50" onChange={handleChange} required />
-                                <input type="text" name="service_duration" value={serviceData.service_duration} placeholder="Duration, e.g. 1.5" onChange={handleChange} required />
+                                <input type="text" name="service_price" value={serviceData.service_price} placeholder="Price, e.g. 50" aria-label="Price, e.g. 50" onChange={handleChange} required />
+                                <input type="text" name="service_duration" value={serviceData.service_duration} placeholder="Duration, e.g. 1.5" aria-label="Duration, e.g. 1.5" onChange={handleChange} required />
                             </div>
                             <div className="input">
-                                <input type="text" name="service_location" value={serviceData.service_location || ''} placeholder="Address" onChange={handleChange} required/>
+                                <input type="text" name="service_location" value={serviceData.service_location || ''} placeholder="Address" aria-label="Address" onChange={handleChange} required/>
                             </div>
-                            <textarea name="service_description" value={serviceData.service_description || ''} placeholder="Service Description (up to 255 characters)" maxLength={255} onChange={handleChange} required />
+                            <textarea name="service_description" value={serviceData.service_description || ''} placeholder="Service Description (up to 255 characters)" aria-label="Service Description (up to 255 characters)" maxLength={255} onChange={handleChange} required />
                             <div className="calendly-input">
-                                <input type="text" name="calendly_event_url" value={serviceData.calendly_event_url || ''} placeholder="Calendly URL" onChange={handleChange} required/>
+                                <input type="text" name="calendly_event_url" value={serviceData.calendly_event_url || ''} placeholder="Calendly URL" aria-label="Calendly URL" onChange={handleChange} required/>
                                 <div id="get-calendly-url-container">
                                     <h4 className="get-calendly-url-text" aria-describedby="calendly-tooltip" tabIndex={0}>
                                         <svg role="presentation" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-info-circle" viewBox="0 0 16 16">

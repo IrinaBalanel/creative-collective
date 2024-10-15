@@ -40,10 +40,10 @@ export default function AdminLogin(){
             <p style={{ color: "red" }}>{errorMessage}</p>
             <form onSubmit={handleSubmit} className="form">
                 <div className="input">
-                    <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
+                    <input type="email" id="email" placeholder="Email" aria-label="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
                 </div>
                 <div className="input">
-                    <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
+                    <input type="password" id="password" placeholder="Password" aria-label="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
                 </div>
                 <button type="submit">Login</button>
             </form>

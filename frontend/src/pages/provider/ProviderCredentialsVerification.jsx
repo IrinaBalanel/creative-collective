@@ -234,7 +234,7 @@ export default function ProviderCredentialsVerification(){
                             )}
                             <p style={{ color: 'red' }}>{errorMessage}</p>
                             <div className="image-url-container">
-                                <input type="text" id="file" placeholder="File URL" name="file" onChange={handleChange} required/>
+                                <input type="text" id="file" placeholder="File URL" aria-label="File URL" name="file" onChange={handleChange} required/>
                             </div>
                         </div>
                         <div className="btns-update">

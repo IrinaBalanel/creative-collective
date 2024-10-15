@@ -127,13 +127,14 @@ export default function Register(){
                     </label>
                 </div>
                 <div className="input">
-                    <input type="text" id="fName" placeholder="First Name" value={fName} onChange={(e) => setFName(e.target.value)} required></input>
-                    <input type="text" id="lName" placeholder="Last Name" value={lName} onChange={(e) => setLName(e.target.value)} required></input>
+                    <input type="text" id="fName" placeholder="First Name" aria-label="First Name" value={fName} onChange={(e) => setFName(e.target.value)} required></input>
+                    <input type="text" id="lName" placeholder="Last Name" aria-label="Last Name" value={lName} onChange={(e) => setLName(e.target.value)} required></input>
                 </div>
                 <div className="input">
-                    <input type="email" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
+                    <input type="email" id="email" placeholder="Email" aria-label="Email" value={email} onChange={(e) => setEmail(e.target.value)} required></input>
                     <PhoneInput
                         id="phone"
+                        aria-label="Phone"
                         placeholder="999-999-9999"
                         value={phone}
                         onChange={(value) => {
@@ -144,8 +145,8 @@ export default function Register(){
                 </div>
                 
                 <div className="input">
-                    <input type="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
-                    <input type="password" id="password-confirm" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required></input>
+                    <input type="password" id="password" placeholder="Password" aria-label="Password" value={password} onChange={(e) => setPassword(e.target.value)} required></input>
+                    <input type="password" id="password-confirm" placeholder="Confirm Password" aria-label="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required></input>
                 </div>
                 <button type="submit">Register</button>
             </form>

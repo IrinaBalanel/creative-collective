@@ -63,25 +63,38 @@ export default function ContactForm(){
                 </div>
                 <form id="contact-form" onSubmit={handleSubmit}>
                     <div className="input">
-                        <input 
-                            type="text" id="name" placeholder="Full Name" 
-                            value={name}
-                            onChange={(e) => {setName(e.target.value); handleInputChange();}}
-                            required 
-                        />
-                        <input type="email" id="email" placeholder="Email" 
-                            value={email}
-                            onChange={(e) => {setEmail(e.target.value); handleInputChange();}}
-                            required 
-                        />
+                            <div className="input-col">
+                                <label htmlFor="name">Full Name *</label>
+                                <input 
+                                    type="text" id="name" placeholder="Full Name" 
+                                    value={name}
+                                    onChange={(e) => {setName(e.target.value); handleInputChange();}}
+                                    required 
+                                />
+                            </div>
+                            
+                        <div className="input">
+                            <div className="input-col">
+                                <label htmlFor="email">Email *</label>
+                                <input type="email" id="email" placeholder="Email" 
+                                    value={email}
+                                    onChange={(e) => {setEmail(e.target.value); handleInputChange();}}
+                                    required 
+                                />
+                            </div>
+                            
+                        </div>
                     </div>
-                    <div className="input">
-                        <textarea id="message" placeholder="Leave your message here... (up to 255 characters)" 
-                            required
-                            maxLength={255}
-                            value={message}
-                            onChange={(e) => {setMessage(e.target.value); handleInputChange();}}
-                        ></textarea>
+                    <div className="input-col">
+                        <label htmlFor="message">Message *</label>
+                        <div className="input">
+                            <textarea id="message" placeholder="Tell us about your experience... (up to 255 characters)" 
+                                required
+                                maxLength={255}
+                                value={message}
+                                onChange={(e) => {setMessage(e.target.value); handleInputChange();}}
+                            ></textarea>
+                        </div>
                     </div>
                     <div id="submit-btn-container">
                         <button id="btn-submit-msg" type="submit" 

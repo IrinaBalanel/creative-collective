@@ -141,13 +141,14 @@ export default function EditProvider(){
                         </ul>
                     )}
                     <div className="input">
-                        <input type="text" id="fName" placeholder="First Name" name="first_name" value={user.first_name} onChange={handleChange} required/>
-                        <input type="text" id="lName" placeholder="Last Name"  name="last_name" value={user.last_name} onChange={handleChange} required/>
+                        <input type="text" id="fName" placeholder="First Name" aria-label="First Name" name="first_name" value={user.first_name} onChange={handleChange} required/>
+                        <input type="text" id="lName" placeholder="Last Name"  aria-label="Last Name" name="last_name" value={user.last_name} onChange={handleChange} required/>
                     </div>
                     <div className="input">
-                        <input type="email" id="email" placeholder="Email" name="email" value={user.user_id.email} onChange={handleChange} required/>
+                        <input type="email" id="email" placeholder="Email" aria-label="Email" name="email" value={user.user_id.email} onChange={handleChange} required/>
                         <PhoneInput
                             id="phone"
+                            aria-label="Phone"
                             placeholder="999-999-9999"
                             name="phone_number" value={user.phone_number} onChange={handlePhoneChange}
                             defaultCountry="CA"

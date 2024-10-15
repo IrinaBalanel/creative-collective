@@ -173,3 +173,8 @@ input::placeholder{
     transition: border-color 0.25s;
     text-decoration: none;
 }
+
+.btn-link:hover{
+    background-color: #646cff;
+    color: rgb(251, 251, 251);
+}

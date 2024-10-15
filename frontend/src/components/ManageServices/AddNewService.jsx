@@ -121,7 +121,7 @@ export default function AddNewService({ provider_id, onServiceAdded, isEditing, 
                     <form id="service-update-form" onSubmit={handleSubmit}>
                         <div id="preview-pic-container">
                             <img className="preview-pic" src={newService.service_thumbnail_url} alt="Image Preview" />
-                            <div className="image-url-container"><input className="input " type="text" name="service_thumbnail_url" placeholder="Thumbnail URL" value={newService.service_thumbnail_url} onChange={handleChange} required/></div>
+                            <div className="image-url-container"><input className="input" type="text" name="service_thumbnail_url" placeholder="Thumbnail URL" aria-label="Thumbnail URL" value={newService.service_thumbnail_url} onChange={handleChange} required/></div>
                         </div>
                         <div className="udpate-inputs">
                             <p style={{color: "#12009D", fontWeight: 500}}>* All fields are required.</p>
@@ -130,17 +130,17 @@ export default function AddNewService({ provider_id, onServiceAdded, isEditing, 
                                     message && <p key={key} style={{ color: 'red' }}>{message}</p>
                                 ))}
                             </div>
-                            <div className="input"><input type="text" name="service_name" placeholder="Service Name" value={newService.service_name} onChange={handleChange} required /></div>
+                            <div className="input"><input type="text" name="service_name" placeholder="Service Name" aria-label="Service Name" value={newService.service_name} onChange={handleChange} required /></div>
                             <div className="inline-inputs">
-                                <input type="text" name="service_price" placeholder="Price, e.g. 50" value={newService.service_price} onChange={handleChange} required />
-                                <input type="text" name="service_duration" placeholder="Duration, e.g. 1.5" value={newService.service_duration} onChange={handleChange} required />
+                                <input type="text" name="service_price" placeholder="Price, e.g. 50" aria-label="Price, e.g. 50" value={newService.service_price} onChange={handleChange} required />
+                                <input type="text" name="service_duration" placeholder="Duration, e.g. 1.5" aria-label="Duration, e.g. 1.5" value={newService.service_duration} onChange={handleChange} required />
                             </div>
                             <div className="input">
-                                <input type="text" name="service_location" placeholder="Address" value={newService.service_location} onChange={handleChange} required/>
+                                <input type="text" name="service_location" placeholder="Address" value={newService.service_location} aria-label="Address" onChange={handleChange} required/>
                             </div>
-                            <textarea name="service_description" placeholder="Service Description (up to 255 characters)" maxLength={255} value={newService.service_description} onChange={handleChange} required/>
+                            <textarea name="service_description" placeholder="Service Description (up to 255 characters)" aria-label="Service Description (up to 255 characters)" maxLength={255} value={newService.service_description} onChange={handleChange} required/>
                             <div className="calendly-input">
-                                <input type="text" name="calendly_event_url" placeholder="Calendly URL" value={newService.calendly_event_url} onChange={handleChange} required/>
+                                <input type="text" name="calendly_event_url" placeholder="Calendly URL" aria-label="Calendly URL" value={newService.calendly_event_url} onChange={handleChange} required/>
                                 <div id="get-calendly-url-container">
                                     <h4 className="get-calendly-url-text" aria-describedby="calendly-tooltip" tabIndex={0}>
                                         <svg role="presentation" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-info-circle" viewBox="0 0 16 16">
