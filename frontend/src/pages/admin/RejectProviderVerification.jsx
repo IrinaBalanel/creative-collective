@@ -57,13 +57,12 @@ export default function RejectProviderVerification(){
                     ) : (
                         <h1>Loading...</h1>
                     )}
-                    <p>Please provide feedback for rejection:</p>
+                    <p>Please provide feedback for rejection (optional):</p>
                     <textarea className="txt-block-reason"
                         value={feedback}
                         onChange={(e) => setFeedback(e.target.value)}
                         placeholder="Enter the reason for rejection..."
                         maxLength={255}
-                        required
                     />
                     {errorMessage ? (
                         <p>{errorMessage}</p>

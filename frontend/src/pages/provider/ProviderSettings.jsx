@@ -19,8 +19,8 @@ export default function ProviderSettings(){
                 console.log("Provider user_id: ", user_id);
                 const response = await axios.get(`${baseUrl}/provider/settings/${user_id}/token`, {withCredentials: true});
                 setToken(response.data.provider.calendly_token);
-                //console.log("Provider data: ", response.data);
-                //console.log("Token: ", response.data.provider.calendly_token);
+                console.log("Provider data: ", response.data);
+                console.log("Token: ", response.data.provider.calendly_token);
 
                 
             } catch (error) {

@@ -230,23 +230,23 @@ router.get("/credentials-verification/attempts-list/:provider_id", async (req, r
 
 ////// CALENDLY API ////////
 ////// CALENDLY API SET UP ////////
-// router.get("/settings/:user_id/token", async (req, res) => {
-//     console.log("token endpoint");
-//     const { user_id } = req.params;
-//     console.log("Received user id to get provider with token", user_id);
-//     try {
-//         const provider = await providerController.getProviderTokenByUserId(user_id);
-//         console.log(provider);
-//         if (!provider) {
-//             return res.json({ message: "Failed to fetch provider with token" });
-//         }
-//         res.json({provider});
+router.get("/settings/:user_id/token", async (req, res) => {
+    console.log("token endpoint");
+    const { user_id } = req.params;
+    console.log("Received user id to get provider with token", user_id);
+    try {
+        const provider = await providerController.getProviderTokenByUserId(user_id);
+        console.log(provider);
+        if (!provider) {
+            return res.json({ message: "Failed to fetch provider with token" });
+        }
+        res.json({provider});
 
-//     } catch (error) {
-//         console.error(error);
-//         res.json({ message: "Error" });
-//     }
-// });
+    } catch (error) {
+        console.error(error);
+        res.json({ message: "Error" });
+    }
+});
 
 router.post("/settings/:user_id/token/submit", async (req, res) => {
     //console.log("Submit calendly token route called");

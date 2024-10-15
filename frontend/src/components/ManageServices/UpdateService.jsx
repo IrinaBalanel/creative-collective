@@ -107,6 +107,8 @@ export default function UpdateService({ provider_id, service, index, onServiceUp
             service_duration: service.service_duration.$numberDecimal || service.service_duration || '',
         });
         onCancel(); // exits the editing mode by calling parent method
+        setErrorMessages({});
+
     };
     const handleDelete = async (e) => {
         e.preventDefault();

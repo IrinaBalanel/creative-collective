@@ -12,7 +12,7 @@ export default function ProviderCredentialsVerification(){
     const [isEditing, setIsEditing] = useState(false);  // edit/view mode
     const { user } = useContext(UserContext);
     //console.log("User id from context", user._id);
-    const [errorMessage, setErrorMessage] = useState(); 
+    const [errorMessage, setErrorMessage] = useState(""); 
     const [providerId, setProviderId] = useState(null);
     const [categoryId, setCategoryId] = useState();
     const [credentialsAttempts, setCredentialsAttempts] = useState([]);
@@ -98,6 +98,11 @@ export default function ProviderCredentialsVerification(){
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!isValidUrl(file)) {
+            //setErrorMessage("Invalid URL. Please provide a valid link.");
+            return;
+        }
+
         const credentialData = {
             category_id: categoryId,
             provider_id: providerId,
@@ -138,9 +143,10 @@ export default function ProviderCredentialsVerification(){
     const handleChange = (e) => {
         const { value } = e.target;
         setFile(value);
-        // Validate url
-        if (!isValidUrl(value)) {
-            setErrorMessage( "Invalid image URL format");
+
+        // Validate URL on input change
+        if (value && !isValidUrl(value)) {
+            setErrorMessage("Invalid URL format.");
         } else {
             setErrorMessage("");
         }
@@ -203,8 +209,8 @@ export default function ProviderCredentialsVerification(){
                                             )}
                                             
                                             
-                                            {attempt.review_feedback === null ? (
-                                            <td>N/A</td>
+                                            {attempt.review_feedback === null || attempt.review_feedback === "" ? (
+                                                <td>N/A</td>
                                                 ) : (
                                                 <td className="block-reason-col">{attempt.review_feedback}</td>
                                             )}
@@ -222,13 +228,11 @@ export default function ProviderCredentialsVerification(){
                 ) : (
                     // Edit Mode
                     <form onSubmit={handleSubmit}>
-                        <p style={{ color: 'red' }}>{errorMessage}</p>
                         <div id="preview-pic-container" className="credentials-container">
-                            {file ? (
+                            {file && isValidUrl(file) &&  (
                                 <img src={file} alt="File Preview" required/>
-                            ) : (
-                                null
                             )}
+                            <p style={{ color: 'red' }}>{errorMessage}</p>
                             <div className="image-url-container">
                                 <input type="text" id="file" placeholder="File URL" name="file" onChange={handleChange} required/>
                             </div>

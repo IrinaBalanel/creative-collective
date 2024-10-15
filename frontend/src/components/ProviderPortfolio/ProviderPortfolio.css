@@ -92,9 +92,9 @@
     font-size: 1.5rem;
 }
 
-.close-modal:hover {
+/* .close-modal:hover {
     color: #646cff;
-}
+} */
 
 /* Media queries for responsiveness */
 @media screen and (max-width: 768px) {

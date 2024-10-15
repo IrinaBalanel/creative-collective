@@ -65,12 +65,12 @@ export default function ConfirmBlockUser(){
                         <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
                     </svg>
                     <h1>Are you sure you want to block {user.email}?</h1>
-                    <p>Please provide the reason of blocking:</p>
+                    <p>Please provide the reason for blocking (optional):</p>
                     <textarea className="txt-block-reason"
                         value={blockReason}
                         maxLength={255}
                         onChange={(e) => setBlockReason(e.target.value)}
-                        placeholder="Enter the reason of blocking this user..."
+                        placeholder="Enter the reason for blocking this user..."
                     />
                     <div className="btns block">
                         {/* //redirect back depeding on the role of the blocked user */}

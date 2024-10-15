@@ -23,7 +23,7 @@ export default function AdminDashboard(){
                     <div className="dashboard-items">
                         <div className="dashboard-item">
                             <h2><i aria-hidden="true" className="bi bi-1-circle"></i>Manage Clients and Providers</h2>
-                            <p>Oversee client and provider accounts effortlessly. Create, update, delete, or block accounts as needed, ensuring efficient management and smooth platform operations directly from the dashboard.</p>
+                            <p>Oversee client and provider accounts effortlessly. <strong>Create, update, delete, or block accounts as needed,</strong> ensuring efficient management and smooth platform operations directly from the dashboard.</p>
                             <div className="btns-manage">
                                 <Link to="/admin/management-clients" className="btn-link">Clients</Link>
                                 <Link to="/admin/management-providers" className="btn-link">Providers</Link>

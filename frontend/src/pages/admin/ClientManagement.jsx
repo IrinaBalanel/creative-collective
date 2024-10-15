@@ -111,7 +111,7 @@ export default function Clients(){
                                             <td style={{color: "green", fontWeight: 500}}>{capitalizeFirstLetter(client.user_id.status)}</td>
                                         )}
                                         {client.user_id.blockReason === null ? (
-                                        <td>N/A</td>
+                                            <td>N/A</td>
                                             ) : (
                                             <td className="block-reason-col">{client.user_id.blockReason}</td>
                                         )}

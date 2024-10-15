@@ -72,7 +72,7 @@ export default function FormMessages(){
                                     <tr key={message._id}>
                                         <td>{message.full_name}</td>
                                         <td>{message.email}</td>
-                                        <td>{message.message}</td>
+                                        <td className="message-col">{message.message}</td>
                                         <td className="actions-col">
                                             <button onClick={() => handleRead(message._id)} aria-label="Mark as read" title="Mark as read"><i className="bi bi-check2-circle"></i></button>
                                         </td>

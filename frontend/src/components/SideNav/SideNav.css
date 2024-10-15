@@ -35,11 +35,16 @@
 #side-nav .logo{
     padding: 5px;
     align-self: center;
-    margin-bottom: 130px;
-}
+    margin-bottom: 120px;
+    margin-left: 15px;
 
+}
+#side-nav .logo img{
+    width: 200px;
+}
 
 
 #side-nav button:last-child{
     margin-top: 100px;
 }
+

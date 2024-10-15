@@ -21,9 +21,17 @@ export function isValidCalendlyUrl(url){
     return calendlyRegex.test(url);
 }
 
-export function isValidDecimal(decimal){
-    const decimalRegex = /^\d*\.?\d*$/;
-    return decimalRegex.test(decimal);
+// export function isValidDecimal(decimal){
+//     const decimalRegex = /^\d*\.?\d*$/;
+//     return decimalRegex.test(decimal);
+// }
+
+export function isValidDecimal(decimal) {
+    // convert input to a number and check if it's >0
+    const parsedDecimal = parseFloat(decimal);
+    // check if decimal and  >0
+    const decimalRegex = /^\d*\.?\d+$/;  // at least one digit is required after . decimal point
+    return decimalRegex.test(decimal) && parsedDecimal > 0;
 }
 
 export function isPhoneNumberValid(phoneNumber){

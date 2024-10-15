@@ -36,6 +36,10 @@
     padding: 10px 0;
 }
 
+.message-col{
+    max-width: 670px;
+}
+
 .centered-header{
     text-align: center;
     padding: 30px 0;
