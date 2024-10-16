@@ -17,6 +17,7 @@
     height: auto;
     transition: 0.5s;
     position: relative;
+    background-color: #f4f4f4;
 }
 
 
@@ -41,7 +42,9 @@
 }
 
 .app-text-container{
-    padding: 36px 50px;
+    /* padding: 36px 50px; */
+    margin: 35px 50px;
+    width: 400px;
     background-color: #f4f4f4;
     border-radius: 0 10px 10px 0;
 }

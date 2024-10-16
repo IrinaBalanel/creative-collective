@@ -41,7 +41,7 @@ export default function ProviderSettings() {
             <main className="main">
                 <ProfileButton />
                 <h1 className="dashboard-header-one" style={{ textAlign: "center" }}>Upcoming Appointments</h1>
-                <p>{error}</p>
+                {/* <p>{error}</p> */}
                 <div className="appointments">
                     {appointments && appointments.length > 0 ? (
                         appointments.map((appointment) => (
