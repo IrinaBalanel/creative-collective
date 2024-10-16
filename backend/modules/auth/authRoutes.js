@@ -94,7 +94,12 @@ router.post("/logout", async (req, res) => {
     if (!user) {
         return res.json({ message: "User not found" });
     }
-    res.clearCookie("token");
+    res.clearCookie(
+        "token", token, {
+            secure: true, // only true in production
+            sameSite: "None",
+        }
+    );
     res.json({ message: "Logged out", user});
 });
 
@@ -109,7 +114,7 @@ router.get("/verify-token", async (req, res) => {
         if (!user) {
             return res.json({ message: "User not found" });
         }
-        //console.log("User from verify token:", user); 
+        console.log("User from verify token:", user); 
         res.json({ user });
     } catch (error) {
         console.error("Token verification failed:", error.message);
