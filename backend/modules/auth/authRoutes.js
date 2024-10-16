@@ -95,7 +95,8 @@ router.post("/logout", async (req, res) => {
         return res.json({ message: "User not found" });
     }
     res.clearCookie(
-        "token", token, {
+        "token", {
+            httpOnly: true, 
             secure: true, // only true in production
             sameSite: "None",
         }
