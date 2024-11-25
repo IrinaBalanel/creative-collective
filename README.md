@@ -34,7 +34,7 @@ Based on feedback and usability testing I made the following improvements:
 - Replaced vague terms like “Creative Type” with intuitive ones like “Profession” and “Specialization.”
 - Improved layout for better visibility of appointment dates and times.
 
-## Tech Stack
+## Tech Stack: MERN
 
 - Frontend: Built with React’s component-based architecture for scalability and maintainability
 - Backend: API development with Node.js and Express
