@@ -2,7 +2,7 @@
 
 ## Overview
 
-I built Creative Collective to address a real-world problem faced by creative professionals like makeup artists, stylists, and set designers. While platforms like Behance cater to digital creators and niche apps serve specific services like barbers or wedding planners, there wasn’t a unified platform for broader creative services. This app bridges that gap, providing a space where professionals can showcase their work and manage bookings, while clients can conveniently find and book their services.
+I built Creative Collective to address a real-world problem faced by creative professionals like photographers, makeup artists, stylists, and set decorators. While platforms like Behance cater to digital creators and niche apps serve specific services like barbers or wedding planners, there wasn’t a unified platform for broader creative services. This app bridges that gap, providing a space where professionals can showcase their work and manage bookings, while clients can conveniently find and book their services.
 
 The project consists of 3 products: a client-facing site, a provider dashboard, and an admin panel.
 
@@ -21,7 +21,7 @@ The entire project was tracked using a project management system I built in Noti
 
 ## Usability Improvements
 
-Based on feedback and usability testing:
+Based on feedback and usability testing I made the following improvements:
 
 ### Landing Page
 
@@ -46,7 +46,7 @@ Based on feedback and usability testing:
 ### Client-facing website
 
 - Search functionality by professional category for quick access to providers
-- Provider Details Page: Detailed profiles of creatives with personal and contact information, portfolio and services
+- Provider Details Page: Personal and contact information, portfolio and services
 - Booking Service Functionality: Integrated with Calendly API for seamless scheduling
 - Favorites: Management of preferred providers
 - Contact form
@@ -60,15 +60,21 @@ Based on feedback and usability testing:
 
 ### Admin Panel
 
-- CRUD for Users: Manage clients and providers, with options for soft deletes and account blocking.
-- Messages Management: Respond to inquiries from the contact form.
-- Provider Verification: Review and verify provider credentials for badge assignment.
+- CRUD for Users: Client and Provider Management, with options for soft deletes and account blocking.
+- Messages Management: Inquiries Consolidation from the contact form for quick processing.
+- Provider Verification: Functionality to review and verify provider credentials for badge assignment.
 
-## Lessons Learned
+## Lesson Learned
 
-This project taught me the importance of adaptability in software development. Although I couldn’t implement features like reviews, Google Maps integration, and advanced search within the timeframe, I learned to prioritize effectively and deliver a functional product.
+This project taught me the importance of adaptability in software development. Although I couldn’t implement features like reviews, Google Maps integration, and advanced search within the timeframe, I learned to prioritize effectively and deliver a fully functional product. The project idea gives the space for creativity and future enhancement.
 
 ## Interface
 
+### Client-facing website interface
+<img src="client.png" width="600px"/>
 
+### Provider Dashboard
+<img src="provider.png" width="600px"/>
 
+### Admin Panel
+<img src="admin.png" width="600px"/>
