@@ -4,7 +4,7 @@
 
 I built Creative Collective to address a real-world problem faced by creative professionals like photographers, makeup artists, stylists, and set decorators. While platforms like Behance cater to digital creators and niche apps serve specific services like barbers or wedding planners, there wasn’t a unified platform for broader creative services. This app bridges that gap, providing a space where professionals can showcase their work and manage bookings, while clients can conveniently find and book their services.
 
-The project consists of 3 products: a client-facing site, a provider dashboard, and an admin panel. Click here to go to the website(https://creativecollective.irinabalanel.com/).
+The project consists of 3 products: a client-facing site, a provider dashboard, and an admin panel. [Click here to go to the website](https://creativecollective.irinabalanel.com/).
 
 ## Development Process
 
