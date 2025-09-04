@@ -18,7 +18,7 @@ app.use(cookieParser());
 app.use(cors({
   //origin: "*" //allow requests from all servers: to be changed for subdomain
   //for token auth
-  origin: ["https://creative-collective.irinabalanel.com", "http://localhost:5173", "https://creative-collective-frontend.onrender.com"],
+  origin: ["https://creative-collective.irinabalanel.com", "https://api.creative-collective.irinabalanel.com", "http://localhost:5173", "https://creative-collective-frontend.onrender.com"],
   // origin: "*",
   methods: ["GET", "POST"],
   credentials: true
