@@ -29,7 +29,8 @@ app.use(cors({
 
 
 // Database connection
-const dbUrl= `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}/creative-collective?retryWrites=true&w=majority&appName=creative-collective`;
+//const dbUrl= `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}/creative-collective?retryWrites=true&w=majority&appName=creative-collective`;
+const dbUrl= `${process.env.MONGO_URI}`;
 const connect = async () => {
   try {
     await mongoose.connect(dbUrl);
