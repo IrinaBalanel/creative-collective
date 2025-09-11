@@ -4,7 +4,7 @@
 
 I built Creative Collective to address a real-world problem faced by creative professionals like photographers, makeup artists, stylists, and set decorators. While platforms like Behance cater to digital creators and niche apps serve specific services like barbers or wedding planners, there wasn’t a unified platform for broader creative services. This app bridges that gap, providing a space where professionals can showcase their work and manage bookings, while clients can conveniently find and book their services.
 
-The project consists of 3 products: a client-facing site, a provider dashboard, and an admin panel. [Click here to go to the website](https://creativecollective.irinabalanel.com/).
+The project consists of 3 products: a client-facing site, a provider dashboard, and an admin panel. [Click here to go to the website](https://creative-collective.irinabalanel.com/).
 
 ## Development Process
 
@@ -21,7 +21,7 @@ The entire project was tracked using a project management system I built in Noti
 
 ## Usability Improvements
 
-Based on feedback and usability testing I made the following improvements:
+Based on feedback and usability testing, I made the following improvements:
 
 ### Landing Page
 
@@ -38,7 +38,7 @@ Based on feedback and usability testing I made the following improvements:
 
 - Frontend: Built with React’s component-based architecture for scalability and maintainability
 - Backend: API development with Node.js and Express
-- Database: Modeled using Mongoose (ODM) for MongoDB hosted on Atlas
+- Database: Modelled using Mongoose (ODM) for MongoDB hosted on Atlas
 - Features: User authentication, role-based access control, Calendly API integration for booking functionality, Soft deletes for data safety and flexibility
 
 ## Features
@@ -66,7 +66,10 @@ Based on feedback and usability testing I made the following improvements:
 
 ## Lesson Learned
 
-This project taught me the importance of adaptability in software development. Although I couldn’t implement features like reviews, Google Maps integration, and advanced search within the timeframe, I learned to prioritize effectively and deliver a fully functional product. The project idea gives the space for creativity and future enhancement.
+This project taught me the importance of adaptability in software development. Although I couldn’t implement features like reviews, Google Maps integration, and advanced search within the timeframe, I learned to prioritize effectively and deliver a fully functional product. The project idea gives space for creativity and future enhancement.
+
+## More projects
+Explore more of my work on my portfolio: [irinabalanel.com](https://irinabalanel.com)
 
 ## Interface
 
