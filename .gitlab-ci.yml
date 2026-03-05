@@ -59,7 +59,8 @@ deploy:backend:
       for seed in backend/db/seed/*.json; do
         ssh "${deploy_user}@${DEPLOY_HOST}" "cat > ${deploy_dir}/$seed" < "$seed"
       done
-      ssh "${deploy_user}@${DEPLOY_HOST}" "cd ${deploy_dir} && docker compose -f docker-compose.backend.yml pull && docker compose -f docker-compose.backend.yml up -d --remove-orphans"
+      registry_password_b64="$(printf '%s' "$CI_REGISTRY_PASSWORD" | base64 | tr -d '\n')"
+      ssh "${deploy_user}@${DEPLOY_HOST}" "printf '%s' '${registry_password_b64}' | base64 -d | docker login '${CI_REGISTRY}' -u '${CI_REGISTRY_USER}' --password-stdin >/dev/null && cd ${deploy_dir} && docker compose -f docker-compose.backend.yml pull && docker compose -f docker-compose.backend.yml up -d --remove-orphans"
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: manual
