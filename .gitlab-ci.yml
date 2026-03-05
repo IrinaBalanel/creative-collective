@@ -10,35 +10,25 @@ variables:
 
 build:backend-image:
   stage: build
-  image: docker:27.5.1
-  services:
-    - docker:27.5.1-dind
-  variables:
-    DOCKER_HOST: tcp://docker:2376
-    DOCKER_TLS_CERTDIR: "/certs"
-  before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
   script:
-    - docker build -f backend/Dockerfile -t "$BACKEND_IMAGE_REPOSITORY:$BACKEND_IMAGE_TAG" -t "$BACKEND_IMAGE_REPOSITORY:main" ./backend
-    - docker push "$BACKEND_IMAGE_REPOSITORY:$BACKEND_IMAGE_TAG"
-    - docker push "$BACKEND_IMAGE_REPOSITORY:main"
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context "$CI_PROJECT_DIR/backend" --dockerfile "$CI_PROJECT_DIR/backend/Dockerfile" --destination "$BACKEND_IMAGE_REPOSITORY:$BACKEND_IMAGE_TAG" --destination "$BACKEND_IMAGE_REPOSITORY:main"
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 build:frontend-image:
   stage: build
-  image: docker:27.5.1
-  services:
-    - docker:27.5.1-dind
-  variables:
-    DOCKER_HOST: tcp://docker:2376
-    DOCKER_TLS_CERTDIR: "/certs"
-  before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
   script:
-    - docker build -f frontend/Dockerfile --build-arg VITE_API_URL=https://creative-collective-api.irinabalanel.com -t "$FRONTEND_IMAGE_REPOSITORY:$FRONTEND_IMAGE_TAG" -t "$FRONTEND_IMAGE_REPOSITORY:main" ./frontend
-    - docker push "$FRONTEND_IMAGE_REPOSITORY:$FRONTEND_IMAGE_TAG"
-    - docker push "$FRONTEND_IMAGE_REPOSITORY:main"
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context "$CI_PROJECT_DIR/frontend" --dockerfile "$CI_PROJECT_DIR/frontend/Dockerfile" --build-arg "VITE_API_URL=https://creative-collective-api.irinabalanel.com" --destination "$FRONTEND_IMAGE_REPOSITORY:$FRONTEND_IMAGE_TAG" --destination "$FRONTEND_IMAGE_REPOSITORY:main"
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
