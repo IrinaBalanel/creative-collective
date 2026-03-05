@@ -20,7 +20,7 @@ services:
       - creative_collective_backend
 
   mongo:
-    image: mongo:8.0
+    image: mongo:4.4
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -28,7 +28,7 @@ services:
     volumes:
       - mongo_data:/data/db
     healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      test: ["CMD", "mongo", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
       interval: 10s
       timeout: 5s
       retries: 20
@@ -36,7 +36,7 @@ services:
       - creative_collective_backend
 
   mongo_seed:
-    image: mongo:8.0
+    image: mongo:4.4
     restart: "no"
     depends_on:
       mongo:
