@@ -1,0 +1,16 @@
+services:
+  creative_collective_frontend:
+    image: ${IMAGE:-creative-collective/frontend:latest}
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL:-https://creative-collective-api.irinabalanel.com}
+    ports:
+      - "${APP_PORT:-8081}:80"
+    restart: unless-stopped
+    networks:
+      - creative_collective_frontend
+
+networks:
+  creative_collective_frontend:
+    name: creative_collective_frontend
