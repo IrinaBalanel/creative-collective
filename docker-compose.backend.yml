@@ -44,11 +44,15 @@ services:
     volumes:
       - ./backend/db/seed:/seed:ro
     entrypoint: ["/bin/sh", "-c"]
-    command: >
-      for file in /seed/*.json; do
-        collection=$$(basename "$$file" .json);
-        mongoimport --host mongo --username root --password ${MONGO_ROOT_PASSWORD:-creative_collective_root_password} --authenticationDatabase admin --db creative-collective --collection "$$collection" --drop --jsonArray --file "$$file";
-      done
+    command:
+      - |
+        mongoimport --host mongo --username root --password ${MONGO_ROOT_PASSWORD:-creative_collective_root_password} --authenticationDatabase admin --db creative-collective --collection clients --drop --jsonArray --file /seed/clients.json &&
+        mongoimport --host mongo --username root --password ${MONGO_ROOT_PASSWORD:-creative_collective_root_password} --authenticationDatabase admin --db creative-collective --collection credentials --drop --jsonArray --file /seed/credentials.json &&
+        mongoimport --host mongo --username root --password ${MONGO_ROOT_PASSWORD:-creative_collective_root_password} --authenticationDatabase admin --db creative-collective --collection form_messages --drop --jsonArray --file /seed/form_messages.json &&
+        mongoimport --host mongo --username root --password ${MONGO_ROOT_PASSWORD:-creative_collective_root_password} --authenticationDatabase admin --db creative-collective --collection provider_categories --drop --jsonArray --file /seed/provider_categories.json &&
+        mongoimport --host mongo --username root --password ${MONGO_ROOT_PASSWORD:-creative_collective_root_password} --authenticationDatabase admin --db creative-collective --collection providers --drop --jsonArray --file /seed/providers.json &&
+        mongoimport --host mongo --username root --password ${MONGO_ROOT_PASSWORD:-creative_collective_root_password} --authenticationDatabase admin --db creative-collective --collection services --drop --jsonArray --file /seed/services.json &&
+        mongoimport --host mongo --username root --password ${MONGO_ROOT_PASSWORD:-creative_collective_root_password} --authenticationDatabase admin --db creative-collective --collection users --drop --jsonArray --file /seed/users.json
     networks:
       - creative_collective_backend
 
